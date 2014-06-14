@@ -1,103 +1,167 @@
 
+
 var zoom = {
-    
-    url: "http://api.zoom.it/v1/content/hhcn",
+	
+	url: 'http://api.zoom.it/v1/content/hhcn',
 
-    parseData: function (response) {
+	addEventListener: (function () {
 
-        if (response.error) {
-            console.log(response.error);
-            return;
-        }
+		function addEventListener(el, eventName, handler) {
+			el.addEventListener(eventName, handler);
+		};
 
-        var content = response.content;
-        
-        if (content.ready) {
-            zoom.viewer = new Seadragon.Viewer("viewer");
-            zoom.viewer.addEventListener("open", zoom.addOverlays);
-            zoom.viewer.openDzi(content.dzi);
-        } else if (content.failed) {
-            console.log(content.url + " failed to convert.");
-        } else {
-            console.log(content.url + " is " + Math.round(100 * content.progress) + "% done.");
-        }
+		function attachEvent(el, eventName, handler) {
+			el.attachEvent('on' + eventName, function(){ 
+				handler.call(el); 
+			});
+		};
 
-    },
+		return document.addEventListener ? addEventListener : attachEvent;
 
-    addOverlays: function () {
+	})(),
 
-        zoom.viewer.setMouseNavEnabled(false);
+	removeClass: (function () {
 
-        var myDiv = document.createElement("div");
-        var myRect = new Seadragon.Rect(0, 0, 1, 1);
+		function classList(el, className) {
+			el.classList.remove(className);
+		} 
 
-        myDiv.id = "myDrawings";
-        myDiv.className = "overlay";
-        zoom.viewer.drawer.addOverlay(myDiv, myRect);  
-        // TODO adjust the width and height to the measures of the drawing
-      
-        // TODO do something to eliminate the need to do this...
-        setTimeout(function() {
+		function className(el, className) {
+			var regExp = new RegExp('(^|\\b)' + className.split(' ').join('|') + '(\\b|$)', 'gi');
+			el.className = el.className.replace(regExp, ' ');
+		}
 
-            var myStrokeWidth = 1;
-            
-            var sketchpad = Raphael.sketchpad("myDrawings", {
-                width: 6600,   
-                height: 6600, 
-                editing: true
-            });
-            sketchpad.pen().color("#f00");  
-            sketchpad.pen().width(myStrokeWidth); 
-            
-            zoom.viewer.addEventListener("animation", function() { 
+		return document.documentElement.classList ? classList : className;
 
-                var myZoom = zoom.viewer.viewport.getZoom(true);
-                var myCanvas = sketchpad.paper();
+	})(),
 
-                //myCanvas.setViewBox(0, 0, 6600/myZoom, 6600/myZoom, true);
-                //myCanvas.setSize(myZoom*600, myZoom*600);
+	addClass: (function () {
 
-                sketchpad.pen().width(myZoom*myStrokeWidth);
-            
-                myCanvas.forEach(function (el) {
-                    el.transform("");
-                    el.scale(myZoom, myZoom, 0, 0);
-                    el.attr('stroke-width', myZoom*myStrokeWidth);
-                });
+		function classList(el, className) {
+			el.classList.add(className);
+		} 
 
-                myCanvas.setSize(myZoom*600, myZoom*600);
-                    
-            });
-            
-            $("#editor_draw").click(function() {
-                $("#editor_move").removeClass("selected").addClass("disabled");
-                $("#editor_draw").removeClass("disabled").addClass("selected");
-                sketchpad.editing(true);
-                zoom.viewer.setMouseNavEnabled(false);
-            });
-                        
-            $("#editor_move").click(function() {
-                $("#editor_move").removeClass("disabled").addClass("selected");
-                $("#editor_draw").removeClass("selected").addClass("disabled");
-                sketchpad.editing("move");
-                zoom.viewer.setMouseNavEnabled(true);
-            });
+		function className(el, className) {
+			el.className += ' ' + className;
+		}
 
-        }, 500);
+		return document.documentElement.classList ? classList : className;
 
-    },
+	})(),
 
-    init: function () {
+	parseData: function (response) {
 
-        // The Deep Zoom image with overlays
-        $.ajax({
-            url: zoom.url,
-            dataType: "jsonp",
-            success: zoom.parseData
-        });
+		if (response.error) {
+			console.log(response.error);
+			return;
+		}
 
-    }  
+		var content = response.content;
+		
+		if (content.ready) {
+			zoom.viewer = new Seadragon.Viewer("viewer");
+			zoom.viewer.addEventListener("open", zoom.addOverlays);
+			zoom.viewer.openDzi(content.dzi);
+		} else if (content.failed) {
+			console.log(content.url + " failed to convert.");
+		} else {
+			console.log(content.url + " is " + Math.round(100 * content.progress) + "% done.");
+		}
+
+	},
+
+	addOverlays: function () {
+
+		zoom.viewer.setMouseNavEnabled(false);
+
+		var myDiv = document.createElement("div"),
+			myRect = new Seadragon.Rect(0, 0, 1, 1);
+
+		myDiv.id = "myDrawings";
+		myDiv.className = "overlay";
+		
+		zoom.viewer.drawer.addOverlay(myDiv, myRect);  
+		// TODO adjust the width and height to the measures of the drawing
+	  
+		// TODO do something to eliminate the need to do this...
+		setTimeout(function() {
+
+			var myStrokeWidth = 1;
+			
+			var sketchpad = Raphael.sketchpad("myDrawings", {
+				width: 6600,   
+				height: 6600, 
+				editing: true
+			});
+			sketchpad.pen().color("#f00");  
+			sketchpad.pen().width(myStrokeWidth); 
+			
+			zoom.viewer.addEventListener("animation", function() { 
+
+				var myZoom = zoom.viewer.viewport.getZoom(true);
+				var myCanvas = sketchpad.paper();
+
+				//myCanvas.setViewBox(0, 0, 6600/myZoom, 6600/myZoom, true);
+				//myCanvas.setSize(myZoom*600, myZoom*600);
+
+				sketchpad.pen().width(myZoom*myStrokeWidth);
+			
+				myCanvas.forEach(function (el) {
+					el.transform("");
+					el.scale(myZoom, myZoom, 0, 0);
+					el.attr('stroke-width', myZoom*myStrokeWidth);
+				});
+
+				myCanvas.setSize(myZoom*600, myZoom*600);
+					
+			});
+			
+			var editorDraw = document.getElementById('editor_draw'),
+				editorMove = document.getElementById('editor_move');
+
+			console.log(editorDraw, editorMove);
+
+			zoom.addEventListener(editorDraw, 'click', function () {
+
+				zoom.removeClass(editorDraw, 'disabled');
+				zoom.addClass(editorDraw, 'selected');
+
+				zoom.addClass(editorMove, 'disabled');
+				zoom.removeClass(editorMove, 'selected');
+
+				sketchpad.editing(true);
+				zoom.viewer.setMouseNavEnabled(false);
+			});
+
+			zoom.addEventListener(editorMove, 'click', function () {
+
+				zoom.removeClass(editorDraw, 'selected');
+				zoom.addClass(editorDraw, 'disabled');
+
+				zoom.addClass(editorMove, 'selected');
+				zoom.removeClass(editorMove, 'disabled');
+
+				sketchpad.editing("move");
+				zoom.viewer.setMouseNavEnabled(true);
+
+			});
+
+		}, 500);
+
+	},
+
+	init: function (url) {
+
+		var script_element = document.createElement('script');
+
+		script_element.src = url || zoom.url + '?callback=zoom.parseData';
+
+		document.getElementsByTagName('head')[0].appendChild(script_element);
+
+	}  
 
 };
 
 zoom.init();
+
+
