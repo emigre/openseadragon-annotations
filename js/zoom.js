@@ -1,8 +1,10 @@
 
 
 var zoom = {
-	
-	url: 'http://api.zoom.it/v1/content/hhcn',
+
+	// TODO subsitute image with http://static.seadragon.com/content/misc/blue-marble.dzi
+	// This involves rewriting parseData
+	url: 'http://api.zoom.it/v1/content/hhcn', 
 
 	addEventListener: (function () {
 
