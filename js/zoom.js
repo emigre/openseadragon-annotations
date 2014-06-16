@@ -49,6 +49,12 @@ var zoom = {
 
 	})(),
 
+	JSONP: function (url) {
+			var script_element = document.createElement('script');
+			script_element.src = url || zoom.url + '?callback=zoom.parseData';
+			document.getElementsByTagName('head')[0].appendChild(script_element);
+	},
+
 	parseData: function (response) {
 
 		if (response.error) {
@@ -119,8 +125,6 @@ var zoom = {
 			var editorDraw = document.getElementById('editor_draw'),
 				editorMove = document.getElementById('editor_move');
 
-			console.log(editorDraw, editorMove);
-
 			zoom.addEventListener(editorDraw, 'click', function () {
 
 				zoom.removeClass(editorDraw, 'disabled');
@@ -152,11 +156,15 @@ var zoom = {
 
 	init: function (url) {
 
-		var script_element = document.createElement('script');
+		var viewer = document.getElementById('viewer'),
+			actions = document.querySelector('div.widget_actions');
 
-		script_element.src = url || zoom.url + '?callback=zoom.parseData';
+		viewer.style.width = window.innerWidth + 'px';
+		viewer.style.height = window.innerHeight + 'px';
 
-		document.getElementsByTagName('head')[0].appendChild(script_element);
+		actions.style.left = Math.round(window.innerWidth / 2 - actions.offsetWidth / 2) + 'px';
+
+		zoom.JSONP(url);
 
 	}  
 
