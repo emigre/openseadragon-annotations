@@ -2,9 +2,8 @@
 
 var zoom = {
 
-	// TODO subsitute image with http://static.seadragon.com/content/misc/blue-marble.dzi
-	// This involves rewriting parseData
-	url: 'http://api.zoom.it/v1/content/hhcn', 
+	// XMLHttpRequest can only load deep zoom images served from other servers if they have 'Access-Control-Allow-Origin' in their header set to '*' or to the server that served your JavaScript file. To ignore that limitations you could use JSONP, Flash or an iframe. Nevertheless, deep zoom images hosted in zoom.it allow cross-domain AJAX requests.
+	url: 'http://api.zoom.it/v1/content/hhcn?format=json', 
 
 	addEventListener: (function () {
 
@@ -51,12 +50,7 @@ var zoom = {
 
 	})(),
 
-	JSONP: function (url) {
-			var script_element = document.createElement('script');
-			script_element.src = url || zoom.url + '?callback=zoom.parseData';
-			document.getElementsByTagName('head')[0].appendChild(script_element);
-	},
-
+	// Disabled temporarily
 	parseData: function (response) {
 
 		if (response.error) {
@@ -78,6 +72,7 @@ var zoom = {
 
 	},
 
+	// Disabled temporarily
 	addOverlays: function () {
 
 		zoom.viewer.setMouseNavEnabled(false);
@@ -163,10 +158,26 @@ var zoom = {
 
 		viewer.style.width = window.innerWidth + 'px';
 		viewer.style.height = window.innerHeight + 'px';
-
 		actions.style.left = Math.round(window.innerWidth / 2 - actions.offsetWidth / 2) + 'px';
 
-		zoom.JSONP(url);
+		var viewer = OpenSeadragon({
+			id: "viewer",
+			tileSources: [{ 
+				Image:  {
+					xmlns: "http://schemas.microsoft.com/deepzoom/2009",
+					Url: "http://cache.zoom.it/content/WwI0_files/",
+					TileSize: "254", 
+					Overlap: "1", 
+					Format: "jpg", 
+					ServerFormat: "Default",
+					Size: { 
+						Width: "5816",
+						Height: "3961"
+					}
+				}
+			}],
+			prefixUrl: "img/"
+		});
 
 	}  
 
