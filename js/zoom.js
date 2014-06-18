@@ -3,7 +3,7 @@
 var zoom = {
 
 	// XMLHttpRequest can only load deep zoom images served from other servers if they have 'Access-Control-Allow-Origin' in their header set to '*' or to the server that served your JavaScript file. To ignore that limitations you could use JSONP, Flash or an iframe. Nevertheless, deep zoom images hosted in zoom.it allow cross-domain AJAX requests.
-	url: 'http://api.zoom.it/v1/content/hhcn?format=json', 
+	url: 'http://static.seadragon.com/content/misc/blue-marble_files/', 
 
 	addEventListener: (function () {
 
@@ -151,7 +151,7 @@ var zoom = {
 
 	},
 
-	init: function (url) {
+	init: function () {
 
 		var viewer = document.getElementById('viewer'),
 			actions = document.querySelector('div.widget_actions');
@@ -164,15 +164,15 @@ var zoom = {
 			id: "viewer",
 			tileSources: [{ 
 				Image:  {
-					xmlns: "http://schemas.microsoft.com/deepzoom/2009",
-					Url: "http://cache.zoom.it/content/WwI0_files/",
-					TileSize: "254", 
-					Overlap: "1", 
-					Format: "jpg", 
-					ServerFormat: "Default",
+					xmlns: 'http://schemas.microsoft.com/deepzoom/2009',
+					Url: zoom.url,
+					TileSize: '254', 
+					Overlap: '1', 
+					Format: 'jpg', 
+					ServerFormat: 'Default',
 					Size: { 
-						Width: "5816",
-						Height: "3961"
+						Width: '86400',
+						Height: '43200'
 					}
 				}
 			}],
