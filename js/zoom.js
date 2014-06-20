@@ -5,51 +5,6 @@ var zoom = {
 	// XMLHttpRequest can only load deep zoom images served from other servers if they have 'Access-Control-Allow-Origin' in their header set to '*' or to the server that served your JavaScript file. To ignore that limitations you could use JSONP, Flash or an iframe. Nevertheless, deep zoom images hosted in zoom.it allow cross-domain AJAX requests.
 	url: 'http://static.seadragon.com/content/misc/blue-marble_files/', 
 
-	addEventListener: (function () {
-
-		function addEventListener(el, eventName, handler) {
-			el.addEventListener(eventName, handler);
-		};
-
-		function attachEvent(el, eventName, handler) {
-			el.attachEvent('on' + eventName, function(){ 
-				handler.call(el); 
-			});
-		};
-
-		return document.addEventListener ? addEventListener : attachEvent;
-
-	})(),
-
-	removeClass: (function () {
-
-		function classList(el, className) {
-			el.classList.remove(className);
-		} 
-
-		function className(el, className) {
-			var regExp = new RegExp('(^|\\b)' + className.split(' ').join('|') + '(\\b|$)', 'gi');
-			el.className = el.className.replace(regExp, ' ');
-		}
-
-		return document.documentElement.classList ? classList : className;
-
-	})(),
-
-	addClass: (function () {
-
-		function classList(el, className) {
-			el.classList.add(className);
-		} 
-
-		function className(el, className) {
-			el.className += ' ' + className;
-		}
-
-		return document.documentElement.classList ? classList : className;
-
-	})(),
-
 	// Disabled temporarily
 	parseData: function (response) {
 
@@ -122,25 +77,25 @@ var zoom = {
 			var editorDraw = document.getElementById('editor_draw'),
 				editorMove = document.getElementById('editor_move');
 
-			zoom.addEventListener(editorDraw, 'click', function () {
+			editorDraw.addEventListener('click', function () {
 
-				zoom.removeClass(editorDraw, 'disabled');
-				zoom.addClass(editorDraw, 'selected');
+				editorDraw.removeClass('disabled');
+				editorDraw.addClass('selected');
 
-				zoom.addClass(editorMove, 'disabled');
-				zoom.removeClass(editorMove, 'selected');
+				editorMove.addClass('disabled');
+				editorMove.removeClass('selected');
 
 				sketchpad.editing(true);
 				zoom.viewer.setMouseNavEnabled(false);
 			});
 
-			zoom.addEventListener(editorMove, 'click', function () {
+			editorMove.addEventListener('click', function () {
 
-				zoom.removeClass(editorDraw, 'selected');
-				zoom.addClass(editorDraw, 'disabled');
+				editorDraw.removeClass('selected');
+				editorDraw.addClass('disabled');
 
-				zoom.addClass(editorMove, 'selected');
-				zoom.removeClass(editorMove, 'disabled');
+				editorMove.addClass('selected');
+				editorMove.removeClass('disabled');
 
 				sketchpad.editing("move");
 				zoom.viewer.setMouseNavEnabled(true);
