@@ -17,7 +17,7 @@ var zoom = {
 		
 		if (content.ready) {
 			zoom.viewer = new Seadragon.Viewer("viewer");
-			zoom.viewer.addEventListener("open", zoom.addOverlays);
+			OpenSeadragon.addEvent(zoom.viewer, 'open', zoom.addOverlays);
 			zoom.viewer.openDzi(content.dzi);
 		} else if (content.failed) {
 			console.log(content.url + " failed to convert.");
@@ -54,7 +54,7 @@ var zoom = {
 			sketchpad.pen().color("#f00");  
 			sketchpad.pen().width(myStrokeWidth); 
 			
-			zoom.viewer.addEventListener("animation", function() { 
+			OpenSeadragon.addEvent(zoom.viewer, 'animation', function() { 
 
 				var myZoom = zoom.viewer.viewport.getZoom(true);
 				var myCanvas = sketchpad.paper();
@@ -77,25 +77,25 @@ var zoom = {
 			var editorDraw = document.getElementById('editor_draw'),
 				editorMove = document.getElementById('editor_move');
 
-			editorDraw.addEventListener('click', function () {
+			OpenSeadragon.addEvent(editorDraw, 'click', function () {
 
-				editorDraw.removeClass('disabled');
-				editorDraw.addClass('selected');
+				OpenSeadragon.removeClass(editorDraw, 'disabled');
+				OpenSeadragon.addClass(editorDraw, 'selected');
 
-				editorMove.addClass('disabled');
-				editorMove.removeClass('selected');
+				OpenSeadragon.addClass(editorMove, 'disabled');
+				OpenSeadragon.removeClass(editorMove, 'selected');
 
 				sketchpad.editing(true);
 				zoom.viewer.setMouseNavEnabled(false);
 			});
 
-			editorMove.addEventListener('click', function () {
+			OpenSeadragon.addEvent(editorMove, 'click', function () {
 
-				editorDraw.removeClass('selected');
-				editorDraw.addClass('disabled');
+				OpenSeadragon.removeClass(editorDraw, 'selected');
+				OpenSeadragon.addClass(editorDraw, 'disabled');
 
-				editorMove.addClass('selected');
-				editorMove.removeClass('disabled');
+				OpenSeadragon.addClass(editorMove, 'selected');
+				OpenSeadragon.removeClass(editorMove, 'disabled');
 
 				sketchpad.editing("move");
 				zoom.viewer.setMouseNavEnabled(true);
