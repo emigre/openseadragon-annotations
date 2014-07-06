@@ -1,6 +1,6 @@
 (function (oS) {
 	
-    oS.Viewer.prototype.initializeAnnotations = function (options) {
+	 oS.Viewer.prototype.initializeAnnotations = function (options) {
 	
 		var options = oS.extend({
 			// defaults
@@ -8,32 +8,16 @@
 	
 		this.annotations = new oS.Annotations(options);
 
+		console.log(this, oS.addEvent, this.annotations);
+
+		this.addHandler('open', this.annotations.addOverlays); 
+		
 	};
 
 	oS.Annotations = function () {
 	
 	};
 	
-	oS.Annotations.prototype.parseData = function (response) {
-
-		if (response.error) {
-			console.log(response.error);
-			return;
-		}
-
-		var content = response.content;
-		
-		if (content.ready) {
-			zoom.viewer = new Seadragon.Viewer("viewer");
-			oS.addEvent(zoom.viewer, 'open', zoom.addOverlays);
-			zoom.viewer.openDzi(content.dzi);
-		} else if (content.failed) {
-			console.log(content.url + " failed to convert.");
-		} else {
-			console.log(content.url + " is " + Math.round(100 * content.progress) + "% done.");
-		}
-};
-
 	oS.Annotations.prototype.addOverlays = function () {
 
 		console.log('add Overlays called');	
