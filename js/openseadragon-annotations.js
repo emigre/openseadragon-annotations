@@ -1,15 +1,20 @@
-
-(function(OSD) {
+(function (oS) {
 	
-	OSD.Annotations = function(options) {
+    oS.Viewer.prototype.initializeAnnotations = function (options) {
 	
-		var options = OSD.extend({
+		var options = oS.extend({
 			// defaults
 		}, options || {});
 	
+		this.annotations = new oS.Annotations(options);
+
 	};
 
-	OSD.Annotations.prototype.parseData = function (response) {
+	oS.Annotations = function () {
+	
+	};
+	
+	oS.Annotations.prototype.parseData = function (response) {
 
 		if (response.error) {
 			console.log(response.error);
@@ -20,18 +25,19 @@
 		
 		if (content.ready) {
 			zoom.viewer = new Seadragon.Viewer("viewer");
-			OSD.addEvent(zoom.viewer, 'open', zoom.addOverlays);
+			oS.addEvent(zoom.viewer, 'open', zoom.addOverlays);
 			zoom.viewer.openDzi(content.dzi);
 		} else if (content.failed) {
 			console.log(content.url + " failed to convert.");
 		} else {
 			console.log(content.url + " is " + Math.round(100 * content.progress) + "% done.");
 		}
+};
 
-	};
+	oS.Annotations.prototype.addOverlays = function () {
 
-	OSD.Annotations.prototype.addOverlays = function () {
-
+		console.log('add Overlays called');	
+		/*
 		zoom.viewer.setMouseNavEnabled(false);
 
 		var myDiv = document.createElement("div"),
@@ -56,7 +62,7 @@
 			sketchpad.pen().color("#f00");  
 			sketchpad.pen().width(myStrokeWidth); 
 			
-			OSD.addEvent(zoom.viewer, 'animation', function() { 
+			oS.addEvent(zoom.viewer, 'animation', function() { 
 
 				var myZoom = zoom.viewer.viewport.getZoom(true);
 				var myCanvas = sketchpad.paper();
@@ -67,37 +73,37 @@
 				sketchpad.pen().width(myZoom*myStrokeWidth);
 			
 				myCanvas.forEach(function (el) {
-					el.transform("");
-					el.scale(myZoom, myZoom, 0, 0);
-					el.attr('stroke-width', myZoom*myStrokeWidth);
-				});
-
-				myCanvas.setSize(myZoom*600, myZoom*600);
-					
+				el.transform("");
+				el.scale(myZoom, myZoom, 0, 0);
+				el.attr('stroke-width', myZoom*myStrokeWidth);
 			});
-			
-			var editorDraw = document.getElementById('editor_draw'),
-				editorMove = document.getElementById('editor_move');
 
-			OSD.addEvent(editorDraw, 'click', function () {
+			myCanvas.setSize(myZoom*600, myZoom*600);
+				
+		});
+		
+		var editorDraw = document.getElementById('editor_draw'),
+			editorMove = document.getElementById('editor_move');
 
-				OSD.removeClass(editorDraw, 'disabled');
-				OSD.addClass(editorDraw, 'selected');
+		oS.addEvent(editorDraw, 'click', function () {
 
-				OSD.addClass(editorMove, 'disabled');
-				OSD.removeClass(editorMove, 'selected');
+			oS.removeClass(editorDraw, 'disabled');
+			oS.addClass(editorDraw, 'selected');
+
+			oS.addClass(editorMove, 'disabled');
+			oS.removeClass(editorMove, 'selected');
 
 				sketchpad.editing(true);
 				zoom.viewer.setMouseNavEnabled(false);
 			});
 
-			OSD.addEvent(editorMove, 'click', function () {
+			oS.addEvent(editorMove, 'click', function () {
 
-				OSD.removeClass(editorDraw, 'selected');
-				OSD.addClass(editorDraw, 'disabled');
+				oS.removeClass(editorDraw, 'selected');
+				oS.addClass(editorDraw, 'disabled');
 
-				OSD.addClass(editorMove, 'selected');
-				OSD.removeClass(editorMove, 'disabled');
+				oS.addClass(editorMove, 'selected');
+				oS.removeClass(editorMove, 'disabled');
 
 				sketchpad.editing("move");
 				zoom.viewer.setMouseNavEnabled(true);
@@ -105,7 +111,7 @@
 			});
 
 		}, 500);
-
+*/
 	};
 
 })(OpenSeadragon);

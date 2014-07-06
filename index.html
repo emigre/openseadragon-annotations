@@ -2,16 +2,14 @@
 <html>
   <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<title>eZoom</title>
+	<title>OpenSeadragon Annotations</title>
 	<meta name="description" content="">
 	<meta name="author" content="Gaspar Rey">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<link rel="stylesheet" type="text/css" href="css/screen.css" />
   </head>
 
-  <body>
-
-	<p class="microsoft_license">built on Microsoft technology</p>
+  <body>	
 
 	<div id="viewer"></div>
 
@@ -36,7 +34,7 @@
 		document.getElementById('viewer').style.width = window.innerWidth + 'px';
 		document.getElementById('viewer').style.height = window.innerHeight + 'px';
 
-		var osd = OpenSeadragon({
+		var oS = OpenSeadragon({
 			id: 'viewer',
 			tileSources: [{ 
 				Image:  {
@@ -61,6 +59,8 @@
 			}],
 			prefixUrl: 'img/'
 		});
+
+		oS.initializeAnnotations();
 
 	</script>
 
