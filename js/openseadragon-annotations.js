@@ -1,7 +1,7 @@
 
 (function(OSD) {
 	
-	OSD.DziAnnotations = function(options) {
+	OSD.Annotations = function(options) {
 	
 		var options = OSD.extend({
 			// defaults
@@ -9,7 +9,7 @@
 	
 	};
 
-	OSD.DziAnnotations.prototype.parseData = function (response) {
+	OSD.Annotations.prototype.parseData = function (response) {
 
 		if (response.error) {
 			console.log(response.error);
@@ -30,7 +30,7 @@
 
 	};
 
-	OSD.DziAnnotations.prototype.addOverlays = function () {
+	OSD.Annotations.prototype.addOverlays = function () {
 
 		zoom.viewer.setMouseNavEnabled(false);
 

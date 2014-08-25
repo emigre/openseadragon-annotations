@@ -36,12 +36,18 @@
 		document.getElementById('viewer').style.width = window.innerWidth + 'px';
 		document.getElementById('viewer').style.height = window.innerHeight + 'px';
 
-		var dziAnnotations = OpenSeadragon({
+		var osd = OpenSeadragon({
 			id: 'viewer',
 			tileSources: [{ 
 				Image:  {
 					xmlns: 'http://schemas.microsoft.com/deepzoom/2009',
-					// XMLHttpRequest can only load deep zoom images served from other servers if they have 'Access-Control-Allow-Origin' in their header set to '*' or to the server that served your JavaScript file. To ignore that limitations you could use JSONP, Flash or an iframe. Nevertheless, deep zoom images hosted in http://zoom.it/ (like the one below) allow cross-domain AJAX requests.
+					// XMLHttpRequest can only load deep zoom images served 
+					// from other servers if they have 'Access-Control-Allow-Origin' 
+					// in their header set to '*' or to the server that served your
+					// JavaScript file. To ignore that limitations you could use 
+					// JSONP, Flash or an iframe. Nevertheless, deep zoom images 
+					// hosted at http://zoom.it/ (like the one below) allow 
+					// cross-domain AJAX requests.
 					Url: 'http://static.seadragon.com/content/misc/blue-marble_files/',
 					TileSize: '254', 
 					Overlap: '1', 
