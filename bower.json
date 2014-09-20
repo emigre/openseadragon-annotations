@@ -21,7 +21,7 @@
     "tests"
   ],
   "dependencies": {
-    "raphael": "~2.1.2",
+    "raphael": "2.0.1",
     "raphael-sketchpad": "ianli/raphael-sketchpad#~0.5.1",
     "jquery": "~1.8.3",
     "JSON-js": "douglascrockford/JSON-js"
