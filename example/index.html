@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>OpenSeadragon Annotations</title>
+	<meta name="description" content="">
+	<meta name="author" content="Gaspar Rey">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<link rel="stylesheet" type="text/css" href="css/screen.css" />
+  </head>
+
+  <body>
+
+	<div id="viewer"></div>
+
+	<div class="widget_actions">
+		<div id="editor_draw" class="selected">Draw</div>
+		<div id="editor_move" class="disabled">Move</div>
+	</div>
+
+	<!--[if lt IE 9]>
+		<script src="http://ie7-js.googlecode.com/svn/version/2.1(beta4)/IE9.js"></script>
+	<![endif]-->
+
+    <script type="text/javascript" src="../bower_components/jquery/jquery.js"></script>
+	<script type="text/javascript" src="../bower_components/JSON-js/json2.js"></script>
+	<script type="text/javascript" src="../bower_components/openseadragon/build/openseadragon/openseadragon.min.js"></script>
+    <script type="text/javascript" src="../bower_components/raphael/raphael.js"></script>
+	<script type="text/javascript" src="../bower_components/raphael-sketchpad/javascripts/raphael.sketchpad.js"></script>
+	<script type="text/javascript" src="../openseadragon-annotations.js"></script>
+
+	<script type="text/javascript">
+
+		document.getElementById('viewer').style.width = window.innerWidth + 'px';
+		document.getElementById('viewer').style.height = window.innerHeight + 'px';
+
+		var os = new OpenSeadragon({
+			id: 'viewer',
+			tileSources: [{
+				Image:  {
+					xmlns: 'http://schemas.microsoft.com/deepzoom/2009',
+					// XMLHttpRequest can only load deep zoom images served
+					// from other servers if they have 'Access-Control-Allow-Origin'
+					// in their header set to '*' or to the server that served your
+					// JavaScript file. To ignore that limitations you could use
+					// JSONP, Flash or an iframe. Nevertheless, deep zoom images
+					// hosted at http://zoom.it/ (like the one below) allow
+					// cross-domain AJAX requests.
+					Url: 'http://static.seadragon.com/content/misc/blue-marble_files/',
+					TileSize: '254',
+					Overlap: '1',
+					Format: 'jpg',
+					ServerFormat: 'Default',
+					Size: {
+						Width: '86400',
+						Height: '43200'
+					}
+				}
+			}],
+			prefixUrl: 'img/'
+		});
+
+		os.initializeAnnotations();
+
+		// os.annotations.addOverlays();
+
+	</script>
+
+  </body>
+
+</html>

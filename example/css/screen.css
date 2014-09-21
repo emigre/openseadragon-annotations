@@ -1,0 +1,23 @@
+html, body {
+    margin:0px;
+    width:100%;
+    height:100%;
+    font-family: Verdana;
+}
+
+#viewer{
+    display:block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width:600px;
+    height:600px;
+    margin:0px;
+    border: 1px solid black;
+    background-color: #666;
+    color: white;   /* for error messages */
+}
+
+.overlay{
+     border: 1px solid red;
+}
