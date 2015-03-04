@@ -5,7 +5,7 @@
     }
 
 	if (!Raphael) {
-        throw new Error('OpenSeadragonScalebar requires Raphael');
+        throw new Error('OpenSeadragonAnnotations requires Raphael');
     }
 
 	OSD.Viewer.prototype.initializeAnnotations = function (options) {
