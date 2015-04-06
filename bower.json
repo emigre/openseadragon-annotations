@@ -1,0 +1,9 @@
+{
+  "name": "OpenSeadragonAnnotations",
+  "version": "0.0.1",
+  "description": "OpenSeadragon annotations plugin",
+  "main": "openseadragon-annotations.js",
+  "dependencies": {
+    "openseadragon": "~1.2.1"
+  }
+}
