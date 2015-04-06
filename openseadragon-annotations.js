@@ -29,18 +29,6 @@
         myDiv.className = "overlay";
         this.viewer.addOverlay(myDiv, myRect);
         this.viewer.setMouseNavEnabled(false);
-        // OpenSeadragon.requestAnimationFrame(function (){
-
-            // var sketchpad = Raphael.sketchpad("annotations", {
-            //  width: 6600,
-            //  height: 6600,
-            //  editing: true
-            // });
-
-            // sketchpad.pen().color("#f00");
-            // sketchpad.pen().width(1);
-
-        // });
     };
 
 })();
