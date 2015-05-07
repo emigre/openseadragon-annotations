@@ -22,11 +22,37 @@
         this.svg.addEventListener('click', function (e) {
             var x = e.offsetX / this.el.clientWidth;
             var y = e.offsetY / this.el.clientHeight;
-            this.addCircle(x, y)
+            this.addCircle(x, y);
         }.bind(this), false);
+
+        this.addNewControls();
 
         this.viewer.addHandler('animation', this.refresh.bind(this));
         this.viewer.addHandler('open', this.refresh.bind(this));
+    };
+
+    Annotations.prototype.addNewControls = function () {
+        this.addNewControl({
+            tooltip: 'Move',
+            srcRest: '/OpenSeadragonAnnotations/img/move_rest.png',
+            srcGroup: '/OpenSeadragonAnnotations/img/move_grouphover.png',
+            srcHover: '/OpenSeadragonAnnotations/img/move_hover.png',
+            srcDown: '/OpenSeadragonAnnotations/img/move_pressed.png'
+        });
+        this.addNewControl({
+            tooltip: 'Draw',
+            srcRest: '/OpenSeadragonAnnotations/img/draw_rest.png',
+            srcGroup: '/OpenSeadragonAnnotations/img/draw_grouphover.png',
+            srcHover: '/OpenSeadragonAnnotations/img/draw_hover.png',
+            srcDown: '/OpenSeadragonAnnotations/img/draw_pressed.png'
+        });
+    };
+
+    Annotations.prototype.addNewControl = function (options) {
+        var btn = new OpenSeadragon.Button(options);
+        this.viewer.addControl(btn.element, {
+            anchor: OpenSeadragon.ControlAnchor.TOP_LEFT
+        });
     };
 
     Annotations.prototype.add = function (element) {
