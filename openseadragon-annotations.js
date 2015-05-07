@@ -12,6 +12,7 @@
     var Annotations = function (options) {
         var options = options || {};
         this.viewer = options.viewer;
+        this.imagePath = options.imagePath || 'lib/';
         this.mode = Modes.MOVE;
         this.action = null;
         this.controls = [];
@@ -33,18 +34,18 @@
     Annotations.prototype.addNewControls = function () {
         this.addNewControl({
             tooltip: 'Move',
-            srcRest: '/OpenSeadragonAnnotations/img/move_rest.png',
-            srcGroup: '/OpenSeadragonAnnotations/img/move_grouphover.png',
-            srcHover: '/OpenSeadragonAnnotations/img/move_hover.png',
-            srcDown: '/OpenSeadragonAnnotations/img/move_pressed.png',
+            srcRest: this.imagePath + 'move_rest.png',
+            srcGroup: this.imagePath + 'move_grouphover.png',
+            srcHover: this.imagePath + 'move_hover.png',
+            srcDown: this.imagePath + 'move_pressed.png',
             onClick: this.setMoveMode.bind(this)
         });
         this.addNewControl({
             tooltip: 'Draw',
-            srcRest: '/OpenSeadragonAnnotations/img/draw_rest.png',
-            srcGroup: '/OpenSeadragonAnnotations/img/draw_grouphover.png',
-            srcHover: '/OpenSeadragonAnnotations/img/draw_hover.png',
-            srcDown: '/OpenSeadragonAnnotations/img/draw_pressed.png',
+            srcRest: this.imagePath + 'draw_rest.png',
+            srcGroup: this.imagePath + 'draw_grouphover.png',
+            srcHover: this.imagePath + 'draw_hover.png',
+            srcDown: this.imagePath + 'draw_pressed.png',
             onClick: this.setDrawingMode.bind(this)
         });
     };
