@@ -1,113 +1,114 @@
-(function (window) {
+(function ($) {
 
-    if (!window.OpenSeadragon) {
-        throw new Error('OpenSeadragon Annotations requires OpenSeadragon');
-    }
+    if (!$) { throw new Error('OpenSeadragon Annotations requires OpenSeadragon'); }
 
-    var Modes = {
-        MOVE: 0,
-        DRAW: 1
+    $.Viewer.prototype.initializeAnnotations = function (options) {
+        var options = $.extend({ viewer: this }, options);
+        return this.annotations = this.annotations || annotations.initialize(options);
     };
 
-    var Annotations = function (options) {
-        var options = options || {};
-        this.viewer = options.viewer;
-        this.imagePath = options.imagePath || 'lib/';
-        this.mode = Modes.MOVE;
-        this.action = null;
-        this.controls = [];
-    };
+    var MODES = { MOVE: 0, DRAW: 1 };
 
-    Annotations.prototype.addOverlays = function () {
-        var width = this.viewer.viewport.homeBounds.width;
-        var height = this.viewer.viewport.homeBounds.height;
-        var rect = new OpenSeadragon.Rect(0, 0, width, height);
-        this.el = new Overlay('annotations');
-        this.svg = new Svg();
-        this.el.appendChild(this.svg);
-        this.viewer.addOverlay(this.el, rect);
-        this.addNewControls();
-        this.viewer.addHandler('animation', this.refresh.bind(this));
-        this.viewer.addHandler('open', this.refresh.bind(this));
-    };
+    var annotations = {
 
-    Annotations.prototype.addNewControls = function () {
-        this.addNewControl({
-            tooltip: 'Move',
-            srcRest: this.imagePath + 'move_rest.png',
-            srcGroup: this.imagePath + 'move_grouphover.png',
-            srcHover: this.imagePath + 'move_hover.png',
-            srcDown: this.imagePath + 'move_pressed.png',
-            onClick: this.setMoveMode.bind(this)
-        });
-        this.addNewControl({
-            tooltip: 'Draw',
-            srcRest: this.imagePath + 'draw_rest.png',
-            srcGroup: this.imagePath + 'draw_grouphover.png',
-            srcHover: this.imagePath + 'draw_hover.png',
-            srcDown: this.imagePath + 'draw_pressed.png',
-            onClick: this.setDrawingMode.bind(this)
-        });
-    };
+        initialize: function (options) {
+            $.extend(annotations, options);
+            this.viewer.addHandler('open', $.delegate(this, this.addOverlays));
+        },
 
-    Annotations.prototype.addNewControl = function (options) {
-        var btn = new OpenSeadragon.Button(options);
-        this.controls.push(btn);
-        btn.addHandler('click', function () {
-            for (var i = 0; i < this.controls.length; i++) {
-                if (this.controls[i] === btn) {
-                    this.controls[i].imgDown.style.visibility = 'visible';
-                    this.controls[i].imgRest.style.visibility = 'hidden';
-                } else {
-                    this.controls[i].imgDown.style.visibility = 'hidden';
-                    this.controls[i].imgRest.style.visibility = 'visible';
+        viewer: null,
+
+        imagePath: 'bower_components/OpenSeadragonAnnotations/img/',
+
+        mode: MODES.MOVE,
+
+        action: null,
+
+        controls: [],
+
+        addOverlays: function () {
+            var width = this.viewer.viewport.homeBounds.width;
+            var height = this.viewer.viewport.homeBounds.height;
+            var rect = new $.Rect(0, 0, width, height);
+            this.el = new Overlay('annotations');
+            this.svg = new Svg();
+            this.el.appendChild(this.svg);
+            this.viewer.addOverlay(this.el, rect);
+
+            this.addNewControl({
+                tooltip: 'Move',
+                srcRest: this.imagePath + 'move_rest.png',
+                srcGroup: this.imagePath + 'move_grouphover.png',
+                srcHover: this.imagePath + 'move_hover.png',
+                srcDown: this.imagePath + 'move_pressed.png',
+                onClick: this.setMoveMode.bind(this)
+            });
+
+            this.addNewControl({
+                tooltip: 'Draw',
+                srcRest: this.imagePath + 'draw_rest.png',
+                srcGroup: this.imagePath + 'draw_grouphover.png',
+                srcHover: this.imagePath + 'draw_hover.png',
+                srcDown: this.imagePath + 'draw_pressed.png',
+                onClick: this.setDrawingMode.bind(this)
+            });
+
+            this.viewer.addHandler('animation', this.refresh.bind(this));
+            this.viewer.addHandler('open', this.refresh.bind(this));
+        },
+
+
+        addNewControl: function (options) {
+            var btn = new $.Button(options);
+            this.controls.push(btn);
+            btn.addHandler('click', function () {
+                for (var i = 0; i < this.controls.length; i++) {
+                    if (this.controls[i] === btn) {
+                        this.controls[i].imgDown.style.visibility = 'visible';
+                        this.controls[i].imgRest.style.visibility = 'hidden';
+                    } else {
+                        this.controls[i].imgDown.style.visibility = 'hidden';
+                        this.controls[i].imgRest.style.visibility = 'visible';
+                    }
                 }
-            }
-        }.bind(this));
-        this.viewer.addControl(btn.element, {
-            anchor: OpenSeadragon.ControlAnchor.BOTTOM_LEFT
-        });
-    };
+            }.bind(this));
+            this.viewer.addControl(btn.element, {
+                anchor: $.ControlAnchor.BOTTOM_LEFT
+            });
+        },
 
-    Annotations.prototype.setDrawingMode = function () {
-        this.viewer.setMouseNavEnabled(false);
-        this.mode = Modes.DRAW;
-        this.action = function (e) {
-            var x = e.offsetX / this.el.clientWidth;
-            var y = e.offsetY / this.el.clientHeight;
-            this.addCircle(x, y);
-        }.bind(this);
-        this.svg.addEventListener('click', this.action, false);
-    };
+        setDrawingMode: function () {
+            this.viewer.setMouseNavEnabled(false);
+            this.mode = this.MODES.DRAW;
+            this.action = function (e) {
+                var x = e.offsetX / this.el.clientWidth;
+                var y = e.offsetY / this.el.clientHeight;
+                this.addCircle(x, y);
+            }.bind(this);
+            this.svg.addEventListener('click', this.action, false);
+        },
 
-    Annotations.prototype.setMoveMode = function () {
-        this.viewer.setMouseNavEnabled(true);
-        this.mode = Modes.MOVE;
-        this.svg.removeEventListener('click', this.action, false);
-    };
+        setMoveMode: function () {
+            this.viewer.setMouseNavEnabled(true);
+            this.mode = this.MODES.MOVE;
+            this.svg.removeEventListener('click', this.action, false);
+        },
 
-    Annotations.prototype.add = function (element) {
-        this.svg.appendChild(element);
-        this.refresh();
-    };
+        add: function (element) {
+            this.svg.appendChild(element);
+            this.refresh();
+        },
 
-    Annotations.prototype.addCircle = function (x, y) {
-        this.svg.appendChild(new Circle(x, y));
-        this.refresh();
-    };
+        addCircle: function (x, y) {
+            this.svg.appendChild(new Circle(x, y));
+            this.refresh();
+        },
 
-    Annotations.prototype.refresh = function () {
-        var viewPort = '0 0 ' + this.el.clientWidth + ' ' + this.el.clientHeight;
-        this.svg.setAttribute('viewPort', viewPort);
-    };
-
-    window.OpenSeadragon.Viewer.prototype.initializeAnnotations = function (options) {
-        if (!(this.hasOwnProperty('annotations') && this.annotations instanceof Annotations)) {
-            var options = OpenSeadragon.extend({ viewer: this }, options || {});
-            this.annotations = new Annotations(options);
-            this.addHandler('open', OpenSeadragon.delegate(this.annotations, this.annotations.addOverlays));
+        refresh: function () {
+            var viewPort = '0 0 ' + this.el.clientWidth + ' ' + this.el.clientHeight;
+            this.svg.setAttribute('viewPort', viewPort);
         }
-        return this.annotations;
+
     };
 
     function Overlay(id) {
@@ -140,4 +141,4 @@
         return circle;
     }
 
-})(window);
+})(OpenSeadragon);
