@@ -79,7 +79,7 @@
 
         setDrawingMode: function () {
             this.viewer.setMouseNavEnabled(false);
-            this.mode = this.MODES.DRAW;
+            this.mode = MODES.DRAW;
             this.action = function (e) {
                 var x = e.offsetX / this.el.clientWidth;
                 var y = e.offsetY / this.el.clientHeight;
@@ -90,13 +90,8 @@
 
         setMoveMode: function () {
             this.viewer.setMouseNavEnabled(true);
-            this.mode = this.MODES.MOVE;
+            this.mode = MODES.MOVE;
             this.svg.removeEventListener('click', this.action, false);
-        },
-
-        add: function (element) {
-            this.svg.appendChild(element);
-            this.refresh();
         },
 
         addCircle: function (x, y) {
