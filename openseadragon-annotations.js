@@ -4,136 +4,153 @@
 
     $.Viewer.prototype.initializeAnnotations = function (options) {
         var options = $.extend({ viewer: this }, options);
+        this.addHandler('open', annotations.onOpen.bind(annotations));
         return this.annotations = this.annotations || annotations.initialize(options);
     };
-
-    var MODES = { MOVE: 0, DRAW: 1 };
 
     var annotations = {
 
         initialize: function (options) {
-            $.extend(annotations, options);
-            this.viewer.addHandler('open', $.delegate(this, this.addOverlays));
-        },
-
-        viewer: null,
-
-        imagePath: 'bower_components/OpenSeadragonAnnotations/img/',
-
-        mode: MODES.MOVE,
-
-        action: null,
-
-        controls: [],
-
-        addOverlays: function () {
-            var width = this.viewer.viewport.homeBounds.width;
-            var height = this.viewer.viewport.homeBounds.height;
-            var rect = new $.Rect(0, 0, width, height);
-            this.el = new Overlay('annotations');
-            this.svg = new Svg();
-            this.el.appendChild(this.svg);
-            this.viewer.addOverlay(this.el, rect);
-
-            this.addNewControl({
-                tooltip: 'Move',
-                srcRest: this.imagePath + 'move_rest.png',
-                srcGroup: this.imagePath + 'move_grouphover.png',
-                srcHover: this.imagePath + 'move_hover.png',
-                srcDown: this.imagePath + 'move_pressed.png',
-                onClick: this.setMoveMode.bind(this)
-            });
-
-            this.addNewControl({
-                tooltip: 'Draw',
-                srcRest: this.imagePath + 'draw_rest.png',
-                srcGroup: this.imagePath + 'draw_grouphover.png',
-                srcHover: this.imagePath + 'draw_hover.png',
-                srcDown: this.imagePath + 'draw_pressed.png',
-                onClick: this.setDrawingMode.bind(this)
-            });
-
-            this.viewer.addHandler('animation', this.refresh.bind(this));
-            this.viewer.addHandler('open', this.refresh.bind(this));
-        },
-
-
-        addNewControl: function (options) {
-            var btn = new $.Button(options);
-            this.controls.push(btn);
-            btn.addHandler('click', function () {
-                for (var i = 0; i < this.controls.length; i++) {
-                    if (this.controls[i] === btn) {
-                        this.controls[i].imgDown.style.visibility = 'visible';
-                        this.controls[i].imgRest.style.visibility = 'hidden';
-                    } else {
-                        this.controls[i].imgDown.style.visibility = 'hidden';
-                        this.controls[i].imgRest.style.visibility = 'visible';
-                    }
-                }
+            $.extend(this, {
+                state: move.initialize(),
+                controls: controls.initialize()
+            }, options);
+            this.controls.addHandler('add', function (button) {
+                this.viewer.addControl(button.element, {
+                    anchor: $.ControlAnchor.BOTTOM_LEFT
+                });
             }.bind(this));
-            this.viewer.addControl(btn.element, {
-                anchor: $.ControlAnchor.BOTTOM_LEFT
+            return this;
+        },
+
+        onOpen: function () {
+            this.overlay = overlay.initialize({
+                viewer: this.viewer
             });
-        },
 
-        setDrawingMode: function () {
-            this.viewer.setMouseNavEnabled(false);
-            this.mode = MODES.DRAW;
-            this.action = function (e) {
-                var x = e.offsetX / this.el.clientWidth;
-                var y = e.offsetY / this.el.clientHeight;
-                this.addCircle(x, y);
-            }.bind(this);
-            this.svg.addEventListener('click', this.action, false);
-        },
+            this.viewer.addHandler('animation', function () {
+                var width = this.overlay.el.clientWidth;
+                var height = this.overlay.el.clientHeight;
+                var viewPort = '0 0 ' + width + ' ' + height;
+                var svg = this.overlay.el.querySelector('svg');
+                svg.setAttribute('viewPort', viewPort);
+            }.bind(this));
 
-        setMoveMode: function () {
-            this.viewer.setMouseNavEnabled(true);
-            this.mode = MODES.MOVE;
-            this.svg.removeEventListener('click', this.action, false);
-        },
+            this.controls.add('move').addHandler('click', function () {
+                this.viewer.setMouseNavEnabled(true);
+                this.state = move.initialize();
+            }.bind(this));
 
-        addCircle: function (x, y) {
-            this.svg.appendChild(new Circle(x, y));
-            this.refresh();
-        },
+            this.controls.add('draw').addHandler('click', function () {
+                this.viewer.setMouseNavEnabled(false);
+                this.state = draw.initialize();
+            }.bind(this));
 
-        refresh: function () {
-            var viewPort = '0 0 ' + this.el.clientWidth + ' ' + this.el.clientHeight;
-            this.svg.setAttribute('viewPort', viewPort);
+            this.overlay.el.addEventListener('click', function (e) {
+                this.state.handle(e.offsetX, e.offsetY, this.overlay);
+            }.bind(this), false);
+            return this;
         }
 
     };
 
-    function Overlay(id) {
-        var overlay = document.createElement('div');
-        overlay.id = id;
-        overlay.className = 'overlay';
-        return overlay;
+    var state = {
+
+        initialize: function (options) {
+            $.extend(this, options);
+            return this;
+        },
+
+        handle: function () {
+            return this;
+        }
+
     }
 
-    function Svg() {
-        var svgns = 'http://www.w3.org/2000/svg';
-        var svg = document.createElementNS(svgns, 'svg');
-        svg.setAttribute('version', '1.1');
-        svg.setAttribute('width', '100%');
-        svg.setAttribute('height', '100%');
-        svg.setAttribute('preserveAspectRatio', 'none');
-        return svg;
-    }
+    var move = Object.create(state);
 
-    function Circle(x, y) {
-        var svgns = 'http://www.w3.org/2000/svg';
-        var circle = document.createElementNS(svgns, 'circle');
-        circle.setAttribute('class', 'circle');
-        circle.setAttribute('cx', (x * 100) + '%');
-        circle.setAttribute('cy', (y * 100) + '%');
-        circle.setAttribute('r', '5%');
-        circle.setAttribute('fill', 'none');
-        circle.setAttribute('stroke', 'red');
-        circle.setAttribute('stroke-width', '2');
-        return circle;
-    }
+    var draw = $.extend(Object.create(state), {
+
+        handle: function (offsetX, offsetY, overlay) {
+            var svg = overlay.el.querySelector('svg');
+            var x = offsetX / overlay.el.clientWidth;
+            var y = offsetY / overlay.el.clientHeight;
+            var circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+            circle.setAttribute('class', 'circle');
+            circle.setAttribute('cx', (x * 100) + '%');
+            circle.setAttribute('cy', (y * 100) + '%');
+            circle.setAttribute('r', '5%');
+            circle.setAttribute('fill', 'none');
+            circle.setAttribute('stroke', 'red');
+            circle.setAttribute('stroke-width', '2');
+            svg.appendChild(circle);
+            return this;
+        }
+
+    });
+
+    var controls = $.extend(new $.EventSource(), {
+
+        imagePath: 'bower_components/OpenSeadragonAnnotations/img/',
+
+        list: {},
+
+        initialize: function (options) {
+            $.extend(this, options);
+            this.addHandler('click', this.onClick.bind(this));
+            return this;
+        },
+
+        onClick: function (name) {
+            for (var button in this.list) {
+                if (this.list.hasOwnProperty(button)) {
+                    if (button === name) {
+                        this.list[button].imgDown.style.visibility = 'visible';
+                    } else {
+                        this.list[button].imgDown.style.visibility = 'hidden';
+                    }
+                }
+            }
+            return this;
+        },
+
+        add: function (name) {
+            this.list[name] = new $.Button({
+                tooltip: name[0].toUpperCase() + name.substr(1),
+                srcRest: this.imagePath + name + '_rest.png',
+                srcGroup: this.imagePath + name + '_grouphover.png',
+                srcHover: this.imagePath + name + '_hover.png',
+                srcDown: this.imagePath + name + '_pressed.png',
+                onClick: this.raiseEvent.bind(this, 'click', name)
+            });
+            this.raiseEvent('add', this.list[name]);
+            return this.list[name];
+        },
+
+        get: function (name) {
+            return this.list[name];
+        }
+
+    });
+
+    var overlay = {
+
+        initialize: function (options) {
+            $.extend(this, options);
+            this.el = document.createElement('div');
+            this.el.className = 'overlay';
+            var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+            svg.setAttribute('version', '1.1');
+            svg.setAttribute('width', '100%');
+            svg.setAttribute('height', '100%');
+            svg.setAttribute('preserveAspectRatio', 'none');
+            this.el.appendChild(svg);
+            var width = this.viewer.viewport.homeBounds.width;
+            var height = this.viewer.viewport.homeBounds.height;
+            this.viewer.addOverlay(this.el, new $.Rect(0, 0, width, height));
+            return this;
+        }
+
+    };
 
 })(OpenSeadragon);
