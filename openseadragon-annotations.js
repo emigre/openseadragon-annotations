@@ -36,7 +36,7 @@
                 svg.setAttribute('viewPort', viewPort);
             }.bind(this));
 
-            this.controls.add('move').addHandler('click', function () {
+            this.controls.add('move', true).addHandler('click', function () {
                 this.viewer.setMouseNavEnabled(true);
                 this.state = move.initialize();
             }.bind(this));
@@ -47,12 +47,11 @@
             }.bind(this));
 
             this.overlay.el.addEventListener('mousedown', function (e) {
-                 e.stopPropagation();
-                this.state.handleMouseDown(e.offsetX, e.offsetY, this.overlay);
+                this.state.handleMouseDown(e, this.overlay);
             }.bind(this), false);
 
             this.overlay.el.addEventListener('mouseup', function (e) {
-                this.state.handleMouseUp(e.offsetX, e.offsetY, this.overlay);
+                this.state.handleMouseUp(e, this.overlay);
             }.bind(this), false);
 
             return this;
@@ -81,23 +80,37 @@
 
     var draw = $.extend(Object.create(state), {
 
-        handleMouseDown: function (offsetX, offsetY, overlay) {
-            var svg = overlay.el.querySelector('svg');
-            var x = offsetX / overlay.el.clientWidth;
-            var y = offsetY / overlay.el.clientHeight;
-            var circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-            circle.setAttribute('class', 'circle');
-            circle.setAttribute('cx', (x * 100) + '%');
-            circle.setAttribute('cy', (y * 100) + '%');
-            circle.setAttribute('r', '5%');
-            circle.setAttribute('fill', 'none');
-            circle.setAttribute('stroke', 'red');
-            circle.setAttribute('stroke-width', '2');
-            svg.appendChild(circle);
+        handleMouseDown: function (e, overlay) {
+            var x = e.offsetX;
+            var y = e.offsetY;
+
+            this._mouseTracker = function (e) {
+                x = e.offsetX;
+                y = e.offsetY;
+            };
+
+            overlay.el.addEventListener('mousemove', this._mouseTracker, false);
+
+            this._interval = window.setInterval(function () {
+                var svg = overlay.el.querySelector('svg');
+                var circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                circle.setAttribute('class', 'circle');
+                circle.setAttribute('cx', (x / overlay.el.clientWidth * 100) + '%');
+                circle.setAttribute('cy', (y / overlay.el.clientHeight * 100) + '%');
+                circle.setAttribute('r', '1%');
+                circle.setAttribute('fill', 'none');
+                circle.setAttribute('stroke', 'red');
+                circle.setAttribute('stroke-width', '2');
+                svg.appendChild(circle);
+            }.bind(this), 100);
+
+            e.stopPropagation();
             return this;
         },
 
-        handleMouseUp: function (offsetX, offsetY, overlay) {
+        handleMouseUp: function (e, overlay) {
+            overlay.el.removeEventListener('mousemove', this._mouseTracker);
+            clearInterval(this._interval);
             return this;
         }
 
@@ -128,7 +141,7 @@
             return this;
         },
 
-        add: function (name) {
+        add: function (name, active) {
             this.list[name] = new $.Button({
                 tooltip: name[0].toUpperCase() + name.substr(1),
                 srcRest: this.imagePath + name + '_rest.png',
@@ -137,6 +150,9 @@
                 srcDown: this.imagePath + name + '_pressed.png',
                 onClick: this.raiseEvent.bind(this, 'click', name)
             });
+            if (active) {
+                this.list[name].imgDown.style.visibility = 'visible';
+            }
             this.raiseEvent('add', this.list[name]);
             return this.list[name];
         },
