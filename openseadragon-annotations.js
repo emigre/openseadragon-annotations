@@ -83,6 +83,14 @@
         handleMouseDown: function (e, overlay) {
             var x = e.offsetX;
             var y = e.offsetY;
+            var svg = overlay.el.querySelector('svg');
+            var path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            path.setAttribute('fill', 'none');
+            path.setAttribute('stroke', 'red');
+            path.setAttribute('stroke-width', '0.5');
+            path.setAttribute('d', 'M' + x / overlay.el.clientWidth * 100 +
+                ' ' + y / overlay.el.clientHeight * 100);
+            svg.appendChild(path);
 
             this._mouseTracker = function (e) {
                 x = e.offsetX;
@@ -92,17 +100,10 @@
             overlay.el.addEventListener('mousemove', this._mouseTracker, false);
 
             this._interval = window.setInterval(function () {
-                var svg = overlay.el.querySelector('svg');
-                var circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-                circle.setAttribute('class', 'circle');
-                circle.setAttribute('cx', (x / overlay.el.clientWidth * 100) + '%');
-                circle.setAttribute('cy', (y / overlay.el.clientHeight * 100) + '%');
-                circle.setAttribute('r', '1%');
-                circle.setAttribute('fill', 'none');
-                circle.setAttribute('stroke', 'red');
-                circle.setAttribute('stroke-width', '2');
-                svg.appendChild(circle);
-            }.bind(this), 100);
+                path.setAttribute('d', path.getAttribute('d') +
+                    ' L' + x / overlay.el.clientWidth * 100 +
+                    ' ' + y / overlay.el.clientHeight * 100);
+            }.bind(this), 25);
 
             e.stopPropagation();
             return this;
@@ -174,6 +175,7 @@
             svg.setAttribute('width', '100%');
             svg.setAttribute('height', '100%');
             svg.setAttribute('preserveAspectRatio', 'none');
+            svg.setAttribute('viewBox', '0 0 100 100')
             svg.style.cursor = 'default';
             this.el.appendChild(svg);
             var width = this.viewer.viewport.homeBounds.width;
