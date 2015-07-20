@@ -1,3 +1,7 @@
+var scripts = document.getElementsByTagName("script"),
+    src = scripts[scripts.length-1].src;
+console.log(src);
+
 (function ($) {
 
     if (!$) { throw new Error('OpenSeadragon Annotations requires OpenSeadragon'); }
@@ -13,7 +17,9 @@
         initialize: function (options) {
             $.extend(this, {
                 state: move.initialize(),
-                controls: controls.initialize()
+                controls: controls.initialize({
+                    imagePath: options.imagePath || ''
+                })
             }, options);
             this.controls.addHandler('add', function (button) {
                 this.viewer.addControl(button.element, {
@@ -119,12 +125,9 @@
 
     var controls = $.extend(new $.EventSource(), {
 
-        imagePath: 'bower_components/OpenSeadragonAnnotations/img/',
-
-        list: {},
-
         initialize: function (options) {
             $.extend(this, options);
+            this.list = {};
             this.addHandler('click', this.onClick.bind(this));
             return this;
         },
