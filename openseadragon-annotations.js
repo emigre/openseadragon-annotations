@@ -46,9 +46,15 @@
                 this.state = draw.initialize();
             }.bind(this));
 
-            this.overlay.el.addEventListener('click', function (e) {
-                this.state.handle(e.offsetX, e.offsetY, this.overlay);
+            this.overlay.el.addEventListener('mousedown', function (e) {
+                 e.stopPropagation();
+                this.state.handleMouseDown(e.offsetX, e.offsetY, this.overlay);
             }.bind(this), false);
+
+            this.overlay.el.addEventListener('mouseup', function (e) {
+                this.state.handleMouseUp(e.offsetX, e.offsetY, this.overlay);
+            }.bind(this), false);
+
             return this;
         }
 
@@ -61,7 +67,11 @@
             return this;
         },
 
-        handle: function () {
+        handleMouseDown: function () {
+            return this;
+        },
+
+        handleMouseUp: function () {
             return this;
         }
 
@@ -71,7 +81,7 @@
 
     var draw = $.extend(Object.create(state), {
 
-        handle: function (offsetX, offsetY, overlay) {
+        handleMouseDown: function (offsetX, offsetY, overlay) {
             var svg = overlay.el.querySelector('svg');
             var x = offsetX / overlay.el.clientWidth;
             var y = offsetY / overlay.el.clientHeight;
@@ -84,6 +94,10 @@
             circle.setAttribute('stroke', 'red');
             circle.setAttribute('stroke-width', '2');
             svg.appendChild(circle);
+            return this;
+        },
+
+        handleMouseUp: function (offsetX, offsetY, overlay) {
             return this;
         }
 
