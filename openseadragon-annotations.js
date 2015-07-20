@@ -174,6 +174,7 @@
             svg.setAttribute('width', '100%');
             svg.setAttribute('height', '100%');
             svg.setAttribute('preserveAspectRatio', 'none');
+            svg.style.cursor = 'default';
             this.el.appendChild(svg);
             var width = this.viewer.viewport.homeBounds.width;
             var height = this.viewer.viewport.homeBounds.height;
