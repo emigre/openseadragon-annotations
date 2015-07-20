@@ -1,7 +1,3 @@
-var scripts = document.getElementsByTagName("script"),
-    src = scripts[scripts.length-1].src;
-console.log(src);
-
 (function ($) {
 
     if (!$) { throw new Error('OpenSeadragon Annotations requires OpenSeadragon'); }
