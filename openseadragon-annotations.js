@@ -5,7 +5,8 @@
     $.Viewer.prototype.initializeAnnotations = function (options) {
         var options = $.extend({ viewer: this }, options);
         this.addHandler('open', annotations.onOpen.bind(annotations));
-        return this.annotations = this.annotations || annotations.initialize(options);
+        this.annotations = this.annotations || annotations.initialize(options);
+        return this;
     };
 
     var annotations = {
