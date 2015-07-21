@@ -12,7 +12,7 @@ bower install openseadragon-annotations --save
 Then create an OpenSeadragon viewer and run `initializeAnnotations()`. You need to pass the path to the image folder that contains the buttons as an argument.
 
 ```javascript
-OpenSeadragon({
+var viewer = OpenSeadragon({
     id: 'viewer',
     showNavigator:  true,
     tileSources: 'http://openseadragon.github.io/example-images/highsmith/highsmith.dzi'
