@@ -1,3 +1,5 @@
+'use strict';
+
 (function ($) {
 
     if (!$) { throw new Error('OpenSeadragon Annotations requires OpenSeadragon'); }
