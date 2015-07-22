@@ -1,9 +1,19 @@
 {
   "name": "openseadragon-annotations",
+  "version": "0.0.1",
+  "authors": [
+    "Gaspar Rey <info@gasparrey.com> (http://www.gasparrey.com/)"
+  ],
+  "license": "BSD-2-Clause",
   "description": "OpenSeadragon annotations plugin",
   "main": "openseadragon-annotations.js",
   "dependencies": {
     "openseadragon": "~2.0.0"
   },
-  "ignore": []
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test"
+  ]
 }
