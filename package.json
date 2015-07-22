@@ -1,0 +1,41 @@
+{
+  "name": "openseadragon-annotations",
+  "version": "0.0.1",
+  "description": "OpenSeadragon annotations plugin",
+  "main": "openseadragon-annotations.js",
+  "scripts": {
+    "test": "karma start --single-run"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Emigre/openseadragon-annotations.git"
+  },
+  "author": "Gaspar Rey <info@gasparrey.com> (http://www.gasparrey.com/)",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/Emigre/openseadragon-annotations/issues"
+  },
+  "keywords": [
+    "deep",
+    "zoom",
+    "images",
+    "dzi",
+    "annotations",
+    "openseadragon"
+  ],
+  "devDependencies": {
+    "chai": "^3.2.0",
+    "chai-as-promised": "^5.1.0",
+    "karma": "^0.13.3",
+    "karma-chai": "^0.1.0",
+    "karma-chai-as-promised": "^0.1.2",
+    "karma-mocha": "^0.2.0",
+    "karma-mocha-reporter": "^1.0.2",
+    "karma-phantomjs-launcher": "^0.2.0",
+    "karma-sinon": "^1.0.4",
+    "mocha": "^2.2.5",
+    "phantomjs": "^1.9.17",
+    "sinon": "^1.15.4"
+  },
+  "homepage": "https://github.com/Emigre/openseadragon-annotations"
+}
