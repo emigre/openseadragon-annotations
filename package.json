@@ -4,7 +4,9 @@
   "description": "OpenSeadragon annotations plugin",
   "main": "openseadragon-annotations.js",
   "scripts": {
-    "test": "karma start --single-run"
+    "start": "npm run build && karma start",
+    "test": "npm run build && karma start --single-run",
+    "build": "rimraf dist && broccoli build dist"
   },
   "repository": {
     "type": "git",
@@ -24,6 +26,12 @@
     "openseadragon"
   ],
   "devDependencies": {
+    "broccoli": "^0.16.4",
+    "broccoli-babel-transpiler": "^5.3.1",
+    "broccoli-browserify": "^0.1.0",
+    "broccoli-merge-trees": "^0.2.2",
+    "broccoli-static-compiler": "^0.2.1",
+    "browserify": "^11.0.0",
     "chai": "^3.2.0",
     "chai-as-promised": "^5.1.0",
     "karma": "^0.13.3",
@@ -35,6 +43,7 @@
     "karma-sinon": "^1.0.4",
     "mocha": "^2.2.5",
     "phantomjs": "^1.9.17",
+    "rimraf": "^2.4.2",
     "sinon": "^1.15.4"
   },
   "homepage": "https://github.com/Emigre/openseadragon-annotations"

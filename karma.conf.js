@@ -8,7 +8,7 @@ module.exports = function (config) {
 
         files: [
             'bower_components/openseadragon/built-openseadragon/openseadragon/openseadragon.js',
-            'src/openseadragon-annotations.js',
+            'dist/openseadragon-annotations.js',
             'test/**/*.js',
             'karma.main.js'
         ],
