@@ -1,13 +1,12 @@
-'use strict';
+import annotations from './annotations';
 
 (function ($) {
 
     if (!$) { throw new Error('OpenSeadragon Annotations requires OpenSeadragon'); }
 
     $.Viewer.prototype.initializeAnnotations = function (options) {
-        var options = $.extend({ viewer: this }, options);
         this.addHandler('open', annotations.onOpen.bind(annotations));
-        this.annotations = this.annotations || annotations.initialize(options);
+        this.annotations = this.annotations || annotations.initialize($.extend({ viewer: this }, options));
         return this;
     };
 
@@ -79,7 +78,7 @@
             return this;
         }
 
-    }
+    };
 
     var move = Object.create(state);
 
