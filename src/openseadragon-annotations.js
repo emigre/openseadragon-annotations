@@ -1,5 +1,3 @@
-import annotations from './annotations';
-
 (function ($) {
 
     if (!$) { throw new Error('OpenSeadragon Annotations requires OpenSeadragon'); }

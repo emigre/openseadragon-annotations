@@ -4,14 +4,24 @@ module.exports = function (config) {
 
     config.set({
 
-        frameworks: ['mocha', 'chai-as-promised', 'chai', 'sinon'],
+        frameworks: ['browserify', 'mocha', 'chai-as-promised', 'chai', 'sinon'],
 
         files: [
             'bower_components/openseadragon/built-openseadragon/openseadragon/openseadragon.js',
-            'dist/openseadragon-annotations.js',
+            'src/**/*.js',
             'test/**/*.js',
             'karma.main.js'
         ],
+
+        preprocessors: {
+            'src/**/*.js': ['browserify'],
+            'test/**/*.js': ['browserify']
+        },
+
+        browserify: {
+            debug: true,
+            transform: [ 'babelify' ]
+        },
 
         basePath: '.',
 
