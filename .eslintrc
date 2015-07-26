@@ -32,7 +32,7 @@
     "no-use-before-define": 0,
     "quotes": [0],
     "semi": 1,
-    "space-after-function-name": [1, "never"],
+    "space-before-function-paren": [1, {"anonymous": "always", "named": "never"}],
     "space-in-brackets": 0,
     "space-in-parens": [1, "never"],
     "strict": 0

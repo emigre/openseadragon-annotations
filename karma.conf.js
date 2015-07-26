@@ -8,9 +8,8 @@ module.exports = function (config) {
 
         files: [
             'bower_components/openseadragon/built-openseadragon/openseadragon/openseadragon.js',
-            'src/**/*.js',
-            'test/**/*.js',
-            'karma.main.js'
+            { pattern: 'src/**/*.js', watched: false, included: false, served: true},
+            { pattern: 'test/**/*.js', watched: false, included: true, served: true}
         ],
 
         preprocessors: {
@@ -20,12 +19,12 @@ module.exports = function (config) {
 
         browserify: {
             debug: true,
-            transform: [ 'babelify' ]
+            transform: ['babelify']
         },
 
         basePath: '.',
 
-        reporters: ['mocha'],
+        reporters: ['mocha', 'clear-screen'],
 
         autoWatch: true,
 

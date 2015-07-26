@@ -6,7 +6,10 @@
   ],
   "license": "BSD-2-Clause",
   "description": "OpenSeadragon annotations plugin",
-  "main": "src/openseadragon-annotations.js",
+  "main": [
+    "src/openseadragon-annotations.js",
+  ],
+  "moduleType": "es6",
   "dependencies": {
     "openseadragon": "~2.0.0"
   },
