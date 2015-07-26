@@ -25,20 +25,22 @@ gulp.task('test', ['lint'], function (cb) {
 
 gulp.task('build', ['clean', 'test'], function () {
     var img = gulp.src('img/**/*.*').pipe(gulp.dest('dist/img'));
+    var cloneSink = $.clone.sink();
     var js = $.browserify({
             entries: ['./src/openseadragon-annotations.js'],
-            debug: true
         })
         .transform($.babelify)
         .bundle()
         .pipe($.vinylSourceStream('openseadragon-annotations.js'))
         .pipe($.vinylBuffer())
-        .pipe($.sourcemaps.init({ loadMaps: true }))
-            .pipe($.uglify())
-            .pipe($.rename({
-                extname: '.min.js'
-            }))
-        .pipe($.sourcemaps.write('/'))
+        .pipe(cloneSink)
+            .pipe($.sourcemaps.init({ loadMaps: true }))
+                .pipe($.uglify())
+                .pipe($.rename({
+                    extname: '.min.js'
+                }))
+            .pipe($.sourcemaps.write('/'))
+        .pipe(cloneSink.tap())
         .pipe(gulp.dest('dist'));
 });
 

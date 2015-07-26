@@ -32,6 +32,7 @@
     "chai-as-promised": "^5.1.0",
     "del": "^1.2.0",
     "gulp": "^3.9.0",
+    "gulp-clone": "^1.0.0",
     "gulp-eslint": "^0.15.0",
     "gulp-load-plugins": "^0.10.0",
     "gulp-rename": "^1.2.2",
