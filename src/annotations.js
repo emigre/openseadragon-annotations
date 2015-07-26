@@ -52,6 +52,14 @@ export default {
         }.bind(this), false);
 
         return this;
+    },
+
+    import: function () {
+        // TODO
+    },
+
+    export: function () {
+        // TODO
     }
 
 };
