@@ -24,7 +24,7 @@ module.exports = function (config) {
 
         basePath: '.',
 
-        reporters: ['mocha', 'clear-screen'],
+        reporters: ['dots'],
 
         autoWatch: true,
 
@@ -36,7 +36,7 @@ module.exports = function (config) {
 
         logLevel: config.LOG_INFO,
 
-        singleRun: false
+        singleRun: true
 
     });
 

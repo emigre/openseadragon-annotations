@@ -4,7 +4,7 @@
   "description": "OpenSeadragon annotations plugin",
   "main": "openseadragon-annotations.js",
   "scripts": {
-    "start": "karma start",
+    "start": "gulp serve",
     "test": "gulp test",
     "build": "gulp build"
   },
@@ -42,14 +42,12 @@
     "karma-browserify": "^4.2.1",
     "karma-chai": "^0.1.0",
     "karma-chai-as-promised": "^0.1.2",
-    "karma-clear-screen-reporter": "0.0.1",
-    "karma-eslint": "^2.0.1",
     "karma-mocha": "^0.2.0",
-    "karma-mocha-reporter": "^1.0.2",
     "karma-phantomjs-launcher": "^0.2.0",
     "karma-sinon": "^1.0.4",
     "mocha": "^2.2.5",
     "phantomjs": "^1.9.17",
+    "run-sequence": "^1.1.2",
     "sinon": "^1.15.4",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0"
