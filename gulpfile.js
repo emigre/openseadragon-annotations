@@ -2,7 +2,9 @@
 
 var gulp = require('gulp');
 var $ = require('gulp-load-plugins')({ pattern: ['gulp-*', 'vinyl-*',
-    'del', 'browserify', 'babelify', 'karma', 'run-sequence' ] });
+    'del', 'lazypipe', 'browserify', 'babelify', 'karma', 'run-sequence' ] });
+
+var serving = false;
 
 gulp.task('clean', function (cb) {
     $.del(['dist/'], cb);
@@ -21,16 +23,20 @@ gulp.task('test', function (cb) {
     }, cb).start();
 });
 
+var minify = $.lazypipe()
+    .pipe($.sourcemaps.init, { loadMaps: true })
+    .pipe($.uglify)
+    .pipe($.rename, { extname: '.min.js' })
+    .pipe($.sourcemaps.write, '/');
+
 gulp.task('scripts', ['clean'], function () {
     return $.browserify({ entries: ['./src/openseadragon-annotations.js'] })
         .transform($.babelify)
         .bundle()
         .pipe($.vinylSourceStream('openseadragon-annotations.js'))
         .pipe($.vinylBuffer())
-        .pipe($.sourcemaps.init({ loadMaps: true }))
-        .pipe($.uglify())
-        .pipe($.rename({ extname: '.min.js' }))
-        .pipe($.sourcemaps.write('/'))
+        .pipe(gulp.dest('dist'))
+        .pipe($.if(!serving, minify()))
         .pipe(gulp.dest('dist'));
 });
 
@@ -41,12 +47,11 @@ gulp.task('images', ['clean'], function () {
 
 gulp.task('build', ['clean', 'lint', 'test', 'scripts', 'images']);
 
-gulp.task('watch', function() {
-    gulp.watch('src/**/*.js', ['clean', 'test', 'scripts' ]);
-});
-
 gulp.task('serve', function () {
-    $.runSequence(['clean', 'test', 'scripts', 'images'], 'watch');
+    serving = true;
+    $.runSequence(['clean', 'test', 'scripts', 'images'], function () {
+        gulp.watch('src/**/*.js', ['clean', 'test', 'scripts']);
+    });
 });
 
 gulp.task('default', ['serve']);
