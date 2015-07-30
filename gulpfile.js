@@ -50,7 +50,7 @@ gulp.task('build', ['clean', 'lint', 'test', 'scripts', 'images']);
 gulp.task('serve', function () {
     serving = true;
     $.runSequence(['clean', 'test', 'scripts', 'images'], function () {
-        gulp.watch('src/**/*.js', ['clean', 'test', 'scripts']);
+        gulp.watch('{src,test}/**/*.js', ['clean', 'test', 'scripts']);
     });
 });
 
