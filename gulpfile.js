@@ -2,9 +2,9 @@
 
 var gulp = require('gulp');
 var $ = require('gulp-load-plugins')({ pattern: ['gulp-*', 'vinyl-*',
-    'del', 'lazypipe', 'browserify', 'babelify', 'karma', 'run-sequence' ] });
+    'del', 'lazypipe', 'browserify', 'babelify', 'karma'] });
 
-var serving = false;
+var watch = false;
 
 gulp.task('clean', function (cb) {
     $.del(['dist/'], cb);
@@ -20,6 +20,8 @@ gulp.task('lint', function () {
 gulp.task('test', function (cb) {
     new $.karma.Server({
         configFile: __dirname + '/karma.conf.js',
+        reporters: ['dots'],
+        singleRun: true
     }, cb).start();
 });
 
@@ -36,7 +38,7 @@ gulp.task('scripts', ['clean'], function () {
         .pipe($.vinylSourceStream('openseadragon-annotations.js'))
         .pipe($.vinylBuffer())
         .pipe(gulp.dest('dist'))
-        .pipe($.if(!serving, minify()))
+        .pipe($.if(!watch, minify()))
         .pipe(gulp.dest('dist'));
 });
 
@@ -45,13 +47,11 @@ gulp.task('images', ['clean'], function () {
         .pipe(gulp.dest('dist/img'));
 });
 
-gulp.task('build', ['clean', 'lint', 'test', 'scripts', 'images']);
+gulp.task('build', ['clean', 'scripts', 'images']);
 
-gulp.task('serve', function () {
-    serving = true;
-    $.runSequence(['clean', 'test', 'scripts', 'images'], function () {
-        gulp.watch('{src,test}/**/*.js', ['clean', 'test', 'scripts']);
-    });
+gulp.task('watch', ['build'], function () {
+    watch = true;
+    gulp.watch('src/**/*.js', ['clean', 'scripts']);
 });
 
-gulp.task('default', ['serve']);
+gulp.task('default', ['watch']);

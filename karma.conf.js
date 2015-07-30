@@ -36,7 +36,7 @@ module.exports = function (config) {
 
         logLevel: config.LOG_INFO,
 
-        singleRun: true
+        singleRun: false
 
     });
 

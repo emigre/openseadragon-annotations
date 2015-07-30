@@ -4,7 +4,7 @@
   "description": "OpenSeadragon annotations plugin",
   "main": "openseadragon-annotations.js",
   "scripts": {
-    "start": "gulp serve",
+    "start": "gulp watch",
     "test": "gulp test",
     "build": "gulp build"
   },
@@ -50,7 +50,6 @@
     "lazypipe": "^1.0.1",
     "mocha": "^2.2.5",
     "phantomjs": "^1.9.17",
-    "run-sequence": "^1.1.2",
     "sinon": "^1.15.4",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0"
