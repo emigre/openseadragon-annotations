@@ -24,7 +24,7 @@ module.exports = function (config) {
 
         basePath: '.',
 
-        reporters: ['dots'],
+        reporters: ['mocha'],
 
         autoWatch: true,
 
