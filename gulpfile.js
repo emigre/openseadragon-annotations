@@ -47,11 +47,11 @@ gulp.task('images', ['clean'], function () {
         .pipe(gulp.dest('dist/img'));
 });
 
-gulp.task('build', ['clean', 'scripts', 'images']);
+gulp.task('build', ['lint', 'clean', 'scripts', 'images']);
 
 gulp.task('watch', ['build'], function () {
     watch = true;
-    gulp.watch('src/**/*.js', ['clean', 'scripts']);
+    gulp.watch('src/**/*.js', ['lint', 'clean', 'scripts']);
 });
 
 gulp.task('default', ['watch']);
