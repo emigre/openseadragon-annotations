@@ -4,38 +4,50 @@ module.exports = function (config) {
 
     config.set({
 
-        frameworks: ['browserify', 'mocha', 'chai-as-promised', 'chai', 'sinon'],
+        frameworks: ['mocha', 'chai-as-promised', 'chai', 'sinon'],
 
         files: [
             'bower_components/openseadragon/built-openseadragon/openseadragon/openseadragon.js',
-            { pattern: 'src/**/*.js', watched: false, included: false, served: true},
-            { pattern: 'test/**/*.js', watched: false, included: true, served: true}
+            'test/**/*.js'
         ],
 
         preprocessors: {
-            'test/**/*.js': ['browserify']
+            'test/**/*.js': ['webpack', 'sourcemap']
         },
 
-        browserify: {
-            debug: true,
-            transform: ['babelify']
+        webpack: {
+            module: {
+                loaders: [
+                    {
+                        test: /\.js/,
+                        exclude: /node_modules/,
+                        loader: 'babel-loader'
+                    }
+                ]
+            },
+            devtool: 'inline-source-map',
+            watch: true
+        },
+
+        webpackMiddleware: {
+            noInfo: true
         },
 
         basePath: '.',
 
         reporters: ['mocha'],
 
+        browsers: ['PhantomJS'],
+
         autoWatch: true,
 
-        browsers: ['PhantomJS'],
+        singleRun: false,
 
         port: 9876,
 
         colors: true,
 
-        logLevel: config.LOG_INFO,
-
-        singleRun: false
+        logLevel: config.LOG_INFO
 
     });
 
