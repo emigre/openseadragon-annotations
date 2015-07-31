@@ -1,8 +1,9 @@
+import annotations from '../src/annotations';
+
 describe('A test', function() {
 
     it('will test something', function () {
-        expect(true).to.equal(true);
+        expect(annotations).to.not.be.an('object');
     });
 
 });
-

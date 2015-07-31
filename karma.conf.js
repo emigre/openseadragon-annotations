@@ -13,7 +13,6 @@ module.exports = function (config) {
         ],
 
         preprocessors: {
-            'src/**/*.js': ['browserify'],
             'test/**/*.js': ['browserify']
         },
 
