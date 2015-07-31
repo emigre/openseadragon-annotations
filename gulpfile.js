@@ -1,8 +1,7 @@
 'use strict';
 
 var gulp = require('gulp');
-var $ = require('gulp-load-plugins')({ pattern: ['gulp-*', 'vinyl-*',
-    'del', 'lazypipe', 'browserify', 'babelify', 'karma'] });
+var $ = require('gulp-load-plugins')({ pattern: ['gulp-*', 'vinyl-*', 'del', 'lazypipe', 'browserify', 'babelify'] });
 
 var watch = false;
 
