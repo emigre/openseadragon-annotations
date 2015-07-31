@@ -5,7 +5,7 @@
   "main": "openseadragon-annotations.js",
   "scripts": {
     "start": "gulp watch",
-    "test": "gulp test",
+    "test": "karma start --single-run",
     "build": "gulp build"
   },
   "repository": {
