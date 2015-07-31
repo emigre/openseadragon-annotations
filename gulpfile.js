@@ -17,14 +17,6 @@ gulp.task('lint', function () {
         .pipe($.eslint.failAfterError());
 });
 
-gulp.task('test', function (cb) {
-    new $.karma.Server({
-        configFile: __dirname + '/karma.conf.js',
-        reporters: ['dots'],
-        singleRun: true
-    }, cb).start();
-});
-
 var minify = $.lazypipe()
     .pipe($.sourcemaps.init, { loadMaps: true })
     .pipe($.uglify)
