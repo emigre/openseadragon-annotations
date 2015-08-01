@@ -1,3 +1,4 @@
+import OpenSeadragon from "OpenSeadragon";
 import state from './state';
 
 var draw = OpenSeadragon.extend(Object.create(state), {

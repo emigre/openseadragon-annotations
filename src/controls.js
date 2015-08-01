@@ -1,3 +1,5 @@
+import OpenSeadragon from "OpenSeadragon";
+
 export default OpenSeadragon.extend(new OpenSeadragon.EventSource(), {
 
     initialize: function (options) {

@@ -1,3 +1,4 @@
+import OpenSeadragon from "OpenSeadragon";
 import draw from './draw';
 import move from './move';
 import controls from './controls';
