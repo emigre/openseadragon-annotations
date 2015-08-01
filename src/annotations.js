@@ -1,6 +1,6 @@
 import OpenSeadragon from "OpenSeadragon";
+import state from './state';
 import draw from './draw';
-import move from './move';
 import controls from './controls';
 import overlay from './overlay';
 
@@ -8,7 +8,7 @@ export default {
 
     initialize: function (options) {
         OpenSeadragon.extend(this, {
-            state: move.initialize(),
+            state: state.initialize(),
             controls: controls.initialize({
                 imagePath: options.imagePath || ''
             }),
@@ -24,7 +24,7 @@ export default {
         }.bind(this));
         this.controls.add('move', true).addHandler('click', function () {
             this.viewer.setMouseNavEnabled(true);
-            this.state = move.initialize();
+            this.state = state.initialize();
         }.bind(this));
         this.controls.add('draw').addHandler('click', function () {
             this.viewer.setMouseNavEnabled(false);
