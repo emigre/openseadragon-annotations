@@ -11,13 +11,6 @@ module.exports = {
     module: {
         loaders: [
             {
-                test: /\.(png|jpg|gif)$/,
-                loaders: [
-                    'file?hash=sha512&digest=hex&name=img/[name].[ext]',
-                    'image-webpack?bypassOnDebug&optimizationLevel=7&interlaced=false'
-                ]
-            },
-            {
                 test: /\.js$/,
                 loader: 'babel-loader'
             }
