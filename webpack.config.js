@@ -3,8 +3,7 @@ module.exports = {
     output: {
         path: './dist',
         filename: "openseadragon-annotations.js",
-        libraryTarget: "umd",
-        library: "OpenSeadragon.annotations"
+        libraryTarget: "umd"
     },
     externals: {
         "OpenSeadragon": "OpenSeadragon"
