@@ -2,7 +2,7 @@
   "name": "openseadragon-annotations",
   "version": "0.0.1",
   "description": "OpenSeadragon annotations plugin",
-  "main": "openseadragon-annotations.js",
+  "main": "src/openseadragon-annotations.js",
   "scripts": {
     "start": "rimraf dist && webpack -d --watch",
     "test": "karma start --single-run",
