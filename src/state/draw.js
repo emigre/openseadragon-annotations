@@ -1,7 +1,7 @@
 import OpenSeadragon from "OpenSeadragon";
 import state from './state';
 
-var draw = OpenSeadragon.extend(Object.create(state), {
+export default OpenSeadragon.extend(Object.create(state), {
 
     initialize: function (options) {
         OpenSeadragon.extend(this, options);
@@ -46,5 +46,3 @@ var draw = OpenSeadragon.extend(Object.create(state), {
     }
 
 });
-
-export default draw;

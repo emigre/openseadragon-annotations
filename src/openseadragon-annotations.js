@@ -1,5 +1,5 @@
 import OpenSeadragon from "OpenSeadragon";
-import annotations from './annotations';
+import annotations from './annotations/annotations';
 
 if (!OpenSeadragon) { throw new Error('OpenSeadragon Annotations requires OpenSeadragon'); }
 
