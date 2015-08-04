@@ -1,8 +1,8 @@
-import OpenSeadragon from "OpenSeadragon";
-import state from './state/state';
-import draw from './state/draw';
-import controls from './controls/controls';
-import overlay from './overlay/overlay';
+import OpenSeadragon from 'OpenSeadragon';
+import state from '../state/state';
+import draw from '../state/draw';
+import controls from '../controls/controls';
+import overlay from '../overlay/overlay';
 
 export default {
 

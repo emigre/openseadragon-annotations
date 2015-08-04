@@ -1,4 +1,4 @@
-import OpenSeadragon from "OpenSeadragon";
+import OpenSeadragon from 'OpenSeadragon';
 
 export default OpenSeadragon.extend(new OpenSeadragon.EventSource(), {
 

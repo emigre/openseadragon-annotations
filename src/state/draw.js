@@ -1,4 +1,4 @@
-import OpenSeadragon from "OpenSeadragon";
+import OpenSeadragon from 'OpenSeadragon';
 import state from './state';
 
 export default OpenSeadragon.extend(Object.create(state), {
