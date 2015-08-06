@@ -8,7 +8,7 @@ export default {
         OpenSeadragon.extend(this, options);
         this.state = Object.create(state).initialize();
         this.controls = Object.create(controls).initialize({ imagePath: this.imagePath || '' })
-        this.overlay = Object.create(overlay).initialize({ viewer: this.viewer });
+        this.overlay = Object.create(overlay).initialize();
         this.controls.add('move', true).add('draw');
         this.controls.get('move').addHandler('click', this.setState.bind(this, state, true));
         this.controls.get('draw').addHandler('click', this.setState.bind(this, draw, true));

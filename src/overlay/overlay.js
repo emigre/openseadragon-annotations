@@ -4,8 +4,7 @@ import inject from '../context/inject';
 export default {
 
     @inject('annotations')
-    initialize: function (annotations, options) {
-        OpenSeadragon.extend(this, options);
+    initialize: function (annotations) {
         this.el = document.createElement('div');
         this.el.className = 'overlay';
         var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
@@ -16,9 +15,9 @@ export default {
         svg.setAttribute('viewBox', '0 0 100 100');
         svg.style.cursor = 'default';
         this.el.appendChild(svg);
-        var width = this.viewer.viewport.homeBounds.width;
-        var height = this.viewer.viewport.homeBounds.height;
-        this.viewer.addOverlay(this.el, new OpenSeadragon.Rect(0, 0, width, height));
+        var width = annotations.viewer.viewport.homeBounds.width;
+        var height = annotations.viewer.viewport.homeBounds.height;
+        annotations.viewer.addOverlay(this.el, new OpenSeadragon.Rect(0, 0, width, height));
         this.el.addEventListener('mousedown', annotations.onMouseDown.bind(annotations), false);
         this.el.addEventListener('mouseup', annotations.onMouseUp.bind(annotations), false);
         return this;
