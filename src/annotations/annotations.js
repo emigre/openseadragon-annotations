@@ -9,35 +9,30 @@ export default {
         this.state = Object.create(state).initialize();
         this.controls = Object.create(controls).initialize({ imagePath: this.imagePath || '' })
         this.overlay = Object.create(overlay).initialize({ viewer: this.viewer });
-
-        this.controls.addHandler('add', function (button) {
-            this.viewer.addControl(button.element, {
-                anchor: OpenSeadragon.ControlAnchor.BOTTOM_LEFT
-            });
-        }.bind(this));
-        this.controls.add('move', true).addHandler('click', function () {
-            this.viewer.setMouseNavEnabled(true);
-            this.state = state.initialize();
-        }.bind(this));
-        this.controls.add('draw').addHandler('click', function () {
-            this.viewer.setMouseNavEnabled(false);
-            this.state = draw.initialize();
-        }.bind(this));
-
-        this.viewer.addHandler('animation', function () {
-            var width = this.overlay.el.clientWidth;
-            var height = this.overlay.el.clientHeight;
-            var viewPort = '0 0 ' + width + ' ' + height;
-            var svg = this.overlay.el.querySelector('svg');
-            svg.setAttribute('viewPort', viewPort);
-        }.bind(this));
-        this.overlay.el.addEventListener('mousedown', function (e) {
-            this.state.handleMouseDown(e, this.overlay);
-        }.bind(this), false);
-        this.overlay.el.addEventListener('mouseup', function (e) {
-            this.state.handleMouseUp(e, this.overlay);
-        }.bind(this), false);
+        this.controls.add('move', true).add('draw');
+        this.controls.get('move').addHandler('click', this.setState.bind(this, state, true));
+        this.controls.get('draw').addHandler('click', this.setState.bind(this, draw, true));
+        this.viewer.addHandler('animation', this.overlay.adjust.bind(this.overlay));
         return this;
+    },
+
+    setState: function (state, navigationEnabled) {
+        this.viewer.setMouseNavEnabled(navigationEnabled);
+        this.state = Object.create(state).initialize();
+    },
+
+    addControl: function (button) {
+        this.viewer.addControl(button.element, {
+            anchor: OpenSeadragon.ControlAnchor.BOTTOM_LEFT
+        });
+    },
+
+    onMouseDown: function (e) {
+        this.state.handleMouseDown(e, this.overlay);
+    },
+
+    onMouseUp: function (e) {
+        this.state.handleMouseUp(e, this.overlay);
     },
 
     import: function () {

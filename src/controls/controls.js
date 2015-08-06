@@ -1,4 +1,5 @@
 import OpenSeadragon from 'OpenSeadragon';
+import inject from '../context/inject';
 
 export default OpenSeadragon.extend(new OpenSeadragon.EventSource(), {
 
@@ -22,7 +23,8 @@ export default OpenSeadragon.extend(new OpenSeadragon.EventSource(), {
         return this;
     },
 
-    add: function (name, active) {
+    @inject('annotations')
+    add: function (annotations, name, active) {
         this.list[name] = new OpenSeadragon.Button({
             tooltip: name[0].toUpperCase() + name.substr(1),
             srcRest: this.imagePath + name + '_rest.png',
@@ -34,8 +36,8 @@ export default OpenSeadragon.extend(new OpenSeadragon.EventSource(), {
         if (active) {
             this.list[name].imgDown.style.visibility = 'visible';
         }
-        this.raiseEvent('add', this.list[name]);
-        return this.list[name];
+        annotations.addControl(this.list[name]);
+        return this;
     },
 
     get: function (name) {
