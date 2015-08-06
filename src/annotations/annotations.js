@@ -7,8 +7,8 @@ export default {
     initialize: function (state, draw, controls, overlay, options) {
         OpenSeadragon.extend(this, options);
         this.state = Object.create(state).initialize();
-        this.controls = Object.create(controls).initialize({ imagePath: options.imagePath || '' })
-        this.overlay = Object.create(overlay).initialize({ viewer: options.viewer });
+        this.controls = Object.create(controls).initialize({ imagePath: this.imagePath || '' })
+        this.overlay = Object.create(overlay).initialize({ viewer: this.viewer });
 
         this.controls.addHandler('add', function (button) {
             this.viewer.addControl(button.element, {
