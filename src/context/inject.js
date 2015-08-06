@@ -3,11 +3,10 @@ import context from './context';
 export default function (...dependencies) {
     return function (target, key, descriptor) {
         return {
-            value: function initialize () {
-                dependencies.forEach(function (dependency) {
-                    this[dependency] = Object.create(context.get(dependency));
-                }.bind(this));
-                descriptor.initializer().apply(this, arguments);
+            value: function initialize (...args) {
+                descriptor.initializer().apply(this, dependencies.map(function (name) {
+                    return context.get(name);
+                }).concat(args));
             },
             enumerable: true,
             configurable: true,

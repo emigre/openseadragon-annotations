@@ -1,21 +1,14 @@
 import OpenSeadragon from 'OpenSeadragon';
-import state from '../state/state';
-import draw from '../state/draw';
-import controls from '../controls/controls';
-import overlay from '../overlay/overlay';
+import inject from '../context/inject';
 
 export default {
 
-    initialize: function (options) {
-        OpenSeadragon.extend(this, {
-            state: state.initialize(),
-            controls: controls.initialize({
-                imagePath: options.imagePath || ''
-            }),
-            overlay: overlay.initialize({
-                viewer: options.viewer
-            })
-        }, options);
+    @inject('state', 'draw', 'controls', 'overlay')
+    initialize: function (state, draw, controls, overlay, options) {
+        OpenSeadragon.extend(this, options);
+        this.state = Object.create(state).initialize();
+        this.controls = Object.create(controls).initialize({ imagePath: options.imagePath || '' })
+        this.overlay = Object.create(overlay).initialize({ viewer: options.viewer });
 
         this.controls.addHandler('add', function (button) {
             this.viewer.addControl(button.element, {
