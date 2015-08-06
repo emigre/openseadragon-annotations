@@ -4,7 +4,7 @@ export default function (...dependencies) {
     return function (target, key, descriptor) {
         return {
             value: function initialize (...args) {
-                descriptor.initializer().apply(this, dependencies.map(function (name) {
+                return descriptor.initializer().apply(this, dependencies.map(function (name) {
                     return context.get(name);
                 }).concat(args));
             },
