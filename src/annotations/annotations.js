@@ -4,7 +4,7 @@ import inject from '../context/inject';
 export default {
 
     @inject('state', 'draw', 'controls', 'overlay')
-    initialize: function (state, draw, controls, overlay, options) {
+    function initialize(state, draw, controls, overlay, options) {
         OpenSeadragon.extend(this, options);
         this.state = Object.create(state).initialize();
         this.controls = Object.create(controls).initialize({ imagePath: this.imagePath || '' })
@@ -16,30 +16,30 @@ export default {
         return this;
     },
 
-    setState: function (state, navigationEnabled) {
+    function setState(state, navigationEnabled) {
         this.viewer.setMouseNavEnabled(navigationEnabled);
         this.state = Object.create(state).initialize();
     },
 
-    addControl: function (button) {
+    function addControl(button) {
         this.viewer.addControl(button.element, {
             anchor: OpenSeadragon.ControlAnchor.BOTTOM_LEFT
         });
     },
 
-    onMouseDown: function (e) {
+    function onMouseDown(e) {
         this.state.handleMouseDown(e, this.overlay);
     },
 
-    onMouseUp: function (e) {
+    function onMouseUp(e) {
         this.state.handleMouseUp(e, this.overlay);
     },
 
-    import: function () {
+    function import() {
         // TODO
     },
 
-    export: function () {
+    function export() {
         // TODO
     }
 

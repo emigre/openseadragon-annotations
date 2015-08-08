@@ -2,16 +2,16 @@ import OpenSeadragon from 'OpenSeadragon';
 
 export default {
 
-    initialize: function (options) {
+    function initialize(options) {
         OpenSeadragon.extend(this, options);
         return this;
     },
 
-    handleMouseDown: function () {
+    function handleMouseDown() {
         return this;
     },
 
-    handleMouseUp: function () {
+    function handleMouseUp() {
         return this;
     }
 
