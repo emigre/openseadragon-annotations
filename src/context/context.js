@@ -2,11 +2,6 @@ export default {
 
     maps: {},
 
-    function initialize() {
-        for (var obj in this.maps) {
-        }
-    },
-
     function register(id, obj) {
         this.maps[id] = obj;
         return this;

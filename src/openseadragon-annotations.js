@@ -12,8 +12,7 @@ export default OpenSeadragon.Viewer.prototype.initializeAnnotations = function (
         .register('controls', controls)
         .register('overlay', overlay)
         .register('state', state)
-        .register('draw', draw)
-        .initialize();
+        .register('draw', draw);
     this.annotations = this.annotations || annotations.initialize(OpenSeadragon.extend({ viewer: this }, options));
     return this;
 };
