@@ -15,10 +15,10 @@ export default {
         var height = this.viewer.viewport.homeBounds.height;
         this.viewer.addOverlay(this.overlay.el, new OpenSeadragon.Rect(0, 0, width, height));
         this.overlay.addHandler('mousedown', function (e) {
-            this.state.handleMouseDown(e, this.overlay);
+            this.state.handleMouseDown(this.overlay, e);
         }.bind(this));
         this.overlay.addHandler('mouseup', function (e) {
-            this.state.handleMouseUp(e, this.overlay)
+            this.state.handleMouseUp(this.overlay, e)
         }.bind(this));
 
         this.controls = Object.create(controls).initialize({

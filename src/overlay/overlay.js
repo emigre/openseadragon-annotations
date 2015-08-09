@@ -4,7 +4,6 @@ import inject from '../context/inject';
 export default OpenSeadragon.extend(new OpenSeadragon.EventSource(), {
 
     initialize() {
-        var options = options || {};
         this.el = document.createElement('div');
         this.el.className = 'overlay';
         var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');

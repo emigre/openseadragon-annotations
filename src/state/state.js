@@ -3,7 +3,6 @@ import OpenSeadragon from 'OpenSeadragon';
 export default {
 
     initialize(options) {
-        OpenSeadragon.extend(this, options);
         return this;
     },
 
