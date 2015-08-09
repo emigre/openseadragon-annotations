@@ -11,17 +11,21 @@ export default OpenSeadragon.extend(Object.create(state), {
             this.x = e.offsetX;
             this.y = e.offsetY;
         }.bind(this);
-
-        overlay.addHandler('mousedown', function (e) {
+        this._onMouseDown = function (e) {
             this.handleMouseDown(e.offsetX, e.offsetY);
             e.stopPropagation();
-        }.bind(this));
-
-        window.addEventListener('mouseup', function () {
+        }.bind(this);
+        this._onMouseUp = function (e) {
             this.handleMouseUp();
-        }.bind(this), false);
-
+        }.bind(this);
+        this.overlay.addHandler('mousedown', this._onMouseDown);
+        window.addEventListener('mouseup', this._onMouseUp, false);
         return this;
+    },
+
+    close: function () {
+        this.overlay.removeHandler('mousedown', this._onMouseDown);
+        window.removeEventListener('mouseup', this._onMouseUp, false);
     },
 
     handleMouseDown(x, y) {

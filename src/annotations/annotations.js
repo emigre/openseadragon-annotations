@@ -3,20 +3,17 @@ import inject from '../context/inject';
 
 export default {
 
-    @inject('viewer', 'state', 'draw', 'controls', 'overlay')
-    initialize(viewer, state, draw, controls, overlay, options) {
-        this.viewer = viewer;
+    @inject('state', 'draw', 'controls', 'overlay')
+    initialize(state, draw, controls, overlay, options) {
         this.overlay = overlay.initialize();
-
+        this.state = Object.create(state).initialize();
         this.controls = controls.initialize({
             imagePath: options.imagePath,
             controls: [
-                { name: 'move', action: setState.bind(null, this, state, true) },
-                { name: 'draw', action: setState.bind(null, this, draw, true) }
+                { name: 'move', action: setState.bind(null, this, state) },
+                { name: 'draw', action: setState.bind(null, this, draw) }
             ]
         }).activate('move');
-
-        setState(this, state, true);
         return this;
     },
 
@@ -30,7 +27,7 @@ export default {
 
 };
 
-function setState(annotations, state, navigationEnabled) {
-    annotations.viewer.setMouseNavEnabled(navigationEnabled);
+function setState(annotations, state) {
+    if (annotations.state) { annotations.state.close(); }
     annotations.state = Object.create(state).initialize();
 }

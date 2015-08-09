@@ -6,6 +6,9 @@ export default {
         return this;
     },
 
+    close: function () {
+    },
+
     handleMouseDown() {
         return this;
     },
