@@ -4,7 +4,7 @@ import inject from '../context/inject';
 export default {
 
     @inject('annotations')
-    function initialize(annotations) {
+    initialize(annotations) {
         this.el = document.createElement('div');
         this.el.className = 'overlay';
         var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
@@ -23,7 +23,7 @@ export default {
         return this;
     },
 
-    function adjust() {
+    adjust() {
         var width = this.el.clientWidth;
         var height = this.el.clientHeight;
         var svg = this.el.querySelector('svg');

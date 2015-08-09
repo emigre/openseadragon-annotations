@@ -3,14 +3,14 @@ import inject from '../context/inject';
 
 export default OpenSeadragon.extend(new OpenSeadragon.EventSource(), {
 
-    function initialize(options) {
+    initialize(options) {
         OpenSeadragon.extend(this, options);
         this.list = {};
         this.addHandler('click', this.onClick.bind(this));
         return this;
     },
 
-    function onClick(name) {
+    onClick(name) {
         for (var button in this.list) {
             if (this.list.hasOwnProperty(button)) {
                 if (button === name) {
@@ -24,7 +24,7 @@ export default OpenSeadragon.extend(new OpenSeadragon.EventSource(), {
     },
 
     @inject('annotations')
-    function add(annotations, name, active) {
+    add(annotations, name, active) {
         this.list[name] = new OpenSeadragon.Button({
             tooltip: name[0].toUpperCase() + name.substr(1),
             srcRest: this.imagePath + name + '_rest.png',
@@ -40,7 +40,7 @@ export default OpenSeadragon.extend(new OpenSeadragon.EventSource(), {
         return this;
     },
 
-    function get(name) {
+    get(name) {
         return this.list[name];
     }
 

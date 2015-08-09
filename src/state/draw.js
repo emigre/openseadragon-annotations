@@ -3,7 +3,7 @@ import state from './state';
 
 export default OpenSeadragon.extend(Object.create(state), {
 
-    function initialize(options) {
+    initialize(options) {
         OpenSeadragon.extend(this, options);
         this._mouseTracker = function (e) {
             this.x = e.offsetX;
@@ -12,7 +12,7 @@ export default OpenSeadragon.extend(Object.create(state), {
         return this;
     },
 
-    function handleMouseDown(e, overlay) {
+    handleMouseDown(e, overlay) {
         if (!this._interval) {
             this.x = e.offsetX;
             this.y = e.offsetY;
@@ -39,7 +39,7 @@ export default OpenSeadragon.extend(Object.create(state), {
         return this;
     },
 
-    function handleMouseUp(e, overlay) {
+    handleMouseUp(e, overlay) {
         overlay.el.removeEventListener('mousemove', this._mouseTracker);
         this._interval = clearInterval(this._interval);
         return this;
