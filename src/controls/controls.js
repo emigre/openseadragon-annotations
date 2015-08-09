@@ -4,27 +4,29 @@ import inject from '../context/inject';
 export default OpenSeadragon.extend(new OpenSeadragon.EventSource(), {
 
     initialize(options) {
-        OpenSeadragon.extend(this, options);
+        var options = options || {};
+        this.imagePath = options.imagePath;
         this.list = {};
-        this.addHandler('click', this.onClick.bind(this));
+        if (options.controls) { options.controls.forEach(this.add.bind(this)); }
         return this;
     },
 
-    onClick(name) {
-        for (var button in this.list) {
-            if (this.list.hasOwnProperty(button)) {
-                if (button === name) {
-                    this.list[button].imgDown.style.visibility = 'visible';
-                } else {
-                    this.list[button].imgDown.style.visibility = 'hidden';
-                }
+    add(options) {
+        this.set(options.name).addHandler('click', options.action);
+        this.get(options.name).addHandler('click', function () {
+            for (var button in this.list) {
+                this.list[button].imgDown.style.visibility = button === options.name ? 'visible' : 'hidden';
             }
-        }
+        }.bind(this));
         return this;
     },
 
-    @inject('annotations')
-    add(annotations, name, active) {
+    activate(name) {
+        this.list[name].imgDown.style.visibility = 'visible';
+        return this;
+    },
+
+    set(name) {
         this.list[name] = new OpenSeadragon.Button({
             tooltip: name[0].toUpperCase() + name.substr(1),
             srcRest: this.imagePath + name + '_rest.png',
@@ -33,15 +35,19 @@ export default OpenSeadragon.extend(new OpenSeadragon.EventSource(), {
             srcDown: this.imagePath + name + '_pressed.png',
             onClick: this.raiseEvent.bind(this, 'click', name)
         });
-        if (active) {
-            this.list[name].imgDown.style.visibility = 'visible';
-        }
-        annotations.addControl(this.list[name]);
-        return this;
+        return this.list[name];
     },
 
     get(name) {
         return this.list[name];
+    },
+
+    all() {
+        var controls = [];
+        for (var name in this.list) {
+            controls.push(this.list[name]);
+        }
+        return controls;
     }
 
 });

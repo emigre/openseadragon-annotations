@@ -17,7 +17,7 @@ export default OpenSeadragon.Viewer.prototype.initializeAnnotations = function (
         .register('draw', draw)
         .get('viewer', function (viewer) {
              viewer.annotations = viewer.annotations || this.get('annotations');
-             viewer.annotations.initialize(options);
+             viewer.addHandler('open', viewer.annotations.initialize.bind(viewer.annotations, options));
         });
     return this;
 };
