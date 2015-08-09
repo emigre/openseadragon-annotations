@@ -7,12 +7,13 @@ import controls from './controls/controls';
 import overlay from './overlay/overlay';
 
 export default OpenSeadragon.Viewer.prototype.initializeAnnotations = function (options) {
+    var options = OpenSeadragon.extend({ viewer: this }, options);
     context
         .register('annotations', annotations)
         .register('controls', controls)
         .register('overlay', overlay)
         .register('state', state)
         .register('draw', draw);
-    this.annotations = this.annotations || annotations.initialize(OpenSeadragon.extend({ viewer: this }, options));
+    this.annotations = this.annotations || annotations.initialize(options);
     return this;
 };
