@@ -8,9 +8,16 @@ module.exports = {
     externals: {
         "OpenSeadragon": "OpenSeadragon"
     },
+    // devtool: 'source-map',
     module: {
         loaders: [
-            { test: /\.js$/, loader: 'babel-loader', query: {stage: 1} }
+            {
+                test: /\.js$/,
+                loader: 'babel-loader',
+                query: {
+                    stage: 1
+                }
+            }
         ]
     }
 };
