@@ -3,10 +3,12 @@ import inject from '../context/inject';
 
 export default OpenSeadragon.extend(new OpenSeadragon.EventSource(), {
 
-    initialize(options) {
+    @inject('viewer')
+    initialize(viewer, options) {
         var options = options || {};
         this.imagePath = options.imagePath || '';
         this.list = {};
+        this.viewer = viewer;
         if (options.controls) { options.controls.forEach(this.add.bind(this)); }
         return this;
     },
@@ -18,6 +20,9 @@ export default OpenSeadragon.extend(new OpenSeadragon.EventSource(), {
                 this.list[button].imgDown.style.visibility = button === options.name ? 'visible' : 'hidden';
             }
         }.bind(this));
+        this.viewer.addControl(this.get(options.name).element, {
+            anchor: OpenSeadragon.ControlAnchor.BOTTOM_LEFT
+        });
         return this;
     },
 

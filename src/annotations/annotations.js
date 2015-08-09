@@ -15,7 +15,7 @@ export default {
                 { name: 'move', action: setState.bind(null, this, state, true) },
                 { name: 'draw', action: setState.bind(null, this, draw, true) }
             ]
-        }).activate('move').all().forEach(addControlToViewer.bind(null, viewer));
+        }).activate('move');
 
         setState(this, state, true);
         return this;
@@ -34,12 +34,6 @@ export default {
 function setState(annotations, state, navigationEnabled) {
     annotations.viewer.setMouseNavEnabled(navigationEnabled);
     annotations.state = Object.create(state).initialize();
-}
-
-function addControlToViewer(viewer, control) {
-    viewer.addControl(control.element, {
-        anchor: OpenSeadragon.ControlAnchor.BOTTOM_LEFT
-    });
 }
 
 function addOverlayToViewer(viewer, overlay) {
