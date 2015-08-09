@@ -14,16 +14,22 @@ export default {
                 { name: 'draw', action: setState.bind(null, this, draw) }
             ]
         }).activate('move');
+    window.gas = this;
         return this;
     },
 
-    import() {
-        // TODO
+    import(data) {
+        this.overlay.import(data);
     },
 
     export() {
-        // TODO
+        return this.overlay.export();
+    },
+
+    reset() {
+        return this.overlay.reset();
     }
+
 
 };
 
