@@ -12,8 +12,12 @@ export default {
         return this;
     },
 
-    get(id) {
-        return this.maps[id];
+    get(id, fn) {
+        var item = this.maps[id];
+        if (fn && typeof fn === 'function') {
+            fn.call(this, item);
+        }
+        return item;
     }
 
 };

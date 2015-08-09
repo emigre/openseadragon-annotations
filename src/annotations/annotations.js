@@ -3,11 +3,13 @@ import inject from '../context/inject';
 
 export default {
 
-    @inject('state', 'draw', 'controls', 'overlay')
-    initialize(state, draw, controls, overlay, options) {
-        OpenSeadragon.extend(this, options);
+    @inject('viewer', 'state', 'draw', 'controls', 'overlay')
+    initialize(viewer, state, draw, controls, overlay, options) {
+        var imagePath = 'bower_components/openseadragon-annotations/img/';
+        var options = OpenSeadragon.extend({ imagePath: imagePath }, options);
+        this.viewer = viewer;
         this.state = Object.create(state).initialize();
-        this.controls = Object.create(controls).initialize({ imagePath: this.imagePath || '' })
+        this.controls = Object.create(controls).initialize({ imagePath: options.imagePath })
         this.overlay = Object.create(overlay).initialize();
         this.controls.add('move', true).add('draw');
         this.controls.get('move').addHandler('click', this.setState.bind(this, state, true));
