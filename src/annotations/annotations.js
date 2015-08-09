@@ -7,7 +7,6 @@ export default {
     initialize(viewer, state, draw, controls, overlay, options) {
         var imagePath = 'bower_components/openseadragon-annotations/img/';
         var options = OpenSeadragon.extend({ imagePath: imagePath }, options);
-
         this.viewer = viewer;
         this.state = Object.create(state).initialize();
 
@@ -25,20 +24,10 @@ export default {
         this.controls = Object.create(controls).initialize({
             imagePath: options.imagePath,
             controls: [
-                {
-                    name: 'move',
-                    action: setState.bind(null, this, state, true)
-                }, {
-                    name: 'draw',
-                    action: setState.bind(null, this, draw, true)
-                }
+                { name: 'move', action: setState.bind(null, this, state, true) },
+                { name: 'draw', action: setState.bind(null, this, draw, true) }
             ]
-        }).activate('move').all().forEach(function (control) {
-            this.viewer.addControl(control.element, {
-                anchor: OpenSeadragon.ControlAnchor.BOTTOM_LEFT
-            });
-        }.bind(this));
-
+        }).activate('move').all().forEach(addControlToViewer.bind(null, this.viewer));
         return this;
     },
 
@@ -57,3 +46,8 @@ function setState(annotations, state, navigationEnabled) {
     annotations.state = Object.create(state).initialize();
 }
 
+function addControlToViewer(viewer, control) {
+    viewer.addControl(control.element, {
+        anchor: OpenSeadragon.ControlAnchor.BOTTOM_LEFT
+    });
+}
