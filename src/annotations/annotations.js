@@ -7,7 +7,6 @@ export default {
     initialize(viewer, state, draw, controls, overlay, options) {
         this.viewer = viewer;
         this.overlay = overlay.initialize();
-        addOverlayToViewer(viewer, overlay);
 
         this.controls = controls.initialize({
             imagePath: options.imagePath,
@@ -34,10 +33,4 @@ export default {
 function setState(annotations, state, navigationEnabled) {
     annotations.viewer.setMouseNavEnabled(navigationEnabled);
     annotations.state = Object.create(state).initialize();
-}
-
-function addOverlayToViewer(viewer, overlay) {
-    var width = viewer.viewport.homeBounds.width;
-    var height = viewer.viewport.homeBounds.height;
-    viewer.addOverlay(overlay.el, new OpenSeadragon.Rect(0, 0, width, height));
 }

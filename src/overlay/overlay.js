@@ -1,8 +1,10 @@
 import OpenSeadragon from 'OpenSeadragon';
+import inject from '../context/inject';
 
 export default OpenSeadragon.extend(new OpenSeadragon.EventSource(), {
 
-    initialize() {
+    @inject('viewer')
+    initialize(viewer) {
         this.el = document.createElement('div');
         this.el.className = 'overlay';
         var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
@@ -16,6 +18,9 @@ export default OpenSeadragon.extend(new OpenSeadragon.EventSource(), {
         this.svg = svg;
         this.el.addEventListener('mousedown', this.raiseEvent.bind(this, 'mousedown'), false);
         this.el.addEventListener('mouseup', this.raiseEvent.bind(this, 'mouseup'), false);
+        var width = viewer.viewport.homeBounds.width;
+        var height = viewer.viewport.homeBounds.height;
+        viewer.addOverlay(this.el, new OpenSeadragon.Rect(0, 0, width, height));
         return this;
     },
 

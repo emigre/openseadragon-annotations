@@ -21,7 +21,6 @@ export default OpenSeadragon.extend(Object.create(state), {
             this.handleMouseUp();
         }.bind(this), false);
 
-
         return this;
     },
 
