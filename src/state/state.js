@@ -2,7 +2,7 @@ import OpenSeadragon from 'OpenSeadragon';
 
 export default {
 
-    initialize(options) {
+    initialize() {
         return this;
     },
 

@@ -5,7 +5,7 @@ export default OpenSeadragon.extend(new OpenSeadragon.EventSource(), {
 
     initialize(options) {
         var options = options || {};
-        this.imagePath = options.imagePath;
+        this.imagePath = options.imagePath || '';
         this.list = {};
         if (options.controls) { options.controls.forEach(this.add.bind(this)); }
         return this;

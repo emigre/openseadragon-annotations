@@ -1,5 +1,4 @@
 import OpenSeadragon from 'OpenSeadragon';
-import inject from '../context/inject';
 
 export default OpenSeadragon.extend(new OpenSeadragon.EventSource(), {
 
