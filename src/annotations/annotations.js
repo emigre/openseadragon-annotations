@@ -14,7 +14,6 @@ export default {
                 { name: 'draw', action: setState.bind(null, this, draw) }
             ]
         }).activate('move');
-    window.gas = this;
         return this;
     },
 
