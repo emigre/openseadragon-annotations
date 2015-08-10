@@ -15,15 +15,15 @@ Include them in your project.
 
 ```
 
-Create an OpenSeadragon viewer and run `initializeAnnotations()`. You need to pass the path to the image folder that contains the buttons as an argument.
+Create an OpenSeadragon viewer and run `initializeAnnotations()` to start using the plugin.
 
 ```javascript
 var viewer = OpenSeadragon({
     id: 'viewer',
     showNavigator:  true,
     tileSources: 'http://openseadragon.github.io/example-images/highsmith/highsmith.dzi'
-}).initializeAnnotations({
-    imagePath: 'bower_components/openseadragon-annotations/dist/img/'
 });
+
+viewer.initializeAnnotations();
 ```
 
