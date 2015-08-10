@@ -1,5 +1,3 @@
-This is a work in progress and is still in a very early stage.
-
 Install [OpenSeadragon](https://openseadragon.github.io/), then install the plugin. You can install both with [Bower](http://bower.io/).
 
 ```
@@ -15,7 +13,7 @@ Include them in your project.
 
 ```
 
-Create an OpenSeadragon viewer and run `initializeAnnotations()` to start using the plugin.
+Create an OpenSeadragon viewer and run `initializeAnnotations()` to start drawing annotations.
 
 ```javascript
 var viewer = OpenSeadragon({
@@ -27,3 +25,18 @@ var viewer = OpenSeadragon({
 viewer.initializeAnnotations();
 ```
 
+The plugin stores the drawings on a SVG overlay that scales with the deep zoom image.
+
+Your OpenSeadragon viewer will gain an `annotations` object that you can use to interact with the plugin. 
+
+`annotations.export()` 
+
+Returns the SVG with the annotations as a string
+
+`annotations.import()` 
+
+Takes a previously exported string and updates the overlay with it
+
+`annotations.reset()` 
+
+Removes all the annotations from the overlay
