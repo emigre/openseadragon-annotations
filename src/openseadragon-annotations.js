@@ -6,8 +6,8 @@ import draw from './state/draw';
 import controls from './controls/controls';
 import overlay from './overlay/overlay';
 
-export default OpenSeadragon.Viewer.prototype.initializeAnnotations = function (options) {
-     context
+export default OpenSeadragon.Viewer.prototype.initializeAnnotations = function () {
+    context
         .reset()
         .register('viewer', this)
         .register('annotations', annotations)
@@ -16,8 +16,8 @@ export default OpenSeadragon.Viewer.prototype.initializeAnnotations = function (
         .register('state', state)
         .register('draw', draw)
         .get('viewer', function (viewer) {
-             viewer.annotations = viewer.annotations || this.get('annotations');
-             viewer.addHandler('open', viewer.annotations.initialize.bind(viewer.annotations, options));
+            viewer.annotations = viewer.annotations || this.get('annotations');
+            viewer.addHandler('open', viewer.annotations.initialize.bind(viewer.annotations));
         });
     return this;
 };

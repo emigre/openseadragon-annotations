@@ -15,7 +15,7 @@ export default OpenSeadragon.extend(Object.create(state), {
             this.handleMouseDown(e.offsetX, e.offsetY);
             e.stopPropagation();
         }.bind(this);
-        this._onMouseUp = function (e) {
+        this._onMouseUp = function () {
             this.handleMouseUp();
         }.bind(this);
         this.overlay.addHandler('mousedown', this._onMouseDown);
@@ -23,7 +23,7 @@ export default OpenSeadragon.extend(Object.create(state), {
         return this;
     },
 
-    close: function () {
+    close() {
         this.overlay.removeHandler('mousedown', this._onMouseDown);
         window.removeEventListener('mouseup', this._onMouseUp, false);
     },

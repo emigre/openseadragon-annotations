@@ -1,4 +1,3 @@
-import OpenSeadragon from 'OpenSeadragon';
 import inject from '../context/inject';
 
 import drawGroupHover from '../../img/draw_grouphover.png';
@@ -14,7 +13,7 @@ import moveRest from '../../img/move_rest.png';
 export default {
 
     @inject('state', 'draw', 'controls', 'overlay')
-    initialize(state, draw, controls, overlay, options) {
+    initialize(state, draw, controls, overlay) {
         this.overlay = overlay.initialize();
         this.state = Object.create(state).initialize();
         this.controls = controls.initialize({

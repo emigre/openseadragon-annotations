@@ -3,7 +3,7 @@ import context from './context';
 export default function (...dependencies) {
     return function (target, key, descriptor) {
         return {
-            value: function initialize (...args) {
+            value: function initialize(...args) {
                 return descriptor.value.apply(this, dependencies.map(function (name) {
                     return context.get(name);
                 }).concat(args));

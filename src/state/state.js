@@ -1,5 +1,3 @@
-import OpenSeadragon from 'OpenSeadragon';
-
 export default {
 
     initialize() {
