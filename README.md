@@ -9,7 +9,7 @@ bower install openseadragon --save
 bower install openseadragon-annotations --save
 ```
 
-Then load them in your page somehow, for example by including them as `<script>` tags.
+Then load them in your page somehow, for example by including them as `<script>` elements.
 
 ```html
 <script src="bower_components/openseadragon/built-openseadragon/openseadragon/openseadragon.js"></script>
@@ -33,7 +33,7 @@ var viewer = OpenSeadragon({
             ServerFormat: 'Default',
             Size: {
                 Height: '4409',
-                Width:  '7793'
+                Width: '7793'
             }
         }
     }
