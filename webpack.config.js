@@ -17,6 +17,10 @@ module.exports = {
                 query: {
                     stage: 1
                 }
+            },
+            {
+                test: /\.png$/,
+                loader: 'url-loader'
             }
         ]
     }

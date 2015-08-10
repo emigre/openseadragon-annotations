@@ -7,7 +7,7 @@
     "start": "rimraf dist && webpack -d --watch",
     "test": "karma start --single-run",
     "tdd": "karma start",
-    "build": "rimraf dist && eslint . && copyfiles img/*.* dist && webpack -d && webpack -p -d --config webpack.prod.config.js",
+    "build": "rimraf dist && eslint . && webpack -d && webpack -p -d --config webpack.prod.config.js",
     "lint": "eslint ."
   },
   "repository": {
@@ -34,6 +34,7 @@
     "chai-as-promised": "^5.1.0",
     "copyfiles": "^0.2.1",
     "extend": "^3.0.0",
+    "file-loader": "^0.8.4",
     "imagemin": "^3.2.0",
     "karma": "^0.13.3",
     "karma-chai": "^0.1.0",
@@ -48,6 +49,7 @@
     "phantomjs": "^1.9.17",
     "rimraf": "^2.4.2",
     "sinon": "^1.15.4",
+    "url-loader": "^0.5.6",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
     "webpack": "^1.10.5"
