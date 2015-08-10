@@ -8,7 +8,6 @@ module.exports = {
     externals: {
         "OpenSeadragon": "OpenSeadragon"
     },
-    // devtool: 'source-map',
     module: {
         loaders: [
             {
