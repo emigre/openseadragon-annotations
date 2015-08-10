@@ -1,11 +1,15 @@
-Install [OpenSeadragon](https://openseadragon.github.io/), then install the plugin. You can install both with [Bower](http://bower.io/).
+This plugin allows you to draw vector annotations over [OpenSeadragon](https://openseadragon.github.io/) deep zoom images. The plugin creates the drawings on a SVG overlay that scales with the image.
+
+![Preview](img/preview.gif)
+
+To use it, add both OpenSeadragon and the plugin as dependencies in your project. You could do it with [Bower](http://bower.io/).
 
 ```
 bower install openseadragon --save
 bower install openseadragon-annotations --save
 ```
 
-Include them in your project.
+Then load them in your page somehow, for example by including them as `<script>` tags.
 
 ```html
 <script src="bower_components/openseadragon/built-openseadragon/openseadragon/openseadragon.js"></script>
@@ -13,19 +17,30 @@ Include them in your project.
 
 ```
 
-Create an OpenSeadragon viewer and run `initializeAnnotations()` to start drawing annotations.
+Now you can create an OpenSeadragon viewer and initialize the plugin with `initializeAnnotations()` to start drawing annotations.
 
 ```javascript
 var viewer = OpenSeadragon({
     id: 'viewer',
     showNavigator:  true,
-    tileSources: 'http://openseadragon.github.io/example-images/highsmith/highsmith.dzi'
+    tileSources: {
+        Image: {
+            xmlns: 'http://schemas.microsoft.com/deepzoom/2008',
+            Url: 'http://content.zoomhub.net/dzis/TDbz_files/',
+            Format: 'jpg',
+            Overlap: '1',
+            TileSize: '254',
+            ServerFormat: 'Default',
+            Size: {
+                Height: '4409',
+                Width:  '7793'
+            }
+        }
+    }
 });
 
 viewer.initializeAnnotations();
 ```
-
-The plugin stores the drawings on a SVG overlay that scales with the deep zoom image.
 
 Your OpenSeadragon viewer will gain an `annotations` object that you can use to interact with the plugin. 
 
