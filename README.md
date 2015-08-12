@@ -44,14 +44,14 @@ viewer.initializeAnnotations();
 
 Your OpenSeadragon viewer will gain an `annotations` object that you can use to interact with the plugin. 
 
-`annotations.export()` 
+`viewer.annotations.export()` 
 
 Returns the SVG with the annotations as a string
 
-`annotations.import()` 
+`viewer.annotations.import()` 
 
 Takes a previously exported string and updates the overlay with it
 
-`annotations.reset()` 
+`viewer.annotations.reset()` 
 
 Removes all the annotations from the overlay
