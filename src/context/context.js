@@ -15,7 +15,7 @@ export default {
         if (fn && typeof fn === 'function') {
             fn.call(this, item);
         }
-        return item;
+        return this;
     }
 
 };
