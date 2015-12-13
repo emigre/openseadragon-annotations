@@ -1,14 +1,12 @@
 export default {
 
-    maps: {},
-
-    register(id, obj) {
-        this.maps[id] = obj;
+    initialize() {
+        this.maps = {};
         return this;
     },
 
-    reset() {
-        this.maps = {};
+    register(id, obj) {
+        this.maps[id] = obj;
         return this;
     },
 

@@ -8,7 +8,7 @@ import overlay from './overlay/overlay';
 
 export default OpenSeadragon.Viewer.prototype.initializeAnnotations = function () {
     context
-        .reset()
+        .initialize()
         .register('viewer', this)
         .register('annotations', annotations)
         .register('controls', controls)
