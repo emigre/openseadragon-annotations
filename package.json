@@ -2,6 +2,7 @@
   "name": "openseadragon-annotations",
   "version": "0.0.1",
   "description": "OpenSeadragon annotations plugin",
+  "homepage": "https://github.com/Emigre/openseadragon-annotations",
   "main": "src/openseadragon-annotations.js",
   "scripts": {
     "start": "rimraf dist && webpack -d --watch",
@@ -55,9 +56,5 @@
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
     "webpack": "^1.10.5"
-  },
-  "homepage": "https://github.com/Emigre/openseadragon-annotations",
-  "dependencies": {
-    "broccoli-eslint": "0.0.5"
   }
 }
