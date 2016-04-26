@@ -1,5 +1,6 @@
 import OpenSeadragon from 'OpenSeadragon';
-import context from './context/context';
+import { context } from 'holy-grail';
+
 import annotations from './annotations/annotations';
 import state from './state/state';
 import draw from './state/draw';
@@ -14,10 +15,9 @@ export default OpenSeadragon.Viewer.prototype.initializeAnnotations = function (
         .register('controls', controls)
         .register('overlay', overlay)
         .register('state', state)
-        .register('draw', draw)
-        .get('viewer', function (viewer) {
-            viewer.annotations = viewer.annotations || this.get('annotations');
-            viewer.addHandler('open', viewer.annotations.initialize.bind(viewer.annotations));
-        });
-    return this;
+        .register('draw', draw);
+
+    var viewer = context.get('viewer');
+    viewer.annotations = viewer.annotations || context.get('annotations');
+    viewer.addHandler('open', viewer.annotations.initialize.bind(viewer.annotations));
 };
