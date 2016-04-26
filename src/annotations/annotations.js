@@ -1,4 +1,4 @@
-import inject from '../context/inject';
+import { inject } from 'holy-grail';
 
 import drawGroupHover from '../../img/draw_grouphover.png';
 import drawHover from '../../img/draw_hover.png';

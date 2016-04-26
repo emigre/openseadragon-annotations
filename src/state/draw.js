@@ -1,6 +1,6 @@
 import OpenSeadragon from 'OpenSeadragon';
 import state from './state';
-import inject from '../context/inject';
+import { inject } from 'holy-grail';
 
 export default OpenSeadragon.extend(Object.create(state), {
 

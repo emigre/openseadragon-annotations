@@ -1,5 +1,5 @@
 import OpenSeadragon from 'OpenSeadragon';
-import inject from '../context/inject';
+import { inject } from 'holy-grail';
 
 export default OpenSeadragon.extend(new OpenSeadragon.EventSource(), {
 
