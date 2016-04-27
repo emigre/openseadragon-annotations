@@ -1,4 +1,4 @@
-import annotations from '../src/annotations';
+import annotations from '../src/annotations/annotations';
 
 describe('A test', function () {
 
