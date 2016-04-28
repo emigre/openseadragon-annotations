@@ -2,53 +2,47 @@
 
 module.exports = function (config) {
 
-    config.set({
+  config.set({
 
-        frameworks: ['mocha', 'chai-as-promised', 'chai', 'sinon'],
+    frameworks: ['mocha', 'chai-as-promised', 'chai', 'sinon'],
 
-        files: [
-            'bower_components/openseadragon/built-openseadragon/openseadragon/openseadragon.js',
-            'test/**/*.js'
-        ],
+    files: [
+      'bower_components/openseadragon/built-openseadragon/openseadragon/openseadragon.js',
+      'test/**/*.js'
+    ],
 
-        preprocessors: {
-            'test/**/*.js': ['webpack', 'sourcemap']
-        },
+    preprocessors: {
+      'test/**/*.js': ['webpack', 'sourcemap']
+    },
 
-        webpack: {
-            module: {
-                loaders: [
-                    {
-                        test: /\.js/,
-                        exclude: /node_modules/,
-                        loader: 'babel-loader'
-                    }
-                ]
-            },
-            devtool: 'inline-source-map',
-            watch: true
-        },
+    webpack: {
+      module: {
+        loaders: [
+          { test: /\.js/, loader: 'babel-loader', exclude: /node_modules/ }
+        ]
+      },
+      devtool: 'inline-source-map',
+      watch: true
+    },
 
-        webpackMiddleware: {
-            noInfo: true
-        },
+    webpackMiddleware: { noInfo: true },
 
-        basePath: '.',
+    basePath: '.',
 
-        reporters: ['mocha'],
+    reporters: ['mocha'],
 
-        browsers: ['PhantomJS'],
+    browsers: ['PhantomJS'],
 
-        autoWatch: true,
+    autoWatch: true,
 
-        singleRun: false,
+    singleRun: false,
 
-        port: 9876,
+    port: 9876,
 
-        colors: true,
+    colors: true,
 
-        logLevel: config.LOG_INFO
+    logLevel: config.LOG_INFO
 
-    });
+  });
 
 };

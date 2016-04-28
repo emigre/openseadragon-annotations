@@ -1,18 +1,18 @@
 export default {
 
-    initialize() {
-        return this;
-    },
+  initialize() {
+    return this;
+  },
 
-    close: function () {
-    },
+  close: function () {
+  },
 
-    handleMouseDown() {
-        return this;
-    },
+  handleMouseDown() {
+    return this;
+  },
 
-    handleMouseUp() {
-        return this;
-    }
+  handleMouseUp() {
+    return this;
+  }
 
 };

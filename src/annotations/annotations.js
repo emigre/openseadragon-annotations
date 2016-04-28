@@ -12,49 +12,48 @@ import moveRest from '../../img/move_rest.png';
 
 export default {
 
-    @inject('state', 'draw', 'controls', 'overlay')
-    initialize(state, draw, controls, overlay) {
-        this.overlay = overlay.initialize();
-        this.state = Object.create(state).initialize();
-        this.controls = controls.initialize({
-            controls: [
-                {
-                    name: 'move',
-                    action: setState.bind(null, this, state),
-                    srcRest: moveRest,
-                    srcGroup: moveGroupHover,
-                    srcHover: moveHover,
-                    srcDown: movePressed
-                },
-                {
-                    name: 'draw',
-                    action: setState.bind(null, this, draw),
-                    srcRest: drawRest,
-                    srcGroup: drawGroupHover,
-                    srcHover: drawHover,
-                    srcDown: drawPressed
-                }
-            ]
-        }).activate('move');
-        return this;
-    },
+  @inject('state', 'draw', 'controls', 'overlay')
+  initialize(state, draw, controls, overlay) {
+    this.overlay = overlay.initialize();
+    this.state = Object.create(state).initialize();
+    this.controls = controls.initialize({
+      controls: [
+        {
+          name: 'move',
+          action: setState.bind(null, this, state),
+          srcRest: moveRest,
+          srcGroup: moveGroupHover,
+          srcHover: moveHover,
+          srcDown: movePressed
+        },
+        {
+          name: 'draw',
+          action: setState.bind(null, this, draw),
+          srcRest: drawRest,
+          srcGroup: drawGroupHover,
+          srcHover: drawHover,
+          srcDown: drawPressed
+        }
+      ]
+    }).activate('move');
+    return this;
+  },
 
-    import(data) {
-        this.overlay.import(data);
-    },
+  import(data) {
+    this.overlay.import(data);
+  },
 
-    export() {
-        return this.overlay.export();
-    },
+  export() {
+    return this.overlay.export();
+  },
 
-    reset() {
-        return this.overlay.reset();
-    }
-
+  reset() {
+    return this.overlay.reset();
+  }
 
 };
 
 function setState(annotations, state) {
-    if (annotations.state) { annotations.state.close(); }
-    annotations.state = Object.create(state).initialize();
+  if (annotations.state) { annotations.state.close(); }
+  annotations.state = Object.create(state).initialize();
 }
