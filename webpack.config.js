@@ -13,5 +13,6 @@ module.exports = {
       { test: /\.js$/, loader: 'babel', exclude: /node_modules/ },
       { test: /\.png$/, loader: 'url' }
     ]
-  }
+  },
+  devtool: 'source-map'
 };
