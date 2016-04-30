@@ -1,18 +1,18 @@
-export default {
+export default class Move {
 
   initialize() {
     return this;
-  },
+  }
 
-  close: function () {
-  },
+  close() {
+  }
 
   handleMouseDown() {
     return this;
-  },
+  }
 
   handleMouseUp() {
     return this;
   }
 
-};
+}

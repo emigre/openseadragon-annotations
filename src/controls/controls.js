@@ -1,16 +1,18 @@
 import OpenSeadragon from 'OpenSeadragon';
-import { inject } from 'holy-grail';
 
-export default OpenSeadragon.extend(new OpenSeadragon.EventSource(), {
+export default class Controls extends OpenSeadragon.EventSource {
 
-  @inject('viewer')
+  constructor() {
+    super();
+    this.list = {};
+  }
+
   initialize(viewer, options) {
     var options = options || {};
-    this.list = {};
     this.viewer = viewer;
     if (options.controls) { options.controls.forEach(this.add.bind(this)); }
     return this;
-  },
+  }
 
   add(options) {
     this.set(options).addHandler('click', options.action);
@@ -23,12 +25,12 @@ export default OpenSeadragon.extend(new OpenSeadragon.EventSource(), {
       anchor: OpenSeadragon.ControlAnchor.BOTTOM_LEFT
     });
     return this;
-  },
+  }
 
   activate(name) {
     this.list[name].imgDown.style.visibility = 'visible';
     return this;
-  },
+  }
 
   set(options) {
     this.list[options.name] = new OpenSeadragon.Button({
@@ -40,11 +42,11 @@ export default OpenSeadragon.extend(new OpenSeadragon.EventSource(), {
       onClick: this.raiseEvent.bind(this, 'click', name)
     });
     return this.list[options.name];
-  },
+  }
 
   get(name) {
     return this.list[name];
-  },
+  }
 
   all() {
     var controls = [];
@@ -54,4 +56,4 @@ export default OpenSeadragon.extend(new OpenSeadragon.EventSource(), {
     return controls;
   }
 
-});
+}

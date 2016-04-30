@@ -1,38 +1,35 @@
 import OpenSeadragon from 'OpenSeadragon';
-import { inject } from 'holy-grail';
 
-export default OpenSeadragon.extend(new OpenSeadragon.EventSource(), {
+export default class Overlay extends OpenSeadragon.EventSource {
 
-  @inject('viewer')
   initialize(viewer) {
     this.el = createOverlay();
     this.svg = appendSVG(this.el);
     this.el.addEventListener('mousedown', this.raiseEvent.bind(this, 'mousedown'), false);
     this.el.addEventListener('mouseup', this.raiseEvent.bind(this, 'mouseup'), false);
     viewer.addOverlay(this.el, createOpenSeadragonRect(viewer));
-    return this;
-  },
+  }
 
   export() {
     var serializer = new XMLSerializer();
     var data = serializer.serializeToString(this.svg);
     return data;
-  },
+  }
 
   import(data) {
     this.el.innerHTML = data;
     this.svg = this.el.firstChild;
-  },
+  }
 
   reset() {
     this.el.innerHTML = '';
     this.svg = appendSVG(this.el);
-  },
+  }
 
   startPath(x, y) {
     var path = createPath(x / this.el.clientWidth * 100, y / this.el.clientHeight * 100);
     this.svg.appendChild(path);
-  },
+  }
 
   updatePath(x, y) {
     var x = x / this.el.clientWidth * 100;
@@ -41,7 +38,7 @@ export default OpenSeadragon.extend(new OpenSeadragon.EventSource(), {
     path.setAttribute('d', path.getAttribute('d') + ' L' + x + ' ' + y);
   }
 
-});
+}
 
 function createOverlay() {
   var div = document.createElement('div');

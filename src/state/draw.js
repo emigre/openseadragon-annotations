@@ -1,12 +1,12 @@
 import OpenSeadragon from 'OpenSeadragon';
-import state from './state';
-import { inject } from 'holy-grail';
 
-export default OpenSeadragon.extend(Object.create(state), {
+export default class Draw {
 
-  @inject('overlay')
-  initialize(overlay) {
+  constructor(overlay) {
     this.overlay = overlay;
+  }
+
+  initialize() {
     this._mouseTracker = function (e) {
       this.x = e.offsetX;
       this.y = e.offsetY;
@@ -21,12 +21,12 @@ export default OpenSeadragon.extend(Object.create(state), {
     this.overlay.addHandler('mousedown', this._onMouseDown);
     window.addEventListener('mouseup', this._onMouseUp, false);
     return this;
-  },
+  }
 
   close() {
     this.overlay.removeHandler('mousedown', this._onMouseDown);
     window.removeEventListener('mouseup', this._onMouseUp, false);
-  },
+  }
 
   handleMouseDown(x, y) {
     if (!this._interval) {
@@ -39,7 +39,7 @@ export default OpenSeadragon.extend(Object.create(state), {
       }.bind(this), 25);
     }
     return this;
-  },
+  }
 
   handleMouseUp() {
     this.overlay.el.removeEventListener('mousemove', this._mouseTracker);
@@ -47,4 +47,4 @@ export default OpenSeadragon.extend(Object.create(state), {
     return this;
   }
 
-});
+}

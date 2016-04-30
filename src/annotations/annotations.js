@@ -1,5 +1,3 @@
-import { inject } from 'holy-grail';
-
 import drawGroupHover from '../../img/draw_grouphover.png';
 import drawHover from '../../img/draw_hover.png';
 import drawPressed from '../../img/draw_pressed.png';
@@ -10,17 +8,23 @@ import moveHover from '../../img/move_hover.png';
 import movePressed from '../../img/move_pressed.png';
 import moveRest from '../../img/move_rest.png';
 
-export default {
+export default class Annotations {
 
-  @inject('state', 'draw', 'controls', 'overlay')
-  initialize(state, draw, controls, overlay) {
-    this.overlay = overlay.initialize();
-    this.state = Object.create(state).initialize();
-    this.controls = controls.initialize({
+  constructor(controls, overlay, draw, move) {
+    this.draw = draw;
+    this.move = move;
+    this.overlay = overlay;
+    this.controls = controls;
+  }
+
+  initialize(viewer) {
+    this.viewer = viewer;
+    this.overlay.initialize(viewer);
+    this.controls.initialize(viewer, {
       controls: [
         {
           name: 'move',
-          action: setState.bind(null, this, state),
+          action: setState.bind(null, this, this.move),
           srcRest: moveRest,
           srcGroup: moveGroupHover,
           srcHover: moveHover,
@@ -28,7 +32,7 @@ export default {
         },
         {
           name: 'draw',
-          action: setState.bind(null, this, draw),
+          action: setState.bind(null, this, this.draw),
           srcRest: drawRest,
           srcGroup: drawGroupHover,
           srcHover: drawHover,
@@ -36,24 +40,23 @@ export default {
         }
       ]
     }).activate('move');
-    return this;
-  },
+  }
 
   import(data) {
     this.overlay.import(data);
-  },
+  }
 
   export() {
     return this.overlay.export();
-  },
+  }
 
   reset() {
     return this.overlay.reset();
   }
 
-};
+}
 
-function setState(annotations, state) {
+function setState(annotations, newState) {
   if (annotations.state) { annotations.state.close(); }
-  annotations.state = Object.create(state).initialize();
+  annotations.state = newState.initialize();
 }

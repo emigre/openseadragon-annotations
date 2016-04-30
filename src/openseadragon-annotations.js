@@ -1,23 +1,21 @@
 import OpenSeadragon from 'OpenSeadragon';
-import { context } from 'holy-grail';
-
-import annotations from './annotations/annotations';
-import state from './state/state';
-import draw from './state/draw';
-import controls from './controls/controls';
-import overlay from './overlay/overlay';
+import Context from 'holy-grail';
+import Annotations from './annotations/Annotations';
+import Draw from './state/Draw';
+import Move from './state/Move';
+import Controls from './controls/Controls';
+import Overlay from './overlay/Overlay';
 
 export default OpenSeadragon.Viewer.prototype.initializeAnnotations = function () {
-  context
-    .initialize()
-    .register('viewer', this)
-    .register('annotations', annotations)
-    .register('controls', controls)
-    .register('overlay', overlay)
-    .register('state', state)
-    .register('draw', draw);
+  var context = new Context();
+  context.register('annotations', Annotations, ['controls', 'overlay', 'draw', 'move']);
+  context.register('draw', Draw, ['overlay']);
+  context.register('move', Move);
+  context.register('controls', Controls);
+  context.registerSingleton('overlay', Overlay);
 
-  var viewer = context.get('viewer');
-  viewer.annotations = viewer.annotations || context.get('annotations');
-  viewer.addHandler('open', viewer.annotations.initialize.bind(viewer.annotations));
+  this.annotations = this.annotations || context.resolve('annotations');
+  this.addHandler('open', function () {
+    this.annotations.initialize.call(this.annotations, this)
+  }.bind(this));
 };
