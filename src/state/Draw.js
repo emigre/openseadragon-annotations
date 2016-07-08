@@ -8,17 +8,16 @@ export default class Draw {
 
   initialize() {
     this._mouseTracker = function (e) {
-      var offsetX = e.clientX - this.rect.left,
-					offsetY = e.clientY - this.rect.top;
-      console.log("mousetracker rect"+this.rect.left+","+this.rect.top+" offset:"+offsetX+","+offsetY);
+      var offsetX = e.clientX - this.rect.left;
+      var offsetY = e.clientY - this.rect.top;
       this.x = offsetX;
       this.y = offsetY;
     }.bind(this);
     this._onMouseDown = function (e) {
       var target = e.target || e.srcElement;
-			this.rect = target.getBoundingClientRect();
-			var	offsetX = e.clientX - this.rect.left,
-			    offsetY = e.clientY - this.rect.top;
+      this.rect = target.getBoundingClientRect();
+      var offsetX = e.clientX - this.rect.left;
+      var offsetY = e.clientY - this.rect.top;
       this.handleMouseDown(offsetX,offsetY);
       e.stopPropagation();
     }.bind(this);
