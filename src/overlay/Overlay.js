@@ -56,7 +56,7 @@ function createPath(x, y) {
   var path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
   path.setAttribute('fill', 'none');
   path.setAttribute('stroke', 'red');
-  path.setAttribute('stroke-width', '0.5');
+  path.setAttribute('stroke-width', 0.5/viewer.viewport.getZoom());
   path.setAttribute('stroke-linejoin', 'round');
   path.setAttribute('stroke-linecap', 'round');
   path.setAttribute('d', 'M' + x + ' ' + y);
