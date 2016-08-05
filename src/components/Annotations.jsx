@@ -18,30 +18,6 @@ export default class Annotations extends Component {
     });
   }
 
-  render() {
-    return (
-      <svg {...svgProperties}
-        onClick={ (e) => click(...this.coords(e)) }
-        onMouseDown={ (e) => {
-          if (Store.getMode() !== 'MOVE') {
-            e.stopPropagation();
-          }
-          press(...this.coords(e));
-        }}
-        onMouseEnter={ enterCanvas }
-        onMouseLeave={ leaveCanvas }
-        onMouseMove={ (e) => {
-          if (Store.getMode() !== 'MOVE') {
-            move(...this.coords(e));
-          }
-        }}
-        onMouseUp={ (e) => release(...this.coords(e)) }
-      >
-        { this.state.annotations.map(el => h(...el)) }
-      </svg>
-    );
-  }
-
   coords(e) {
     const width = this.base.clientWidth;
     const height = this.base.clientHeight;
@@ -52,6 +28,30 @@ export default class Annotations extends Component {
     const y = offsetY / height * 100;
     return [ x, y ];
   }
+
+  render() {
+    return (
+      <svg {...svgProperties}
+        onClick={ unlessInMoveMode((e) => click(...this.coords(e))) }
+        onMouseDown={ unlessInMoveMode((e) => press(...this.coords(e)))}
+        onMouseEnter={ unlessInMoveMode(enterCanvas) }
+        onMouseLeave={ unlessInMoveMode(leaveCanvas) }
+        onMouseMove={ unlessInMoveMode((e) => move(...this.coords(e)))}
+        onMouseUp={ (e) => release(...this.coords(e)) }
+      >
+        { this.state.annotations.map(el => h(...el)) }
+      </svg>
+    );
+  }
+}
+
+function unlessInMoveMode(fn) {
+  return (e) => {
+    if (Store.getMode() !== 'MOVE') {
+      e.stopPropagation();
+      fn(e);
+    }
+  };
 }
 
 const svgProperties = {
