@@ -1,17 +1,23 @@
+var path = require('path');
+
 module.exports = {
-  entry: "./src/openseadragon-annotations.js",
+  entry: "./src/main.jsx",
   output: {
-    path: './dist',
+    path: path.resolve(__dirname, "dist"),
+    publicPath: '/',
     filename: "openseadragon-annotations.js",
     libraryTarget: "umd"
+  },
+  resolve: {
+    extensions: ['', '.jsx', '.js']
   },
   externals: {
     "OpenSeadragon": "OpenSeadragon"
   },
   module: {
     loaders: [
-      { test: /\.js$/, loader: 'babel', exclude: /node_modules/ },
-      { test: /\.png$/, loader: 'url' }
+      { test: /\.jsx?$/, loader: 'babel', exclude: /node_modules/ },
+      { test: /\.png$/, loader: 'url' },
     ]
   },
   devtool: 'source-map'
