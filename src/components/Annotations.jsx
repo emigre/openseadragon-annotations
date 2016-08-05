@@ -6,6 +6,7 @@ import leaveCanvas from '../actions/leaveCanvas';
 import move from '../actions/move';
 import press from '../actions/press';
 import release from '../actions/release';
+import modes from '../constants/modes';
 
 export default class Annotations extends Component {
   getInitialState() {
@@ -47,7 +48,7 @@ export default class Annotations extends Component {
 
 function unlessInMoveMode(fn) {
   return (e) => {
-    if (Store.getMode() !== 'MOVE') {
+    if (Store.getMode() !== modes.MOVE) {
       e.stopPropagation();
       fn(e);
     }
@@ -55,10 +56,10 @@ function unlessInMoveMode(fn) {
 }
 
 const svgProperties = {
-  xmlns: "http://www.w3.org/2000/svg",
-  version: "1.1",
-  preserveAspectRatio: "none",
-  viewBox: "0 0 100 100",
-  width: "100%",
-  height: "100%",
+  xmlns: 'http://www.w3.org/2000/svg',
+  version: '1.1',
+  preserveAspectRatio: 'none',
+  viewBox: '0 0 100 100',
+  width: '100%',
+  height: '100%',
 };

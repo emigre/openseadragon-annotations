@@ -1,12 +1,12 @@
 import OpenSeadragon, { extend } from 'OpenSeadragon';
 import Dispatcher from '../dispatcher/Dispatcher';
 import types from '../constants/actionTypes';
-import km from 'keymirror';
+import modes from '../constants/modes';
 
 const CHANGE_EVENT = 'change';
 
 const data = {
-  mode: 'MOVE',
+  mode: modes.MOVE,
   activityInProgress: false,
   annotations: []
 };
