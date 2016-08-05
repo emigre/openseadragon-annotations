@@ -5,6 +5,7 @@ import modes from '../constants/modes';
 
 export default function move(x, y) {
   switch(Store.getMode()) {
+
     case modes.DRAW:
       if (Store.isActivityInProgress()) {
         const last = Store.getLast();
@@ -12,10 +13,13 @@ export default function move(x, y) {
           const d = last[1].d;
           Dispatcher.dispatch({
             type: types.ANNOTATIONS_UPDATE,
-            update: { d : d + ' L' + x + ' ' + y },
+            update: {
+              d : d + ' L' + x + ' ' + y
+            },
           });
         }
       }
     break;
+
   }
 }

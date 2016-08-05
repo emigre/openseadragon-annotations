@@ -2,9 +2,11 @@ import Dispatcher from '../dispatcher/Dispatcher';
 import Store from '../store/Store';
 import types from '../constants/actionTypes';
 import modes from '../constants/modes';
+import { STROKE_SIZE, STROKE_COLOR } from '../constants/graphical';
 
 export default function press(x, y) {
   switch(Store.getMode()) {
+
     case modes.DRAW:
       Dispatcher.dispatch({
         type: types.ACTIVITY_UPDATE,
@@ -13,11 +15,19 @@ export default function press(x, y) {
       Dispatcher.dispatch({
         type: types.ANNOTATIONS_CREATE,
         annotation: [
-          'path', { fill: 'none', stroke: 'red', strokeWidth: 0.5,
-            strokeLinejoin: 'round', strokeLinecap: 'round',
-            d: 'M' + x + ' ' + y }
+          'path', {
+            'fill': 'none',
+            'vector-effect': 'non-scaling-stroke',
+            'stroke': STROKE_COLOR,
+            'stroke-width': STROKE_SIZE,
+            'stronke-height': STROKE_SIZE,
+            'stroke-linejoin': 'round',
+            'stroke-linecap': 'round',
+            'd': 'M' + x + ' ' + y
+          }
         ]
       });
     break;
+
   }
 }

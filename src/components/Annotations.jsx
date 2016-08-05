@@ -26,7 +26,7 @@ export default class Annotations extends Component {
     const offsetY = e.clientY - rect.top;
     const x = offsetX / width * 100;
     const y = offsetY / height * 100;
-    return [ x.toFixed(1), y.toFixed(1) ];
+    return [ x.toFixed(2), y.toFixed(2) ];
   }
 
   render() {

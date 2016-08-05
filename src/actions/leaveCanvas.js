@@ -5,11 +5,13 @@ import modes from '../constants/modes';
 
 export default function leaveCanvas() {
   switch(Store.getMode()) {
+
     case modes.DRAW:
       Dispatcher.dispatch({
         type: types.ACTIVITY_UPDATE,
         inProgress: false
       });
     break;
+
   }
 }
