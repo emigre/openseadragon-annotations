@@ -1,7 +1,6 @@
 import { h, Component } from 'preact';
 import Store from '../store/Store';
 import click from '../actions/click';
-import enterCanvas from '../actions/enterCanvas';
 import leaveCanvas from '../actions/leaveCanvas';
 import move from '../actions/move';
 import press from '../actions/press';
@@ -27,7 +26,7 @@ export default class Annotations extends Component {
     const offsetY = e.clientY - rect.top;
     const x = offsetX / width * 100;
     const y = offsetY / height * 100;
-    return [ x, y ];
+    return [ x.toFixed(1), y.toFixed(1) ];
   }
 
   render() {
@@ -35,7 +34,6 @@ export default class Annotations extends Component {
       <svg {...svgProperties}
         onClick={ unlessInMoveMode((e) => click(...this.coords(e))) }
         onMouseDown={ unlessInMoveMode((e) => press(...this.coords(e)))}
-        onMouseEnter={ unlessInMoveMode(enterCanvas) }
         onMouseLeave={ unlessInMoveMode(leaveCanvas) }
         onMouseMove={ unlessInMoveMode((e) => move(...this.coords(e)))}
         onMouseUp={ (e) => release(...this.coords(e)) }

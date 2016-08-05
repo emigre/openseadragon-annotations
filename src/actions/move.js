@@ -5,9 +5,6 @@ import modes from '../constants/modes';
 
 export default function move(x, y) {
   switch(Store.getMode()) {
-    case modes.MOVE:
-    break;
-
     case modes.DRAW:
       if (Store.isActivityInProgress()) {
         const last = Store.getLast();

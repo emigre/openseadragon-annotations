@@ -5,9 +5,6 @@ import modes from '../constants/modes';
 
 export default function release(x, y) {
   switch(Store.getMode()) {
-    case modes.MOVE:
-    break;
-
     case modes.DRAW:
       Dispatcher.dispatch({
         type: types.ACTIVITY_UPDATE,
