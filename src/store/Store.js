@@ -1,29 +1,31 @@
-import OpenSeadragon from 'OpenSeadragon';
+import OpenSeadragon, { extend } from 'OpenSeadragon';
 import Dispatcher from '../dispatcher/Dispatcher';
-import types from '../actions';
+import types from '../constants/actionTypes';
 import km from 'keymirror';
 
 const CHANGE_EVENT = 'change';
 
-const state = {
+const data = {
   mode: 'MOVE',
-  annotations: [
-    [ 'rect', { x: 20, y: 20, width: 90, height: 20 } ],
-    [ 'path', { fill: 'none', stroke: 'red', strokeWidth: 0.5,
-      strokeLinejoin: 'round', strokeLinecap: 'round',
-      d: 'M 10 10 L 50 50 L 25 50' }
-    ]
-  ]
+  activityInProgress: false,
+  annotations: []
 };
 
 class AppStore extends OpenSeadragon.EventSource {
   getAll() {
-    return state;
+    return data.annotations;
   }
 
-  emitChange() {
-    console.log(state);
-    this.raiseEvent(CHANGE_EVENT);
+  getLast() {
+    return data.annotations[data.annotations.length - 1]
+  }
+
+  getMode() {
+    return data.mode;
+  }
+
+  isActivityInProgress() {
+    return data.activityInProgress;
   }
 }
 
@@ -31,21 +33,23 @@ const Store = new AppStore();
 
 Dispatcher.register(function (action) {
   switch(action.type) {
-
-    case types.ANNOTATION_CREATE:
-      console.log('annotation create');
-      break;
-
     case types.MODE_UPDATE:
-      if (state.mode !== action.mode) {
-        state.mode = action.mode;
-        Store.emitChange();
-      }
-      break;
+      data.mode = action.mode;
+    break;
 
-    default:
-      // nothing
+    case types.ACTIVITY_UPDATE:
+      data.activityInProgress = action.inProgress;
+    break;
+
+    case types.ANNOTATIONS_CREATE:
+      data.annotations.push(action.annotation);
+    break;
+
+    case types.ANNOTATIONS_UPDATE:
+      extend(Store.getLast()[1], action.update);
+    break;
   }
+  Store.raiseEvent(CHANGE_EVENT);
 });
 
 export default Store;

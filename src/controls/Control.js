@@ -1,5 +1,5 @@
 import { extend, Button } from 'OpenSeadragon';
-import { selectMode } from '../actions/mode';
+import selectMode from '../actions/selectMode';
 
 export default class Control {
   constructor(options) {
