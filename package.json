@@ -6,7 +6,7 @@
   "main": "dist/openseadragon-annotations.js",
   "scripts": {
     "prestart": "shx rm -rf dist",
-    "start": "npm run build -- --config ./webpack.config.dev.js",
+    "start": "webpack --progress --config ./webpack.config.dev.js",
     "test": "ava -v",
     "tdd": "ava -w",
     "prebuild": "shx rm -rf dist",
