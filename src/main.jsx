@@ -4,15 +4,23 @@ import Annotations from './components/Annotations';
 import Move from './controls/Move';
 import Draw from './controls/Draw';
 
-export default OpenSeadragon.Viewer.prototype.initializeAnnotations = function () {
+console.log(OpenSeadragon)
+
+function initialize() {
   this.addHandler('open', () => {
     const size = this.viewport.homeBounds;
     const rect = new Rect(0, 0, size.width, size.height);
     this.addOverlay(render(<Annotations />), rect);
-    [ Move, Draw ].forEach((Control) => {
+
+    const controls = [Move, Draw];
+    controls.forEach((Control) => {
       this.addControl(new Control().element, {
-        anchor: ControlAnchor.BOTTOM_LEFT
+        anchor: OpenSeadragon.ControlAnchor.BOTTOM_LEFT,
       });
     });
   });
-};
+}
+
+OpenSeadragon.Viewer.prototype.initializeAnnotations = initialize;
+
+export default initialize;

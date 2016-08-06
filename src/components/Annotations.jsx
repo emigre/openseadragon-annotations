@@ -24,19 +24,20 @@ export default class Annotations extends Component {
     const rect = this.base.getBoundingClientRect();
     const offsetX = e.clientX - rect.left;
     const offsetY = e.clientY - rect.top;
-    const x = offsetX / width * 100;
-    const y = offsetY / height * 100;
-    return [ x.toFixed(2), y.toFixed(2) ];
+    const x = (offsetX / width) * 100;
+    const y = (offsetY / height) * 100;
+    return [x.toFixed(2), y.toFixed(2)];
   }
 
   render() {
     return (
-      <svg {...svgProperties}
-        onClick={ unlessInMoveMode((e) => click(...this.coords(e))) }
-        onMouseDown={ unlessInMoveMode((e) => press(...this.coords(e)))}
-        onMouseLeave={ unlessInMoveMode(leaveCanvas) }
-        onMouseMove={ unlessInMoveMode((e) => move(...this.coords(e)))}
-        onMouseUp={ (e) => release(...this.coords(e)) }
+      <svg
+        {...svgProperties}
+        onClick={unlessInMoveMode((e) => click(...this.coords(e)))}
+        onMouseDown={unlessInMoveMode((e) => press(...this.coords(e)))}
+        onMouseLeave={unlessInMoveMode(leaveCanvas)}
+        onMouseMove={unlessInMoveMode((e) => move(...this.coords(e)))}
+        onMouseUp={unlessInMoveMode(release)}
       >
         { this.state.annotations.map(el => h(...el)) }
       </svg>

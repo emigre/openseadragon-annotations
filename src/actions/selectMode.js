@@ -5,7 +5,7 @@ import types from '../constants/actionTypes';
 export default function selectMode(mode) {
   Dispatcher.dispatch({
     type: types.ACTIVITY_UPDATE,
-    inProgress: false
+    inProgress: false,
   });
   if (Store.getMode() !== mode) {
     Dispatcher.dispatch({

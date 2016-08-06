@@ -8,7 +8,7 @@ const CHANGE_EVENT = 'change';
 const data = {
   mode: modes.MOVE,
   activityInProgress: false,
-  annotations: []
+  annotations: [],
 };
 
 class AppStore extends OpenSeadragon.EventSource {
@@ -17,7 +17,7 @@ class AppStore extends OpenSeadragon.EventSource {
   }
 
   getLast() {
-    return data.annotations[data.annotations.length - 1]
+    return data.annotations[data.annotations.length - 1];
   }
 
   getMode() {
@@ -31,23 +31,23 @@ class AppStore extends OpenSeadragon.EventSource {
 
 const Store = new AppStore();
 
-Dispatcher.register(function (action) {
-  switch(action.type) {
+Dispatcher.register((action) => {
+  switch (action.type) {
     case types.MODE_UPDATE:
       data.mode = action.mode;
-    break;
+      break;
 
     case types.ACTIVITY_UPDATE:
       data.activityInProgress = action.inProgress;
-    break;
+      break;
 
     case types.ANNOTATIONS_CREATE:
       data.annotations.push(action.annotation);
-    break;
+      break;
 
     case types.ANNOTATIONS_UPDATE:
       extend(Store.getLast()[1], action.update);
-    break;
+      break;
   }
   Store.raiseEvent(CHANGE_EVENT);
 });

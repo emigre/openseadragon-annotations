@@ -5,29 +5,29 @@ import modes from '../constants/modes';
 import { STROKE_SIZE, STROKE_COLOR } from '../constants/graphical';
 
 export default function press(x, y) {
-  switch(Store.getMode()) {
+  switch (Store.getMode()) {
 
     case modes.DRAW:
       Dispatcher.dispatch({
         type: types.ACTIVITY_UPDATE,
-        inProgress: true
+        inProgress: true,
       });
       Dispatcher.dispatch({
         type: types.ANNOTATIONS_CREATE,
         annotation: [
           'path', {
-            'fill': 'none',
-            'vector-effect': 'non-scaling-stroke',
-            'stroke': STROKE_COLOR,
+            fill: 'none',
+            d: `M${x} ${y}`,
+            stroke: STROKE_COLOR,
             'stroke-width': STROKE_SIZE,
             'stronke-height': STROKE_SIZE,
             'stroke-linejoin': 'round',
             'stroke-linecap': 'round',
-            'd': 'M' + x + ' ' + y
-          }
-        ]
+            'vector-effect': 'non-scaling-stroke',
+          },
+        ],
       });
-    break;
+      break;
 
   }
 }

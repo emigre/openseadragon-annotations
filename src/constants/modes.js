@@ -1,8 +1,6 @@
-import km from 'keymirror';
-
-const modes = km({
-  MOVE: null,
-  DRAW: null,
-});
+const modes = {
+  MOVE: 'MOVE',
+  DRAW: 'DRAW',
+};
 
 export default modes;

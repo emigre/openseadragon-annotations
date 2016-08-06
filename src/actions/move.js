@@ -4,7 +4,7 @@ import types from '../constants/actionTypes';
 import modes from '../constants/modes';
 
 export default function move(x, y) {
-  switch(Store.getMode()) {
+  switch (Store.getMode()) {
 
     case modes.DRAW:
       if (Store.isActivityInProgress()) {
@@ -14,12 +14,12 @@ export default function move(x, y) {
           Dispatcher.dispatch({
             type: types.ANNOTATIONS_UPDATE,
             update: {
-              d : d + ' L' + x + ' ' + y
+              d: `${d} L${x} ${y}`,
             },
           });
         }
       }
-    break;
+      break;
 
   }
 }

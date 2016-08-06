@@ -6,12 +6,12 @@ import drawRest from '../../img/draw_rest.png';
 
 export default class Draw extends Control {
   constructor() {
-    return super({
+    super({
       Tooltip: 'Draw',
       srcRest: drawRest,
       srcGroup: drawGroupHover,
       srcHover: drawHover,
-      srcDown: drawPressed
+      srcDown: drawPressed,
     });
   }
 }
