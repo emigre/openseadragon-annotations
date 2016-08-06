@@ -11,6 +11,8 @@
   "rules": {
     "no-use-before-define": 0,
     "default-case": 0,
-    "react/react-in-jsx-scope": 0
+    "react/react-in-jsx-scope": 0,
+    "no-unused-vars": [2, { "varsIgnorePattern": "^h$" }],
+    "import/no-extraneous-dependencies": 0,
   }
 }

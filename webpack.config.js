@@ -14,7 +14,7 @@ module.exports = {
     publicPath: '/',
     filename: 'openseadragon-annotations.js',
     libraryTarget: 'var',
-    library: ['OpenSeadragon', 'Viewer', 'prototype', 'initializeAnnotations'],
+    library: ['OpenSeadragon', 'Viewer', 'prototype', 'annotations'],
   },
   plugins: [
     new webpack.optimize.OccurenceOrderPlugin(),

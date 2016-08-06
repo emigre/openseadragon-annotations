@@ -3,3 +3,4 @@ bower_components
 dist
 coverage
 webpack.*.js
+ava.setup.js
