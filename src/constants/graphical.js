@@ -1,2 +1,4 @@
-export const STROKE_COLOR = 'red';
-export const STROKE_SIZE = 3;
+const STROKE_COLOR = 'red';
+const STROKE_SIZE = 3;
+
+export { STROKE_COLOR, STROKE_SIZE };
