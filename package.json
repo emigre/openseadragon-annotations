@@ -3,12 +3,16 @@
   "version": "0.0.1",
   "description": "OpenSeadragon annotations plugin",
   "homepage": "https://github.com/Emigre/openseadragon-annotations",
-  "main": "src/main.jsx",
+  "main": "dist/openseadragon-annotations.js",
   "scripts": {
-    "start": "rimraf dist && webpack -d --watch",
-    "test": "karma start --single-run",
-    "tdd": "karma start",
-    "build": "rimraf dist && eslint . && webpack && webpack -p --output-file openseadragon-annotationss.min.js",
+    "prestart": "shx rm -rf dist",
+    "start": "npm run build -- --config ./webpack.config.dev.js",
+    "test": "ava -v",
+    "tdd": "ava -w",
+    "prebuild": "shx rm -rf dist",
+    "build": "webpack --progress",
+    "prepublish": "npm run build",
+    "coverage": "nyc ava",
     "lint": "eslint --ext .js,.jsx . || shx echo"
   },
   "repository": {
@@ -29,6 +33,7 @@
     "openseadragon"
   ],
   "devDependencies": {
+    "ava": "^0.15.2",
     "babel-core": "^6.7.7",
     "babel-eslint": "^6.0.4",
     "babel-loader": "^6.2.4",
@@ -44,12 +49,14 @@
     "eslint-plugin-react": "^6.0.0",
     "file-loader": "^0.8.5",
     "flux": "^2.1.1",
+    "jsdom": "^9.4.1",
+    "nyc": "^7.1.0",
     "preact": "^5.6.0",
-    "rimraf": "^2.4.2",
     "shx": "^0.1.2",
     "sinon": "^1.15.4",
     "url-loader": "^0.5.6",
-    "webpack": "^1.10.5"
+    "webpack": "^1.10.5",
+    "webpack-dev-server": "^1.14.1"
   },
   "peerDependencies": {
     "openseadragon": "^2.2.1"
