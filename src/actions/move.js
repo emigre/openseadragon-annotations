@@ -12,7 +12,7 @@ export default function move(x, y) {
         if (last && last[0] === 'path') {
           const d = last[1].d;
           Dispatcher.dispatch({
-            type: types.ANNOTATIONS_UPDATE,
+            type: types.ANNOTATIONS_UPDATE_LAST,
             update: {
               d: `${d} L${x} ${y}`,
             },

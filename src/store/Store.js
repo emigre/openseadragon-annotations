@@ -45,8 +45,12 @@ Dispatcher.register((action) => {
       data.annotations.push(action.annotation);
       break;
 
-    case types.ANNOTATIONS_UPDATE:
+    case types.ANNOTATIONS_UPDATE_LAST:
       extend(Store.getLast()[1], action.update);
+      break;
+
+    case types.ANNOTATIONS_RESET:
+      data.annotations = action.annotations;
       break;
   }
   Store.raiseEvent(CHANGE_EVENT);

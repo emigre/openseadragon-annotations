@@ -1,6 +1,5 @@
 import { h, Component } from 'preact';
 import Store from '../store/Store';
-import click from '../actions/click';
 import leaveCanvas from '../actions/leaveCanvas';
 import move from '../actions/move';
 import press from '../actions/press';
@@ -14,7 +13,7 @@ export default class Annotations extends Component {
 
   componentDidMount() {
     Store.addHandler('change', () => {
-      this.setState({ annotation: Store.getAll() });
+      this.setState({ annotations: Store.getAll() });
     });
   }
 
@@ -33,7 +32,6 @@ export default class Annotations extends Component {
     return (
       <svg
         {...svgProperties}
-        onClick={unlessInMoveMode((e) => click(...this.coords(e)))}
         onMouseDown={unlessInMoveMode((e) => press(...this.coords(e)))}
         onMouseLeave={unlessInMoveMode(leaveCanvas)}
         onMouseMove={unlessInMoveMode((e) => move(...this.coords(e)))}

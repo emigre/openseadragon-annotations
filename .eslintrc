@@ -14,5 +14,6 @@
     "react/react-in-jsx-scope": 0,
     "no-unused-vars": [2, { "varsIgnorePattern": "^h$" }],
     "import/no-extraneous-dependencies": 0,
+    "import/no-unresolved": 0,
   }
 }
