@@ -2,8 +2,7 @@ import OpenSeadragon, { extend } from 'OpenSeadragon';
 import Dispatcher from '../dispatcher/Dispatcher';
 import types from '../constants/actionTypes';
 import modes from '../constants/modes';
-
-const CHANGE_EVENT = 'change';
+import { CHANGE_EVENT } from '../constants/events';
 
 const data = {
   mode: modes.MOVE,

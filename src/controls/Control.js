@@ -1,6 +1,7 @@
 import { extend, Button } from 'OpenSeadragon';
 import selectMode from '../actions/selectMode';
 import Store from '../store/Store';
+import { CHANGE_EVENT } from '../constants/events';
 
 export default class Control {
   constructor(options) {
@@ -11,7 +12,7 @@ export default class Control {
     if (Store.getMode() === this.mode) {
       this.activate();
     }
-    Store.addHandler('change', () => {
+    Store.addHandler(CHANGE_EVENT, () => {
       if (Store.getMode() === this.mode) {
         this.activate();
       } else {

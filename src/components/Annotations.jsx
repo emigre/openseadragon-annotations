@@ -5,6 +5,7 @@ import move from '../actions/move';
 import press from '../actions/press';
 import release from '../actions/release';
 import modes from '../constants/modes';
+import { CHANGE_EVENT } from '../constants/events';
 
 export default class Annotations extends Component {
   getInitialState() {
@@ -12,7 +13,7 @@ export default class Annotations extends Component {
   }
 
   componentDidMount() {
-    Store.addHandler('change', () => {
+    Store.addHandler(CHANGE_EVENT, () => {
       this.setState({ annotations: Store.getAll() });
     });
   }
