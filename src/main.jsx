@@ -4,15 +4,19 @@ import Annotations from './components/Annotations';
 import Store from './store/Store';
 import Dispatcher from './dispatcher/Dispatcher';
 import types from './constants/actionTypes';
-import controls from './controls';
+import controlClasses from './controls';
+
+const controls = controlClasses.map((Control) => {
+  return new Control();
+});
 
 OpenSeadragon.Viewer.prototype.initializeAnnotations = function initialize() {
   this.addHandler('open', () => {
-    const size = this.viewport.homeBounds;
-    const rect = new Rect(0, 0, size.width, size.height);
+    const bounds = this.world.getHomeBounds();
+    const rect = new Rect(0, 0, bounds.width, bounds.height);
     this.addOverlay(render(<Annotations />), rect);
-    controls.forEach((Control) => {
-      this.addControl(new Control().element, {
+    controls.forEach((control) => {
+      this.addControl(control.btn.element, {
         anchor: ControlAnchor.BOTTOM_LEFT,
       });
     });
