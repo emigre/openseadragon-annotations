@@ -11,9 +11,7 @@ export default function move(Dispatcher, Store, x, y) {
           const d = last[1].d;
           Dispatcher.dispatch({
             type: types.ANNOTATIONS_UPDATE_LAST,
-            update: {
-              d: `${d} L${x} ${y}`,
-            },
+            update: { d: `${d} L${x} ${y}` },
           });
         }
       }

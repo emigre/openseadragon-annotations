@@ -2,8 +2,7 @@ import test from 'ava';
 import types from '../constants/actionTypes';
 import modes from '../constants/modes';
 import press from './press';
-import { generatePath, fakeFactory } from '../utils/test';
-import { STROKE_SIZE, STROKE_COLOR } from '../constants/graphical';
+import { fakeFactory } from '../utils/test';
 import shapesFactory from '../utils/shapesFactory';
 
 test('when drawing, it should start an activity', t => {

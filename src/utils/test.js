@@ -22,7 +22,7 @@ const fakeFactory = {
     Store.isActivityInProgress.reset();
     Store.getMode.reset();
     Store.getLast.reset();
-  }
+  },
 };
 
 export { fakeFactory };

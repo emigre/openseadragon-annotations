@@ -4,13 +4,6 @@ import modes from '../constants/modes';
 import leaveCanvas from './leaveCanvas';
 import { fakeFactory } from '../utils/test';
 
-test.afterEach(t => {
-  const Dispatcher = fakeFactory.getDispatcher();
-  const Store = fakeFactory.getStore();
-  fakeFactory.resetDispatcher(Dispatcher);
-  fakeFactory.resetStore(Store);
-});
-
 test('should stop drawing', t => {
   const Dispatcher = fakeFactory.getDispatcher();
   const Store = fakeFactory.getStore();

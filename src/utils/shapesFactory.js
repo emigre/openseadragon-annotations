@@ -15,7 +15,7 @@ const shapesFactory = {
         'vector-effect': 'non-scaling-stroke',
       },
     ];
-  }
+  },
 };
 
 export default shapesFactory;

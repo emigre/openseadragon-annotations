@@ -17,8 +17,6 @@ test('when drawing, should update the path', t => {
   move(Dispatcher, Store, x, y);
   t.true(Dispatcher.dispatch.firstCall.calledWith({
     type: types.ANNOTATIONS_UPDATE_LAST,
-    update: {
-      d: `${d} L${x} ${y}`
-    },
+    update: { d: `${d} L${x} ${y}` },
   }));
 });
