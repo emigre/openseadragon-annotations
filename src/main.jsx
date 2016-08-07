@@ -12,13 +12,14 @@ const controls = controlClasses.map((Control) => new Control());
 
 let isPluginActive = false;
 let openHandler = null;
+let overlay = null;
 
 OpenSeadragon.Viewer.prototype.initializeAnnotations = function initialize() {
-  window.gas = this;
   const onOpen = () => {
     const bounds = this.world.getHomeBounds();
     const rect = new Rect(0, 0, bounds.width, bounds.height);
-    this.addOverlay(render(<Annotations />), rect);
+    overlay = render(<Annotations />);
+    this.addOverlay(overlay, rect);
     controls.forEach((control) => {
       this.addControl(control.btn.element, {
         anchor: ControlAnchor.BOTTOM_LEFT,
@@ -37,6 +38,8 @@ OpenSeadragon.Viewer.prototype.areAnnotationsActive = function isActive() {
 OpenSeadragon.Viewer.prototype.shutdownAnnotations = ifPluginIsActive(function shutdown() {
   this.removeHandler('open', openHandler);
   openHandler = null;
+  this.removeOverlay(overlay);
+  overlay = null;
   const ourControls = controls;
   const activeControls = this.controls;
   activeControls.forEach((viewportControl) => {
