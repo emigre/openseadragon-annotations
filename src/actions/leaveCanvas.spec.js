@@ -1,7 +1,7 @@
 import test from 'ava';
 import Dispatcher from '../dispatcher/Dispatcher';
 import types from '../constants/actionTypes';
-import cleanCanvas from './cleanCanvas';
+import leaveCanvas from './leaveCanvas';
 import sinon from 'sinon';
 
 let dispatch;
@@ -11,7 +11,7 @@ test.beforeEach(t => {
 });
 
 test.beforeEach(t => {
-  cleanCanvas();
+  leaveCanvas();
 });
 
 test.afterEach(t => {
@@ -22,12 +22,5 @@ test('should abort any ongoing activity', t => {
   t.true(dispatch.firstCall.calledWith({
     type: types.ACTIVITY_UPDATE,
     inProgress: false,
-  }));
-});
-
-test('then it should empty the annotations list', t => {
-  t.true(dispatch.secondCall.calledWith({
-    type: types.ANNOTATIONS_RESET,
-    annotations: [],
   }));
 });
