@@ -1,16 +1,10 @@
 import test from 'ava';
 import types from '../constants/actionTypes';
 import cleanCanvas from './cleanCanvas';
-import sinon from 'sinon';
 import { fakeFactory } from '../utils/test';
 
-const Dispatcher = fakeFactory.getDispatcher();
-
-test.afterEach(t => {
-  fakeFactory.resetDispatcher(Dispatcher);
-});
-
 test('should abort any ongoing activity', t => {
+  const Dispatcher = fakeFactory.getDispatcher();
   cleanCanvas(Dispatcher);
   t.true(Dispatcher.dispatch.firstCall.calledWith({
     type: types.ACTIVITY_UPDATE,
@@ -19,6 +13,7 @@ test('should abort any ongoing activity', t => {
 });
 
 test('should empty the annotations list', t => {
+  const Dispatcher = fakeFactory.getDispatcher();
   cleanCanvas(Dispatcher);
   t.true(Dispatcher.dispatch.secondCall.calledWith({
     type: types.ANNOTATIONS_RESET,

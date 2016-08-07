@@ -1,4 +1,5 @@
 import sinon from 'sinon';
+import shapesFactory from './shapesFactory';
 
 const fakeFactory = {
   getDispatcher() {
@@ -35,15 +36,15 @@ export function generateAnnotations() {
 }
 
 export function generatePath() {
-  return ['path', {
-    d: 'M41.57 37.89 L41.57 37.63 L41.57 37.38',
-    fill:'none',
-    stroke: 'red',
-    'stroke-linecap': 'round',
-    'stroke-linejoin': 'round',
-    'stroke-width': 3,
-    'stronke-height': 3,
-    'vector-effect': 'non-scaling-stroke',
-  }];
+  const x = randomNumber(100);
+  const y = randomNumber(100);
+  const path = shapesFactory.getPath(x, y);
+  for (let i = 0; i < 10; i++) {
+    path[1].d += ` L ${randomNumber(100)} ${randomNumber(100)}`;
+  }
+  return path;
 }
 
+function randomNumber(max) {
+  return Math.floor((Math.random() * max * 100)) / 100;
+}

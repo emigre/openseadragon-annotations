@@ -1,6 +1,6 @@
 import types from '../constants/actionTypes';
 import modes from '../constants/modes';
-import { STROKE_SIZE, STROKE_COLOR } from '../constants/graphical';
+import shapesFactory from '../utils/shapesFactory';
 
 export default function press(Dispatcher, Store, x, y) {
   switch (Store.getMode()) {
@@ -12,18 +12,7 @@ export default function press(Dispatcher, Store, x, y) {
       });
       Dispatcher.dispatch({
         type: types.ANNOTATIONS_CREATE,
-        annotation: [
-          'path', {
-            fill: 'none',
-            d: `M${x} ${y}`,
-            stroke: STROKE_COLOR,
-            'stroke-width': STROKE_SIZE,
-            'stroke-height': STROKE_SIZE,
-            'stroke-linejoin': 'round',
-            'stroke-linecap': 'round',
-            'vector-effect': 'non-scaling-stroke',
-          },
-        ],
+        annotation: shapesFactory.getPath(x, y),
       });
       break;
 

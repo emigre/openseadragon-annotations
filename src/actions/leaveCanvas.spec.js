@@ -2,18 +2,18 @@ import test from 'ava';
 import types from '../constants/actionTypes';
 import modes from '../constants/modes';
 import leaveCanvas from './leaveCanvas';
-import sinon from 'sinon';
 import { fakeFactory } from '../utils/test';
 
-const Dispatcher = fakeFactory.getDispatcher();
-const Store = fakeFactory.getStore();
-
 test.afterEach(t => {
+  const Dispatcher = fakeFactory.getDispatcher();
+  const Store = fakeFactory.getStore();
   fakeFactory.resetDispatcher(Dispatcher);
   fakeFactory.resetStore(Store);
 });
 
 test('should stop drawing', t => {
+  const Dispatcher = fakeFactory.getDispatcher();
+  const Store = fakeFactory.getStore();
   Store.getMode.returns(modes.DRAW);
   leaveCanvas(Dispatcher, Store);
   t.true(Dispatcher.dispatch.firstCall.calledWith({
