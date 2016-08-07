@@ -1,9 +1,6 @@
 import { h, Component } from 'preact';
 import Store from '../store/Store';
-import leaveCanvas from '../actions/leaveCanvas';
-import move from '../actions/move';
-import press from '../actions/press';
-import release from '../actions/release';
+import { leaveCanvas, move, press, release } from '../actions/';
 import modes from '../constants/modes';
 import { CHANGE_EVENT } from '../constants/events';
 

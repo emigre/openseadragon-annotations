@@ -1,32 +1,26 @@
 import test from 'ava';
-import Dispatcher from '../dispatcher/Dispatcher';
 import types from '../constants/actionTypes';
 import cleanCanvas from './cleanCanvas';
 import sinon from 'sinon';
+import { fakeFactory } from '../utils/test';
 
-let dispatch;
-
-test.beforeEach(t => {
-  dispatch = sinon.spy(Dispatcher, 'dispatch');
-});
-
-test.beforeEach(t => {
-  cleanCanvas();
-});
+const Dispatcher = fakeFactory.getDispatcher();
 
 test.afterEach(t => {
-  Dispatcher.dispatch.restore();
+  fakeFactory.resetDispatcher(Dispatcher);
 });
 
 test('should abort any ongoing activity', t => {
-  t.true(dispatch.firstCall.calledWith({
+  cleanCanvas(Dispatcher);
+  t.true(Dispatcher.dispatch.firstCall.calledWith({
     type: types.ACTIVITY_UPDATE,
     inProgress: false,
   }));
 });
 
-test('then it should empty the annotations list', t => {
-  t.true(dispatch.secondCall.calledWith({
+test('should empty the annotations list', t => {
+  cleanCanvas(Dispatcher);
+  t.true(Dispatcher.dispatch.secondCall.calledWith({
     type: types.ANNOTATIONS_RESET,
     annotations: [],
   }));

@@ -1,7 +1,6 @@
-import Dispatcher from '../dispatcher/Dispatcher';
 import types from '../constants/actionTypes';
 
-export default function fillCanvasWith(annotations) {
+export default function fillCanvasWith(Dispatcher, annotations) {
   Dispatcher.dispatch({
     type: types.ACTIVITY_UPDATE,
     inProgress: false,

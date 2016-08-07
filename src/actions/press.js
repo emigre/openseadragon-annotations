@@ -1,10 +1,8 @@
-import Dispatcher from '../dispatcher/Dispatcher';
-import Store from '../store/Store';
 import types from '../constants/actionTypes';
 import modes from '../constants/modes';
 import { STROKE_SIZE, STROKE_COLOR } from '../constants/graphical';
 
-export default function press(x, y) {
+export default function press(Dispatcher, Store, x, y) {
   switch (Store.getMode()) {
 
     case modes.DRAW:

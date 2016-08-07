@@ -1,23 +1,31 @@
 import test from 'ava';
 import types from '../constants/actionTypes';
 import modes from '../constants/modes';
-import leaveCanvas from './leaveCanvas';
+import move from './move';
 import sinon from 'sinon';
-import { fakeFactory } from '../utils/test';
+import { generatePath, fakeFactory } from '../utils/test';
 
 const Dispatcher = fakeFactory.getDispatcher();
 const Store = fakeFactory.getStore();
+const x = 33.3;
+const y = 55.5;
 
 test.afterEach(t => {
   fakeFactory.resetDispatcher(Dispatcher);
   fakeFactory.resetStore(Store);
 });
 
-test('should stop drawing', t => {
+test('when drawing, should update the path', t => {
+  const path = generatePath();
+  const d = path[1].d;
   Store.getMode.returns(modes.DRAW);
-  leaveCanvas(Dispatcher, Store);
+  Store.getLast.returns(path);
+  Store.isActivityInProgress.returns(true);
+  move(Dispatcher, Store, x, y);
   t.true(Dispatcher.dispatch.firstCall.calledWith({
-    type: types.ACTIVITY_UPDATE,
-    inProgress: false,
+    type: types.ANNOTATIONS_UPDATE_LAST,
+    update: {
+      d: `${d} L${x} ${y}`
+    },
   }));
 });

@@ -4,9 +4,7 @@ import Annotations from './components/Annotations';
 import Store from './store/Store';
 import modes from './constants/modes';
 import controlClasses from './controls';
-import selectMode from './actions/selectMode';
-import cleanCanvas from './actions/cleanCanvas';
-import fillCanvasWith from './actions/fillCanvasWith';
+import { selectMode, cleanCanvas, fillCanvasWith } from './actions/';
 
 const controls = controlClasses.map((Control) => new Control());
 

@@ -1,7 +1,6 @@
-import Dispatcher from '../dispatcher/Dispatcher';
 import types from '../constants/actionTypes';
 
-export default function cleanCanvas() {
+export default function cleanCanvas(Dispatcher) {
   Dispatcher.dispatch({
     type: types.ACTIVITY_UPDATE,
     inProgress: false,

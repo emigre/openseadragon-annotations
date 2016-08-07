@@ -1,8 +1,6 @@
-import Dispatcher from '../dispatcher/Dispatcher';
-import Store from '../store/Store';
 import types from '../constants/actionTypes';
 
-export default function selectMode(mode) {
+export default function selectMode(Dispatcher, Store, mode) {
   Dispatcher.dispatch({
     type: types.ACTIVITY_UPDATE,
     inProgress: false,
