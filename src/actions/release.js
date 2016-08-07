@@ -1,5 +1,3 @@
-import Dispatcher from '../dispatcher/Dispatcher';
-import Store from '../store/Store';
 import types from '../constants/actionTypes';
 import modes from '../constants/modes';
 
