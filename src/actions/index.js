@@ -9,12 +9,20 @@ import press from './press';
 import release from './release';
 import selectMode from './selectMode';
 
-export default {
-  cleanCanvas: cleanCanvas.bind(null, Dispatcher),
-  fillCanvasWith: fillCanvasWith.bind(null, Dispatcher),
-  leaveCanvas: leaveCanvas.bind(null, Dispatcher, Store),
-  move: move.bind(null, Dispatcher, Store),
-  press: press.bind(null, Dispatcher, Store),
-  release: release.bind(null, Dispatcher, Store),
-  selectMode: selectMode.bind(null, Dispatcher, Store),
+const bindedCleanCanvas = cleanCanvas.bind(null, Dispatcher);
+const bindedFillCanvasWith = fillCanvasWith.bind(null, Dispatcher);
+const bindedLeaveCanvas = leaveCanvas.bind(null, Dispatcher, Store);
+const bindedMove = move.bind(null, Dispatcher, Store);
+const bindedPress = press.bind(null, Dispatcher, Store);
+const bindedRelease = release.bind(null, Dispatcher, Store);
+const bindedSelectMode = selectMode.bind(null, Dispatcher, Store);
+
+export {
+  bindedCleanCanvas as cleanCanvas,
+  bindedFillCanvasWith as fillCanvasWith,
+  bindedLeaveCanvas as leaveCanvas,
+  bindedMove as move,
+  bindedPress as press,
+  bindedRelease as release,
+  bindedSelectMode as selectMode,
 };

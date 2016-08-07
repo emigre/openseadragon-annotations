@@ -1,5 +1,5 @@
 import { extend, Button } from 'OpenSeadragon';
-import selectMode from '../actions/selectMode';
+import { selectMode } from '../actions/';
 import Store from '../store/Store';
 import { CHANGE_EVENT } from '../constants/events';
 
