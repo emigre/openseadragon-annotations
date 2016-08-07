@@ -19,7 +19,6 @@ let overlay = null;
 // for the 'open' event to start itself
 
 OpenSeadragon.Viewer.prototype.initializeAnnotations = function initialize(cb) {
-  window.gas = this;
   const start = () => {
     const bounds = this.world.getHomeBounds();
     const rect = new Rect(0, 0, bounds.width, bounds.height);
@@ -35,7 +34,7 @@ OpenSeadragon.Viewer.prototype.initializeAnnotations = function initialize(cb) {
       openHandler = null;
     }
     isPluginActive = true;
-    cb();
+    if (cb) { cb(); }
   };
 
   if (isPluginActive) {
