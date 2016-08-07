@@ -33,6 +33,7 @@ export default class Annotations extends Component {
     return (
       <svg
         {...svgProperties}
+        style={{ cursor: 'default' }}
         onMouseDown={unlessInMoveMode((e) => press(...this.coords(e)))}
         onMouseLeave={unlessInMoveMode(leaveCanvas)}
         onMouseMove={unlessInMoveMode((e) => move(...this.coords(e)))}
