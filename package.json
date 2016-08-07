@@ -24,6 +24,29 @@
   "bugs": {
     "url": "https://github.com/Emigre/openseadragon-annotations/issues"
   },
+  "ava": {
+    "babel": "inherit",
+    "files": "src/**/*.spec.js",
+    "source": "src/**/*.{jsx,js}",
+    "require": [
+      "babel-register",
+      "./ava.setup.js"
+    ]
+  },
+  "nyc": {
+    "extension": [
+      ".jsx"
+    ],
+    "exclude": [
+      "**/*.spec.js",
+      "**/*.setup.js"
+    ],
+    "reporter": [
+      "lcov",
+      "text",
+      "html"
+    ]
+  },
   "keywords": [
     "deep",
     "zoom",
