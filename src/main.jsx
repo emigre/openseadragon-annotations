@@ -39,7 +39,7 @@ OpenSeadragon.Viewer.prototype.initializeAnnotations = function initialize(cb) {
   };
 
   if (isPluginActive) {
-    cb();
+    throw new Error('The OpenSeadragon Annotations plugin is already running');
   }
   if (overlay) {
     throw new Error('An existing overlay has been found');
@@ -48,6 +48,13 @@ OpenSeadragon.Viewer.prototype.initializeAnnotations = function initialize(cb) {
   if (this.isOpen()) {
     start();
   } else {
+    if (openHandler) {
+      // if there is a handler initializeAnnotations() has been
+      // called before. Cancel that handler (with the previously
+      // passed callback)...
+      this.removeHandler('open', openHandler);
+    }
+    // ...and set a new one, which will use the new passed callback
     openHandler = start;
     this.addOnceHandler('open', start);
   }
