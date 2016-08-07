@@ -20,7 +20,7 @@ export default function press(x, y) {
             d: `M${x} ${y}`,
             stroke: STROKE_COLOR,
             'stroke-width': STROKE_SIZE,
-            'stronke-height': STROKE_SIZE,
+            'stroke-height': STROKE_SIZE,
             'stroke-linejoin': 'round',
             'stroke-linecap': 'round',
             'vector-effect': 'non-scaling-stroke',
