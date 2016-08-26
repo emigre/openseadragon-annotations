@@ -3,6 +3,7 @@ import Store from '../store/Store';
 import { leaveCanvas, move, press, release } from '../actions/';
 import { MOVE } from '../constants/modes';
 import { CHANGE_EVENT } from '../constants/events';
+import { convertWidth, convertHeight } from '../utils/convert';
 
 export default class Annotations extends Component {
   getInitialState() {
@@ -19,8 +20,8 @@ export default class Annotations extends Component {
     const rect = this.base.getBoundingClientRect();
     const offsetX = e.clientX - rect.left;
     const offsetY = e.clientY - rect.top;
-    const x = (offsetX / rect.width) * 100;
-    const y = (offsetY / rect.height) * 100;
+    const x = convertWidth.toPercent(offsetX);
+    const y = convertHeight.toPercent(offsetY);
     return [
       Math.round(x * 100) / 100,
       Math.round(y * 100) / 100,

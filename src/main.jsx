@@ -4,29 +4,47 @@ import Annotations from './components/Annotations';
 import Store from './store/Store';
 import { MOVE } from './constants/modes';
 import controlClasses from './controls';
-import { selectMode, cleanCanvas, fillCanvasWith } from './actions/';
+import { selectMode, cleanCanvas, fillCanvasWith, zoom, initialize } from './actions/';
 
 const controls = controlClasses.map((Control) => new Control());
 
 let isPluginActive = false;
 let openHandler = null;
+let zoomHandler = null;
 let overlay = null;
 
 // the viewer gains the following methods through its prototype,
 // which are used to start and stop the plugin. The plugin waits
 // for the 'open' event to start itself
 
-OpenSeadragon.Viewer.prototype.initializeAnnotations = function initialize(cb) {
+OpenSeadragon.Viewer.prototype.initializeAnnotations = function init(cb) {
+  // updateZoom notifies the plugin of changes in the zoom level
+  const updateZoom = (e) => zoom(e.zoom);
+  // start is the function called once the 'open' event has been fired
   const start = () => {
+    zoomHandler = updateZoom;
+    this.addHandler('zoom', updateZoom);
+
     const bounds = this.world.getHomeBounds();
     const rect = new Rect(0, 0, bounds.width, bounds.height);
     overlay = render(<Annotations />);
     this.addOverlay(overlay, rect);
+
+    const currentZoom = this.viewport.getZoom();
+    const boundingClientRect = overlay.getBoundingClientRect();
+    initialize({
+      zoom: currentZoom,
+      width: boundingClientRect.width,
+      height: boundingClientRect.height,
+    });
+
     controls.forEach((control) => {
       this.addControl(control.btn.element, {
         anchor: ControlAnchor.BOTTOM_LEFT,
       });
     });
+
+    // clean up the listener that triggers this start
     if (openHandler) {
       this.removeHandler('open', openHandler);
       openHandler = null;
@@ -57,19 +75,19 @@ OpenSeadragon.Viewer.prototype.initializeAnnotations = function initialize(cb) {
   }
 };
 
-OpenSeadragon.Viewer.prototype.areAnnotationsActive = function isActive() {
+OpenSeadragon.Viewer.prototype.areAnnotationsActive = function areActive() {
   return isPluginActive;
 };
 
 OpenSeadragon.Viewer.prototype.shutdownAnnotations = ifPluginIsActive(function shutdown() {
-  // if the plugin is running, overlay should not be null and the
-  // 'open' handler should have been set back to null during start
   if (openHandler !== null) {
     throw new Error('An untriggered handler for the \'open\' event has been found');
   }
   if (overlay === null) {
     throw new Error('Null reference to the SVG overlay');
   }
+  this.removeHandler('zoom', zoomHandler);
+  zoomHandler = null;
   this.removeOverlay(overlay);
   overlay = null;
   const ourControls = controls;
