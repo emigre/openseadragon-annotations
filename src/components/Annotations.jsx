@@ -3,6 +3,7 @@ import Store from '../store/Store';
 import { leaveCanvas, move, press, release } from '../actions/';
 import { MOVE } from '../constants/modes';
 import { CHANGE_EVENT } from '../constants/events';
+import { STROKE_SIZE } from '../constants/graphical';
 import { convertWidth, convertHeight } from '../utils/convert';
 
 export default class Annotations extends Component {
@@ -70,7 +71,10 @@ export default class Annotations extends Component {
           }
         }}
       >
-        { this.state.annotations.map(el => h(...el)) }
+        { this.state.annotations.map((el) => {
+            el[1]['stroke-width'] = convertWidth.toPercent(STROKE_SIZE);
+            return h(...el);
+        }) }
       </svg>
     );
   }
