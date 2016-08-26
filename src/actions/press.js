@@ -1,17 +1,17 @@
-import types from '../constants/actionTypes';
-import modes from '../constants/modes';
+import { ACTIVITY_UPDATE, ANNOTATIONS_CREATE } from '../constants/actionTypes';
+import { DRAW } from '../constants/modes';
 import shapesFactory from '../utils/shapesFactory';
 
 export default function press(Dispatcher, Store, x, y) {
   switch (Store.getMode()) {
 
-    case modes.DRAW:
+    case DRAW:
       Dispatcher.dispatch({
-        type: types.ACTIVITY_UPDATE,
+        type: ACTIVITY_UPDATE,
         inProgress: true,
       });
       Dispatcher.dispatch({
-        type: types.ANNOTATIONS_CREATE,
+        type: ANNOTATIONS_CREATE,
         annotation: shapesFactory.getPath(x, y),
       });
       break;

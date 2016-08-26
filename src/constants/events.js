@@ -1,5 +1,3 @@
-const events = {
-  CHANGE_EVENT: 'CHANGE_EVENT',
-};
+const CHANGE_EVENT = 'CHANGE_EVENT';
 
-export default events;
+export { CHANGE_EVENT };

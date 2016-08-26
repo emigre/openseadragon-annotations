@@ -1,6 +1,6 @@
 import test from 'ava';
-import types from '../constants/actionTypes';
-import modes from '../constants/modes';
+import { ACTIVITY_UPDATE, ANNOTATIONS_CREATE } from '../constants/actionTypes';
+import { DRAW } from '../constants/modes';
 import press from './press';
 import { fakeFactory } from '../utils/test';
 import shapesFactory from '../utils/shapesFactory';
@@ -10,10 +10,10 @@ test('when drawing, it should start an activity', t => {
   const Store = fakeFactory.getStore();
   const x = 33.3;
   const y = 55.5;
-  Store.getMode.returns(modes.DRAW);
+  Store.getMode.returns(DRAW);
   press(Dispatcher, Store, x, y);
   t.true(Dispatcher.dispatch.firstCall.calledWith({
-    type: types.ACTIVITY_UPDATE,
+    type: ACTIVITY_UPDATE,
     inProgress: true,
   }));
 });
@@ -23,10 +23,10 @@ test('when drawing, it should create a new path', t => {
   const Store = fakeFactory.getStore();
   const x = 33.3;
   const y = 55.5;
-  Store.getMode.returns(modes.DRAW);
+  Store.getMode.returns(DRAW);
   press(Dispatcher, Store, x, y);
   t.true(Dispatcher.dispatch.secondCall.calledWith({
-    type: types.ANNOTATIONS_CREATE,
+    type: ANNOTATIONS_CREATE,
     annotation: shapesFactory.getPath(x, y),
   }));
 });

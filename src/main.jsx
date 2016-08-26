@@ -2,7 +2,7 @@ import OpenSeadragon, { Rect, ControlAnchor } from 'OpenSeadragon';
 import { h, render } from 'preact';
 import Annotations from './components/Annotations';
 import Store from './store/Store';
-import modes from './constants/modes';
+import { MOVE } from './constants/modes';
 import controlClasses from './controls';
 import { selectMode, cleanCanvas, fillCanvasWith } from './actions/';
 
@@ -82,7 +82,7 @@ OpenSeadragon.Viewer.prototype.shutdownAnnotations = ifPluginIsActive(function s
       }
     });
   });
-  selectMode(modes.MOVE);
+  selectMode(MOVE);
   cleanCanvas();
   isPluginActive = false;
 });

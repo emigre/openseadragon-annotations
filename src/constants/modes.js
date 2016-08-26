@@ -1,6 +1,4 @@
-const modes = {
-  MOVE: 'MOVE',
-  DRAW: 'DRAW',
-};
+const MOVE = 'MOVE';
+const DRAW = 'DRAW';
 
-export default modes;
+export { MOVE, DRAW };

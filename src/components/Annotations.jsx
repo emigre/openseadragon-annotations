@@ -1,7 +1,7 @@
 import { h, Component } from 'preact';
 import Store from '../store/Store';
 import { leaveCanvas, move, press, release } from '../actions/';
-import modes from '../constants/modes';
+import { MOVE } from '../constants/modes';
 import { CHANGE_EVENT } from '../constants/events';
 
 export default class Annotations extends Component {
@@ -16,13 +16,11 @@ export default class Annotations extends Component {
   }
 
   coords(e) {
-    const width = this.base.clientWidth;
-    const height = this.base.clientHeight;
     const rect = this.base.getBoundingClientRect();
     const offsetX = e.clientX - rect.left;
     const offsetY = e.clientY - rect.top;
-    const x = (offsetX / width) * 100;
-    const y = (offsetY / height) * 100;
+    const x = (offsetX / rect.width) * 100;
+    const y = (offsetY / rect.height) * 100;
     return [
       Math.round(x * 100) / 100,
       Math.round(y * 100) / 100,
@@ -33,11 +31,43 @@ export default class Annotations extends Component {
     return (
       <svg
         {...svgProperties}
-        style={{ cursor: 'default' }}
-        onMouseDown={unlessInMoveMode((e) => press(...this.coords(e)))}
-        onMouseLeave={unlessInMoveMode(leaveCanvas)}
-        onMouseMove={unlessInMoveMode((e) => move(...this.coords(e)))}
-        onMouseUp={unlessInMoveMode(release)}
+        style={svgStyles}
+        onMouseDown={(e) => {
+          if (Store.getMode() !== MOVE) {
+            e.stopPropagation();
+            press(...this.coords(e));
+          }
+        }}
+        onPointerDown={(e) => {
+          if (Store.getMode() !== MOVE) {
+            e.stopPropagation();
+            press(...this.coords(e));
+          }
+        }}
+        onMouseLeave={(e) => {
+          if (Store.getMode() !== MOVE) {
+            e.stopPropagation();
+            leaveCanvas();
+          }
+        }}
+        onMouseMove={(e) => {
+          if (Store.getMode() !== MOVE) {
+            e.stopPropagation();
+            move(...this.coords(e));
+          }
+        }}
+        onMouseUp={(e) => {
+          if (Store.getMode() !== MOVE) {
+            e.stopPropagation();
+            release();
+          }
+        }}
+        onPointerUp={(e) => {
+          if (Store.getMode() !== MOVE) {
+            e.stopPropagation();
+            release();
+          }
+        }}
       >
         { this.state.annotations.map(el => h(...el)) }
       </svg>
@@ -45,13 +75,10 @@ export default class Annotations extends Component {
   }
 }
 
-function unlessInMoveMode(fn) {
-  return (e) => {
-    if (Store.getMode() !== modes.MOVE) {
-      e.stopPropagation();
-      fn(e);
-    }
-  };
+const svgStyles = {
+  cursor: 'default',
+  // IE 9-10 fix
+  'background-color': 'rgba(0,0,0,0)',
 }
 
 const svgProperties = {

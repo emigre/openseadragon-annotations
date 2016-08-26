@@ -1,12 +1,12 @@
-import types from '../constants/actionTypes';
+import { ACTIVITY_UPDATE, ANNOTATIONS_RESET } from '../constants/actionTypes';
 
 export default function cleanCanvas(Dispatcher) {
   Dispatcher.dispatch({
-    type: types.ACTIVITY_UPDATE,
+    type: ACTIVITY_UPDATE,
     inProgress: false,
   });
   Dispatcher.dispatch({
-    type: types.ANNOTATIONS_RESET,
+    type: ANNOTATIONS_RESET,
     annotations: [],
   });
 }
