@@ -30,9 +30,9 @@ test('when selecting the currently active mode, it should not try to change the 
   const Dispatcher = fakeFactory.getDispatcher();
   const Store = fakeFactory.getStore();
   Store.getMode.returns(MOVE);
-  selectMode(Dispatcher, Store, modes.MODE);
+  selectMode(Dispatcher, Store, MOVE);
   t.false(Dispatcher.dispatch.secondCall.calledWith({
     type: MODE_UPDATE,
-    mode: DRAW,
+    mode: MOVE,
   }));
 });

@@ -72,8 +72,9 @@ export default class Annotations extends Component {
         }}
       >
         { this.state.annotations.map((el) => {
-            el[1]['stroke-width'] = convertWidth.toPercent(STROKE_SIZE);
-            return h(...el);
+          const newEl = el;
+          newEl[1]['stroke-width'] = convertWidth.toPercent(STROKE_SIZE);
+          return h(...newEl);
         }) }
       </svg>
     );
@@ -84,7 +85,7 @@ const svgStyles = {
   cursor: 'default',
   // IE 9-10 fix
   'background-color': 'rgba(0,0,0,0)',
-}
+};
 
 const svgProperties = {
   xmlns: 'http://www.w3.org/2000/svg',

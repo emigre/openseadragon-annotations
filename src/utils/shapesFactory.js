@@ -1,4 +1,4 @@
-import { STROKE_SIZE, STROKE_COLOR } from '../constants/graphical';
+import { STROKE_COLOR } from '../constants/graphical';
 
 const shapesFactory = {
   getPath(x, y) {
