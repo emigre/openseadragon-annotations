@@ -48,6 +48,14 @@ class AppStore extends OpenSeadragon.EventSource {
     return data.mode;
   }
 
+  inMoveMode() {
+    return this.getMode() === MOVE;
+  }
+
+  notInMoveMode() {
+    return !this.inMoveMode();
+  }
+
   getZoomLevel() {
     return data.zoom;
   }

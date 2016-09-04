@@ -29,47 +29,45 @@ export default class Annotations extends Component {
     ];
   }
 
+  handleMouseDown(e) {
+    if (Store.notInMoveMode()) {
+      e.stopPropagation();
+      press(...this.coords(e));
+    }
+  }
+
+  handleMouseLeave(e) {
+    if (Store.notInMoveMode()) {
+      e.stopPropagation();
+      leaveCanvas();
+    }
+  }
+
+  handleMouseMove(e) {
+    if (Store.notInMoveMode()) {
+      e.stopPropagation();
+      move(...this.coords(e));
+    }
+  }
+
+  handleMouseUp(e) {
+    if (Store.notInMoveMode()) {
+      e.stopPropagation();
+      release();
+    }
+  }
+
   render() {
     return (
       <svg
         {...svgProperties}
         style={svgStyles}
-        onMouseDown={(e) => {
-          if (Store.getMode() !== MOVE) {
-            e.stopPropagation();
-            press(...this.coords(e));
-          }
-        }}
-        onPointerDown={(e) => {
-          if (Store.getMode() !== MOVE) {
-            e.stopPropagation();
-            press(...this.coords(e));
-          }
-        }}
-        onMouseLeave={(e) => {
-          if (Store.getMode() !== MOVE) {
-            e.stopPropagation();
-            leaveCanvas();
-          }
-        }}
-        onMouseMove={(e) => {
-          if (Store.getMode() !== MOVE) {
-            e.stopPropagation();
-            move(...this.coords(e));
-          }
-        }}
-        onMouseUp={(e) => {
-          if (Store.getMode() !== MOVE) {
-            e.stopPropagation();
-            release();
-          }
-        }}
-        onPointerUp={(e) => {
-          if (Store.getMode() !== MOVE) {
-            e.stopPropagation();
-            release();
-          }
-        }}
+        onMouseDown={this.handleMouseDown.bind(this)}
+        onPointerDown={this.handleMouseDown.bind(this)}
+        onMouseLeave={this.handleMouseLeave.bind(this)}
+        onMouseMove={this.handleMouseMove.bind(this)}
+        onMouseUp={this.handleMouseUp.bind(this)}
+        onPointerUp={this.handleMouseUp.bind(this)}
       >
         { this.state.annotations.map((el) => {
           const newEl = el;
