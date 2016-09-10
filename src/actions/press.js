@@ -2,7 +2,7 @@ import { ACTIVITY_UPDATE, ANNOTATIONS_CREATE } from '../constants/actionTypes';
 import { DRAW } from '../constants/modes';
 import shapesFactory from '../utils/shapesFactory';
 
-export default function press(Dispatcher, Store, x, y) {
+export default function press(x, y, Dispatcher, Store) {
   switch (Store.getMode()) {
 
     case DRAW:

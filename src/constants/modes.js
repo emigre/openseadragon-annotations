@@ -1,4 +1,2 @@
-const MOVE = 'MOVE';
-const DRAW = 'DRAW';
-
-export { MOVE, DRAW };
+export const MOVE = 'MOVE';
+export const DRAW = 'DRAW';

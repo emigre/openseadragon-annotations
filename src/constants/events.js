@@ -1,3 +1,3 @@
-const CHANGE_EVENT = 'CHANGE_EVENT';
+/* eslint import/prefer-default-export: 0 */
 
-export default CHANGE_EVENT;
+export const CHANGE_EVENT = 'CHANGE_EVENT';

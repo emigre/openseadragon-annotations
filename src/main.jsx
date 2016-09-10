@@ -2,9 +2,14 @@ import OpenSeadragon, { Rect, ControlAnchor } from 'OpenSeadragon';
 import { h, render } from 'preact';
 import Annotations from './components/Annotations';
 import Store from './store/Store';
+import Dispatcher from './dispatcher/Dispatcher';
 import { MOVE } from './constants/modes';
 import controlClasses from './controls';
-import { selectMode, cleanCanvas, fillCanvasWith, zoom, initialize } from './actions/';
+import initialize from './actions/initialize';
+import selectMode from './actions/selectMode';
+import cleanCanvas from './actions/cleanCanvas';
+import fillCanvasWith from './actions/fillCanvasWith';
+import zoom from './actions/zoom';
 
 const controls = controlClasses.map((Control) => new Control());
 
@@ -19,7 +24,7 @@ let overlay = null;
 
 OpenSeadragon.Viewer.prototype.initializeAnnotations = function init(cb) {
   // updateZoom notifies the plugin of changes in the zoom level
-  const updateZoom = (e) => zoom(e.zoom);
+  const updateZoom = (e) => zoom(e.zoom, Dispatcher);
   // start is the function called once the 'open' event has been fired
   const start = () => {
     zoomHandler = updateZoom;
@@ -36,7 +41,7 @@ OpenSeadragon.Viewer.prototype.initializeAnnotations = function init(cb) {
       zoom: currentZoom,
       width: boundingClientRect.width,
       height: boundingClientRect.height,
-    });
+    }, Dispatcher);
 
     controls.forEach((control) => {
       this.addControl(control.btn.element, {
@@ -100,8 +105,8 @@ OpenSeadragon.Viewer.prototype.shutdownAnnotations = ifPluginIsActive(function s
       }
     });
   });
-  selectMode(MOVE);
-  cleanCanvas();
+  selectMode(MOVE, Dispatcher, Store);
+  cleanCanvas(Dispatcher);
   isPluginActive = false;
 });
 
@@ -112,11 +117,11 @@ OpenSeadragon.Viewer.prototype.shutdownAnnotations = ifPluginIsActive(function s
 const get = ifPluginIsActive(() => Store.getAll());
 
 const set = ifPluginIsActive((annotations) => {
-  fillCanvasWith(annotations);
+  fillCanvasWith(annotations, Dispatcher);
 });
 
 const clean = ifPluginIsActive(() => {
-  cleanCanvas();
+  cleanCanvas(Dispatcher);
 });
 
 // modifies the passed function so it's only called when the

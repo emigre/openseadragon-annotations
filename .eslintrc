@@ -15,5 +15,6 @@
     "no-unused-vars": [2, { "varsIgnorePattern": "^h$" }],
     "import/no-extraneous-dependencies": 0,
     "import/no-unresolved": 0,
+    "react/jsx-no-bind": 0,
   }
 }

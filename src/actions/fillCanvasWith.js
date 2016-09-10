@@ -1,6 +1,6 @@
 import { ACTIVITY_UPDATE, ANNOTATIONS_RESET } from '../constants/actionTypes';
 
-export default function fillCanvasWith(Dispatcher, annotations) {
+export default function fillCanvasWith(annotations, Dispatcher) {
   Dispatcher.dispatch({
     type: ACTIVITY_UPDATE,
     inProgress: false,

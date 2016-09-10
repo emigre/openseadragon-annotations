@@ -1,7 +1,10 @@
 import { h, Component } from 'preact';
 import Store from '../store/Store';
-import { leaveCanvas, move, press, release } from '../actions/';
-import { MOVE } from '../constants/modes';
+import Dispatcher from '../dispatcher/Dispatcher';
+import leaveCanvas from '../actions/leaveCanvas';
+import move from '../actions/move';
+import press from '../actions/press';
+import release from '../actions/release';
 import { CHANGE_EVENT } from '../constants/events';
 import { STROKE_SIZE } from '../constants/graphical';
 import { convertWidth, convertHeight } from '../utils/convert';
@@ -32,28 +35,28 @@ export default class Annotations extends Component {
   handleMouseDown(e) {
     if (Store.notInMoveMode()) {
       e.stopPropagation();
-      press(...this.coords(e));
+      press(...this.coords(e), Dispatcher, Store);
     }
   }
 
   handleMouseLeave(e) {
     if (Store.notInMoveMode()) {
       e.stopPropagation();
-      leaveCanvas();
+      leaveCanvas(Dispatcher, Store);
     }
   }
 
   handleMouseMove(e) {
     if (Store.notInMoveMode()) {
       e.stopPropagation();
-      move(...this.coords(e));
+      move(...this.coords(e), Dispatcher, Store);
     }
   }
 
   handleMouseUp(e) {
     if (Store.notInMoveMode()) {
       e.stopPropagation();
-      release();
+      release(Dispatcher, Store);
     }
   }
 
@@ -78,6 +81,9 @@ export default class Annotations extends Component {
     );
   }
 }
+
+// vector-effect="non-scaling-stroke"
+// document.documentElement.style.vectorEffect !== undefined
 
 const svgStyles = {
   cursor: 'default',

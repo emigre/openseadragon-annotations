@@ -1,6 +1,7 @@
 import { extend, Button } from 'OpenSeadragon';
-import { selectMode } from '../actions/';
+import selectMode from '../actions/selectMode';
 import Store from '../store/Store';
+import Dispatcher from '../dispatcher/Dispatcher';
 import { CHANGE_EVENT } from '../constants/events';
 
 export default class Control {
@@ -31,7 +32,7 @@ export default class Control {
 
   onClick(e) {
     if (e.eventSource.Tooltip) {
-      selectMode(e.eventSource.Tooltip.toUpperCase());
+      selectMode(e.eventSource.Tooltip.toUpperCase(), Dispatcher, Store);
     }
   }
 }

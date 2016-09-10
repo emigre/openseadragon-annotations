@@ -8,7 +8,7 @@ test('should abort any ongoing activity', t => {
   const Dispatcher = fakeFactory.getDispatcher();
   const Store = fakeFactory.getStore();
   Store.getMode.returns(DRAW);
-  selectMode(Dispatcher, Store, DRAW);
+  selectMode(DRAW, Dispatcher, Store);
   t.true(Dispatcher.dispatch.firstCall.calledWith({
     type: ACTIVITY_UPDATE,
     inProgress: false,
@@ -19,7 +19,7 @@ test('when the selected mode is not the current, it should change the mode', t =
   const Dispatcher = fakeFactory.getDispatcher();
   const Store = fakeFactory.getStore();
   Store.getMode.returns(MOVE);
-  selectMode(Dispatcher, Store, DRAW);
+  selectMode(DRAW, Dispatcher, Store);
   t.true(Dispatcher.dispatch.secondCall.calledWith({
     type: MODE_UPDATE,
     mode: DRAW,
@@ -30,6 +30,6 @@ test('when selecting the currently active mode, it should not try to change the 
   const Dispatcher = fakeFactory.getDispatcher();
   const Store = fakeFactory.getStore();
   Store.getMode.returns(MOVE);
-  selectMode(Dispatcher, Store, MOVE);
+  selectMode(MOVE, Dispatcher, Store);
   t.true(Dispatcher.dispatch.calledOnce);
 });

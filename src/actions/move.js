@@ -1,7 +1,7 @@
 import { ANNOTATIONS_UPDATE_LAST } from '../constants/actionTypes';
 import { DRAW } from '../constants/modes';
 
-export default function move(Dispatcher, Store, x, y) {
+export default function move(x, y, Dispatcher, Store) {
   switch (Store.getMode()) {
 
     case DRAW:

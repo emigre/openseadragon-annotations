@@ -14,7 +14,7 @@ test('when drawing, should update the path', t => {
   Store.getMode.returns(DRAW);
   Store.getLast.returns(path);
   Store.isActivityInProgress.returns(true);
-  move(Dispatcher, Store, x, y);
+  move(x, y, Dispatcher, Store);
   t.true(Dispatcher.dispatch.firstCall.calledWith({
     type: ANNOTATIONS_UPDATE_LAST,
     update: { d: `${d} L${x} ${y}` },
