@@ -79,16 +79,15 @@ export default class Annotations extends Component {
 }
 
 const createAnnotations = (() => {
-  if (isVectorEffectSupported()) {
-    return (el) => h(...el);
-  } else {
-    // IE and Edge fix
-    return (el) => {
+  let fn = (el) => h(...el);
+  if (!isVectorEffectSupported()) { // IE and Edge fix
+    fn = (el) => {
       const newEl = el;
       newEl[1]['stroke-width'] = convertWidth.toPercent(STROKE_SIZE);
       return h(...newEl);
-    }
+    };
   }
+  return fn;
 })();
 
 // checks if we can use vector-effect="non-scaling-stroke" to
