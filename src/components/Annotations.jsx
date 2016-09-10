@@ -5,6 +5,7 @@ import leaveCanvas from '../actions/leaveCanvas';
 import move from '../actions/move';
 import press from '../actions/press';
 import release from '../actions/release';
+import isVectorEffectSupported from '../utils/isVectorEffectSupported';
 import { CHANGE_EVENT } from '../constants/events';
 import { STROKE_SIZE } from '../constants/graphical';
 import { convertWidth, convertHeight } from '../utils/convert';
@@ -90,12 +91,6 @@ const createAnnotations = (() => {
     }
   }
 })();
-
-// checks if we can use vector-effect="non-scaling-stroke" to
-// maintain constant the witdh of the SVG strokes
-function isVectorEffectSupported() {
-  return document.documentElement.style.vectorEffect !== undefined;
-}
 
 const svgStyles = {
   cursor: 'default',
