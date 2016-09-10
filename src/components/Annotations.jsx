@@ -72,18 +72,30 @@ export default class Annotations extends Component {
         onMouseUp={this.handleMouseUp.bind(this)}
         onPointerUp={this.handleMouseUp.bind(this)}
       >
-        { this.state.annotations.map((el) => {
-          const newEl = el;
-          newEl[1]['stroke-width'] = convertWidth.toPercent(STROKE_SIZE);
-          return h(...newEl);
-        }) }
+        { this.state.annotations.map(createAnnotations) }
       </svg>
     );
   }
 }
 
-// vector-effect="non-scaling-stroke"
-// document.documentElement.style.vectorEffect !== undefined
+const createAnnotations = (() => {
+  if (isVectorEffectSupported()) {
+    return (el) => h(...el);
+  } else {
+    // IE and Edge fix
+    return (el) => {
+      const newEl = el;
+      newEl[1]['stroke-width'] = convertWidth.toPercent(STROKE_SIZE);
+      return h(...newEl);
+    }
+  }
+})();
+
+// checks if we can use vector-effect="non-scaling-stroke" to
+// maintain constant the witdh of the SVG strokes
+function isVectorEffectSupported() {
+  return document.documentElement.style.vectorEffect !== undefined;
+}
 
 const svgStyles = {
   cursor: 'default',

@@ -1,4 +1,4 @@
-import { STROKE_COLOR } from '../constants/graphical';
+import { STROKE_SIZE, STROKE_COLOR } from '../constants/graphical';
 
 const shapesFactory = {
   getPath(x, y) {
@@ -8,8 +8,10 @@ const shapesFactory = {
         fill: 'none',
         d: `M${x} ${y}`,
         stroke: STROKE_COLOR,
+        'stroke-width': STROKE_SIZE,
         'stroke-linejoin': 'round',
         'stroke-linecap': 'round',
+        'vector-effect': 'non-scaling-stroke',
       },
     ];
   },
