@@ -49,7 +49,7 @@ To check the state of the plugin, call `viewer.areAnnotationsActive();`, it will
 
 To shut down the plugin use `viewer.shutdownAnnotations();`. This will destroy the overlay and remove the buttons and event handlers. The plugin can be started again later in the usual way.
 
-### Interacting with the plugin
+### Interacting With The Plugin
 
 When the plugin is installed, your `viewer` object gains a property object named `annotations` that allows you to interact with it. Through this object's methods you can set and retrieve the current annotations.
 
@@ -58,3 +58,7 @@ Calling `viewer.annotations.get()` will return an Array of annotations. Annotati
 You can call `viewer.annotations.set()` and pass one of those Array of Arrays to reset the current drawing to that particular data.
 
 `viewer.annotations.clean()` will erase all annotations currently on screen.
+
+### Supported Browsers
+
+The plugin works on Chrome, Firefox, Opera and Safari. Internet Explorer 9 and above and Microsoft Edge are also supported, but performance is worse in them due to their lack of support for the `vector-effect` SVG attribute.
