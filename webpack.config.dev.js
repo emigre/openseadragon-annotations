@@ -10,7 +10,7 @@ module.exports = {
   resolve: {
     extensions: ['', '.jsx', '.js'],
   },
-  entry: path.join(__dirname, 'src/main.jsx'),
+  entry: path.join(__dirname, 'src/main.js'),
   output: {
     path: path.resolve(__dirname, 'dist/'),
     filename: 'openseadragon-annotations.js',

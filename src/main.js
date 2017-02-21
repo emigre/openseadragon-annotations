@@ -31,7 +31,7 @@ OpenSeadragon.Viewer.prototype.initializeAnnotations = function init(cb) {
 
     const bounds = this.world.getHomeBounds();
     const rect = new Rect(0, 0, bounds.width, bounds.height);
-    overlay = render(<Annotations />);
+    overlay = render(h(Annotations));
     this.addOverlay(overlay, rect);
 
     const currentZoom = this.viewport.getZoom();
