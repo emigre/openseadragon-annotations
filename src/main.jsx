@@ -3,7 +3,6 @@ import { h, render } from 'preact';
 import Annotations from './components/Annotations';
 import Store from './store/Store';
 import Dispatcher from './dispatcher/Dispatcher';
-import { MOVE } from './constants/modes';
 import controlClasses from './controls';
 import initialize from './actions/initialize';
 import selectMode from './actions/selectMode';
@@ -105,7 +104,7 @@ OpenSeadragon.Viewer.prototype.shutdownAnnotations = ifPluginIsActive(function s
       }
     });
   });
-  selectMode(MOVE, Dispatcher, Store);
+  selectMode('MOVE', Dispatcher, Store);
   cleanCanvas(Dispatcher);
   isPluginActive = false;
 });

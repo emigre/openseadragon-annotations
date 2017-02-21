@@ -5,8 +5,6 @@ import leaveCanvas from '../actions/leaveCanvas';
 import move from '../actions/move';
 import press from '../actions/press';
 import release from '../actions/release';
-import { CHANGE_EVENT } from '../constants/events';
-import { STROKE_SIZE } from '../constants/graphical';
 import { convertWidth, convertHeight } from '../utils/convert';
 
 export default class Annotations extends Component {
@@ -15,7 +13,7 @@ export default class Annotations extends Component {
   }
 
   componentDidMount() {
-    Store.addHandler(CHANGE_EVENT, () => {
+    Store.addHandler('CHANGE_EVENT', () => {
       this.setState({ annotations: Store.getAll() });
     });
   }
@@ -83,7 +81,7 @@ const createAnnotations = (() => {
   if (!isVectorEffectSupported()) { // IE and Edge fix
     fn = (el) => {
       const newEl = el;
-      newEl[1]['stroke-width'] = convertWidth.toPercent(STROKE_SIZE);
+      newEl[1]['stroke-width'] = convertWidth.toPercent(3);
       return h(...newEl);
     };
   }
