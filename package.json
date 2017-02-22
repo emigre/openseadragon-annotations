@@ -57,7 +57,6 @@
   ],
   "dependencies": {
     "flux": "^2.1.1",
-    "jsdom": "^9.4.1",
     "preact": "^5.7.0"
   },
   "devDependencies": {
@@ -77,6 +76,7 @@
     "eslint-plugin-jsx-a11y": "^2.0.1",
     "eslint-plugin-react": "^6.0.0",
     "file-loader": "^0.8.5",
+    "jsdom": "^9.4.1",
     "nyc": "^7.1.0",
     "shx": "^0.1.2",
     "sinon": "^1.15.4",
