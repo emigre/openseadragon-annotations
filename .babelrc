@@ -1,7 +1,5 @@
 {
-  "presets": [
-    "es2015-loose"
-  ],
+  presets: ['stage-0', 'es2015'],
   "plugins": [
     ["transform-react-jsx", { "pragma": "h" }]
   ]
