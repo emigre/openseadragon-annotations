@@ -14,5 +14,8 @@ export default function move(x, y, Dispatcher, Store) {
       }
       break;
 
+    default:
+      break;
+
   }
 }

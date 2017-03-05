@@ -8,5 +8,8 @@ export default function release(Dispatcher, Store) {
       });
       break;
 
+    default:
+      break;
+
   }
 }

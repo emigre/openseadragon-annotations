@@ -8,5 +8,8 @@ export default function leaveCanvas(Dispatcher, Store) {
       });
       break;
 
+    default:
+      break;
+
   }
 }

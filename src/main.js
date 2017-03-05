@@ -10,12 +10,24 @@ import cleanCanvas from './actions/cleanCanvas';
 import fillCanvasWith from './actions/fillCanvasWith';
 import zoom from './actions/zoom';
 
-const controls = controlClasses.map((Control) => new Control());
+const controls = controlClasses.map(Control => new Control());
 
 let isPluginActive = false;
 let openHandler = null;
 let zoomHandler = null;
 let overlay = null;
+
+// modifies the passed function so it's only called when the
+// plugin is active - otherwise it throws an error
+function ifPluginIsActive(fn) {
+  return function checkIfActive(...args) {
+    if (!isPluginActive) {
+      throw new Error('The OpenSeadragon Annotations plugin is not running');
+    } else {
+      return fn.apply(this, args);
+    }
+  };
+}
 
 // the viewer gains the following methods through its prototype,
 // which are used to start and stop the plugin. The plugin waits
@@ -23,7 +35,7 @@ let overlay = null;
 
 OpenSeadragon.Viewer.prototype.initializeAnnotations = function init(cb) {
   // updateZoom notifies the plugin of changes in the zoom level
-  const updateZoom = (e) => zoom(e.zoom, Dispatcher);
+  const updateZoom = e => zoom(e.zoom, Dispatcher);
   // start is the function called once the 'open' event has been fired
   const start = () => {
     zoomHandler = updateZoom;
@@ -122,17 +134,5 @@ const set = ifPluginIsActive((annotations) => {
 const clean = ifPluginIsActive(() => {
   cleanCanvas(Dispatcher);
 });
-
-// modifies the passed function so it's only called when the
-// plugin is active - otherwise it throws an error
-function ifPluginIsActive(fn) {
-  return function checkIfActive(...args) {
-    if (!isPluginActive) {
-      throw new Error('The OpenSeadragon Annotations plugin is not running');
-    } else {
-      return fn.apply(this, args);
-    }
-  };
-}
 
 export { get, set, clean };

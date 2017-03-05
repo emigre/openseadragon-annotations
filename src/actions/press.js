@@ -29,5 +29,8 @@ export default function press(x, y, Dispatcher, Store) {
       });
       break;
 
+    default:
+      break;
+
   }
 }

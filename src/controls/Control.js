@@ -29,7 +29,7 @@ export default class Control {
     this.btn.imgDown.style.visibility = 'hidden';
   }
 
-  onClick(e) {
+  static onClick(e) {
     if (e.eventSource.Tooltip) {
       selectMode(e.eventSource.Tooltip.toUpperCase(), Dispatcher, Store);
     }

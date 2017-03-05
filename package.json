@@ -41,14 +41,7 @@
     },
     "extends": "airbnb",
     "rules": {
-      "no-use-before-define": 0,
-      "default-case": 0,
-      "no-unused-vars": [
-        2,
-        {
-          "varsIgnorePattern": "^h$"
-        }
-      ],
+      "import/extensions": 0,
       "import/no-extraneous-dependencies": 0,
       "import/no-unresolved": 0
     }
@@ -59,7 +52,7 @@
     "source": "src/**/*.js",
     "require": [
       "babel-register",
-      "./ava.setup.js"
+      "./ava.setup.test.js"
     ]
   },
   "nyc": {

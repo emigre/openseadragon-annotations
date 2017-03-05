@@ -16,7 +16,45 @@ const svgProperties = {
   height: '100%',
 };
 
-export default class Annotations extends Component {
+// checks if we can use vector-effect="non-scaling-stroke" to
+// maintain constant the witdh of the SVG strokes during zoom
+function isVectorEffectSupported() {
+  return document.documentElement.style.vectorEffect !== undefined;
+}
+
+const svgStyles = {
+  cursor: 'default',
+  // IE 9-10 fix
+  'background-color': 'rgba(0,0,0,0)',
+};
+
+const createAnnotations = (() => {
+  let fn = el => h(...el);
+  if (!isVectorEffectSupported()) { // IE and Edge fix
+    fn = (el) => {
+      const newEl = el;
+      newEl[1]['stroke-width'] = convertWidth.toPercent(3);
+      return h(...newEl);
+    };
+  }
+  return fn;
+})();
+
+class Annotations extends Component {
+  static handleMouseLeave(e) {
+    if (Store.notInMoveMode()) {
+      e.stopPropagation();
+      leaveCanvas(Dispatcher, Store);
+    }
+  }
+
+  static handleMouseUp(e) {
+    if (Store.notInMoveMode()) {
+      e.stopPropagation();
+      release(Dispatcher, Store);
+    }
+  }
+
   getInitialState() {
     return { annotations: Store.getAll() };
   }
@@ -46,24 +84,10 @@ export default class Annotations extends Component {
     }
   }
 
-  handleMouseLeave(e) {
-    if (Store.notInMoveMode()) {
-      e.stopPropagation();
-      leaveCanvas(Dispatcher, Store);
-    }
-  }
-
   handleMouseMove(e) {
     if (Store.notInMoveMode()) {
       e.stopPropagation();
       move(...this.coords(e), Dispatcher, Store);
-    }
-  }
-
-  handleMouseUp(e) {
-    if (Store.notInMoveMode()) {
-      e.stopPropagation();
-      release(Dispatcher, Store);
     }
   }
 
@@ -80,32 +104,9 @@ export default class Annotations extends Component {
         onMouseUp: this.handleMouseUp.bind(this),
         onPointerUp: this.handleMouseUp.bind(this),
       },
-      this.state.annotations.map(createAnnotations)
+      this.state.annotations.map(createAnnotations),
     );
   }
 }
 
-const createAnnotations = (() => {
-  let fn = (el) => h(...el);
-  if (!isVectorEffectSupported()) { // IE and Edge fix
-    fn = (el) => {
-      const newEl = el;
-      newEl[1]['stroke-width'] = convertWidth.toPercent(3);
-      return h(...newEl);
-    };
-  }
-  return fn;
-})();
-
-// checks if we can use vector-effect="non-scaling-stroke" to
-// maintain constant the witdh of the SVG strokes during zoom
-function isVectorEffectSupported() {
-  return document.documentElement.style.vectorEffect !== undefined;
-}
-
-const svgStyles = {
-  cursor: 'default',
-  // IE 9-10 fix
-  'background-color': 'rgba(0,0,0,0)',
-};
-
+export default Annotations;
