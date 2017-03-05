@@ -30,7 +30,7 @@ module.exports = (env = {}) => {
       pathinfo: true,
     },
     externals: {
-      'OpenSeadragon': 'OpenSeadragon',
+      OpenSeadragon: 'OpenSeadragon',
     },
     module: {
       loaders: [
