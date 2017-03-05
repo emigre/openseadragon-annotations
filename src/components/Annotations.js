@@ -41,20 +41,6 @@ const createAnnotations = (() => {
 })();
 
 class Annotations extends Component {
-  static handleMouseLeave(e) {
-    if (Store.notInMoveMode()) {
-      e.stopPropagation();
-      leaveCanvas(Dispatcher, Store);
-    }
-  }
-
-  static handleMouseUp(e) {
-    if (Store.notInMoveMode()) {
-      e.stopPropagation();
-      release(Dispatcher, Store);
-    }
-  }
-
   getInitialState() {
     return { annotations: Store.getAll() };
   }
@@ -63,6 +49,20 @@ class Annotations extends Component {
     Store.addHandler('CHANGE_EVENT', () => {
       this.setState({ annotations: Store.getAll() });
     });
+  }
+
+  handleMouseLeave(e) {
+    if (Store.notInMoveMode()) {
+      e.stopPropagation();
+      leaveCanvas(Dispatcher, Store);
+    }
+  }
+
+  handleMouseUp(e) {
+    if (Store.notInMoveMode()) {
+      e.stopPropagation();
+      release(Dispatcher, Store);
+    }
   }
 
   coords(e) {

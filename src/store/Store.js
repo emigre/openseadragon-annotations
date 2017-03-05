@@ -14,26 +14,26 @@ const data = {
 };
 
 class AppStore extends OpenSeadragon.EventSource {
-  static getAll() {
+  getAll() {
     return data.annotations;
   }
 
   // multiplying the original width in pixels by the current
   // zoom level gives us the image width in pixels at the moment
-  static getWidth() {
+  getWidth() {
     return data.width * data.zoom;
   }
 
   // idem for the heigth
-  static getHeight() {
+  getHeight() {
     return data.height * data.zoom;
   }
 
-  static getLast() {
+  getLast() {
     return data.annotations[data.annotations.length - 1];
   }
 
-  static getMode() {
+  getMode() {
     return data.mode;
   }
 
@@ -45,11 +45,11 @@ class AppStore extends OpenSeadragon.EventSource {
     return !this.inMoveMode();
   }
 
-  static getZoomLevel() {
+  getZoomLevel() {
     return data.zoom;
   }
 
-  static isActivityInProgress() {
+  isActivityInProgress() {
     return data.activityInProgress;
   }
 }
