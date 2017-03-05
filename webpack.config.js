@@ -6,7 +6,7 @@ var webpack = require('webpack');
 module.exports = {
   devtool: 'source-map',
   resolve: {
-    extensions: ['', '.jsx', '.js'],
+    extensions: ['', '.js'],
   },
   entry: path.join(__dirname, 'src/main.js'),
   output: {
@@ -27,7 +27,7 @@ module.exports = {
   },
   module: {
     loaders: [
-      { test: /\.jsx?$/, loader: 'babel', exclude: /node_modules/ },
+      { test: /\.js$/, loader: 'babel', exclude: /node_modules/ },
       { test: /\.png$/, loader: 'url' },
     ],
   },

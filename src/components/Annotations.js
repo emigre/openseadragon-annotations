@@ -7,6 +7,15 @@ import press from '../actions/press';
 import release from '../actions/release';
 import { convertWidth, convertHeight } from '../utils/convert';
 
+const svgProperties = {
+  xmlns: 'http://www.w3.org/2000/svg',
+  version: '1.1',
+  preserveAspectRatio: 'none',
+  viewBox: '0 0 100 100',
+  width: '100%',
+  height: '100%',
+};
+
 export default class Annotations extends Component {
   getInitialState() {
     return { annotations: Store.getAll() };
@@ -59,19 +68,19 @@ export default class Annotations extends Component {
   }
 
   render() {
-    return (
-      <svg
-        {...svgProperties}
-        style={svgStyles}
-        onMouseDown={this.handleMouseDown.bind(this)}
-        onPointerDown={this.handleMouseDown.bind(this)}
-        onMouseLeave={this.handleMouseLeave.bind(this)}
-        onMouseMove={this.handleMouseMove.bind(this)}
-        onMouseUp={this.handleMouseUp.bind(this)}
-        onPointerUp={this.handleMouseUp.bind(this)}
-      >
-        { this.state.annotations.map(createAnnotations) }
-      </svg>
+    return h(
+      'svg',
+      {
+        ...svgProperties,
+        style: svgStyles,
+        onMouseDown: this.handleMouseDown.bind(this),
+        onPointerDown: this.handleMouseDown.bind(this),
+        onMouseLeave: this.handleMouseLeave.bind(this),
+        onMouseMove: this.handleMouseMove.bind(this),
+        onMouseUp: this.handleMouseUp.bind(this),
+        onPointerUp: this.handleMouseUp.bind(this),
+      },
+      this.state.annotations.map(createAnnotations)
     );
   }
 }
@@ -100,11 +109,3 @@ const svgStyles = {
   'background-color': 'rgba(0,0,0,0)',
 };
 
-const svgProperties = {
-  xmlns: 'http://www.w3.org/2000/svg',
-  version: '1.1',
-  preserveAspectRatio: 'none',
-  viewBox: '0 0 100 100',
-  width: '100%',
-  height: '100%',
-};
