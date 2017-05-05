@@ -1,3 +1,4 @@
+
 import OpenSeadragon, { Rect, ControlAnchor } from 'OpenSeadragon';
 import { h, render } from 'preact';
 import Annotations from './components/Annotations';

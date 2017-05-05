@@ -1,0 +1,9 @@
+[ignore]
+.*/node_modules/flux/.*
+.*/node_modules/fbjs/.*
+.*/dist/.*
+.*/coverage/.*
+[include]
+[libs]
+[options]
+emoji=true
