@@ -95,6 +95,14 @@ OpenSeadragon.Viewer.prototype.areAnnotationsActive = function areActive() {
   return isPluginActive;
 };
 
+OpenSeadragon.Viewer.prototype.startDrawing = ifPluginIsActive(function draw() {
+  selectMode('DRAW', Dispatcher, Store);
+});
+
+OpenSeadragon.Viewer.prototype.stopDrawing = ifPluginIsActive(function stopdraw() {
+  selectMode('MOVE', Dispatcher, Store);
+});
+
 OpenSeadragon.Viewer.prototype.shutdownAnnotations = ifPluginIsActive(function shutdown() {
   if (openHandler !== null) {
     throw new Error('An untriggered handler for the \'open\' event has been found');
