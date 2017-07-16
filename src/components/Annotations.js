@@ -69,8 +69,8 @@ class Annotations extends Component {
     const rect = this.base.getBoundingClientRect();
     const offsetX = e.clientX - rect.left;
     const offsetY = e.clientY - rect.top;
-    const x = convertWidth.toPercent(offsetX);
-    const y = convertHeight.toPercent(offsetY);
+    const x = 100 * offsetX / rect.width;
+    const y = 100 * offsetY / rect.height;
     return [
       Math.round(x * 100) / 100,
       Math.round(y * 100) / 100,
