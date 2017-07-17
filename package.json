@@ -1,6 +1,6 @@
 {
   "name": "openseadragon-annotations",
-  "version": "1.0.2",
+  "version": "1.0.5",
   "description": "OpenSeadragon annotations plugin",
   "homepage": "https://github.com/Emigre/openseadragon-annotations",
   "main": "src/main.js",
