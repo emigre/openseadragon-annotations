@@ -8,6 +8,7 @@ module.exports = (env = {}) => {
     plugins = [
       new webpack.optimize.OccurrenceOrderPlugin(),
       new webpack.optimize.UglifyJsPlugin({
+        sourceMap: true,
         compressor: {
           warnings: false,
           screw_ie8: true,
