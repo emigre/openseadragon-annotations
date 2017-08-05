@@ -1,9 +1,9 @@
-export default function selectMode(mode, Dispatcher, Store) {
+export default function selectMode(mode, Dispatcher, Model) {
   Dispatcher.dispatch({
     type: 'ACTIVITY_UPDATE',
     inProgress: false,
   });
-  if (Store.getMode() !== mode) {
+  if (Model.getMode() !== mode) {
     Dispatcher.dispatch({
       type: 'MODE_UPDATE',
       mode,

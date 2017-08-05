@@ -1,5 +1,5 @@
 import { h, Component } from 'preact';
-import Store from '../store/Store';
+import Model from '../model/Model';
 import Dispatcher from '../dispatcher/Dispatcher';
 import leaveCanvas from '../actions/leaveCanvas';
 import move from '../actions/move';
@@ -42,26 +42,26 @@ const createAnnotations = (() => {
 
 class Annotations extends Component {
   getInitialState() {
-    return { annotations: Store.getAll() };
+    return { annotations: Model.getAll() };
   }
 
   componentDidMount() {
-    Store.addHandler('CHANGE_EVENT', () => {
-      this.setState({ annotations: Store.getAll() });
+    Model.addHandler('CHANGE_EVENT', () => {
+      this.setState({ annotations: Model.getAll() });
     });
   }
 
   handleMouseLeave(e) {
-    if (Store.notInMoveMode()) {
+    if (Model.notInMoveMode()) {
       e.stopPropagation();
-      leaveCanvas(Dispatcher, Store);
+      leaveCanvas(Dispatcher, Model);
     }
   }
 
   handleMouseUp(e) {
-    if (Store.notInMoveMode()) {
+    if (Model.notInMoveMode()) {
       e.stopPropagation();
-      release(Dispatcher, Store);
+      release(Dispatcher, Model);
     }
   }
 
@@ -78,16 +78,16 @@ class Annotations extends Component {
   }
 
   handleMouseDown(e) {
-    if (Store.notInMoveMode()) {
+    if (Model.notInMoveMode()) {
       e.stopPropagation();
-      press(...this.coords(e), Dispatcher, Store);
+      press(...this.coords(e), Dispatcher, Model);
     }
   }
 
   handleMouseMove(e) {
-    if (Store.notInMoveMode()) {
+    if (Model.notInMoveMode()) {
       e.stopPropagation();
-      move(...this.coords(e), Dispatcher, Store);
+      move(...this.coords(e), Dispatcher, Model);
     }
   }
 

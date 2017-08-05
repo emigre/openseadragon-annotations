@@ -1,14 +1,14 @@
 import { Rect, ControlAnchor } from 'OpenSeadragon';
 import { h, render } from 'preact';
-import _Annotations from './components/Annotations';
-import Store from './store/Store';
+import Overlay from './components/Overlay';
+import Model from './model/Model';
 import Dispatcher from './dispatcher/Dispatcher';
 import controlClasses from './controls';
 import initialize from './actions/initialize';
 import selectMode from './actions/selectMode';
 import cleanCanvas from './actions/cleanCanvas';
 import fillCanvasWith from './actions/fillCanvasWith';
-import _zoom from './actions/zoom';
+import setZoom from './actions/setZoom';
 
 const controls = controlClasses.map(Control => new Control());
 
@@ -27,13 +27,13 @@ export default class Annotations {
   }
 
   onZoom({ zoom }) {
-    _zoom(zoom, Dispatcher);
+    setZoom(zoom, Dispatcher);
   }
 
   initialize() {
     const bounds = this.viewer.world.getHomeBounds();
     const rect = new Rect(0, 0, bounds.width, bounds.height);
-    this.overlay = render(h(_Annotations));
+    this.overlay = render(h(Overlay));
     this.viewer.addOverlay(this.overlay, rect);
 
     const currentZoom = this.viewer.viewport.getZoom();
@@ -64,12 +64,12 @@ export default class Annotations {
         }
       });
     });
-    selectMode('MOVE', Dispatcher, Store);
+    selectMode('MOVE', Dispatcher, Model);
     cleanCanvas(Dispatcher);
   }
 
   getAnnotations() {
-    return Store.getAll();
+    return Model.getAll();
   }
 
   setAnnotations(annotations) {
@@ -81,11 +81,11 @@ export default class Annotations {
   }
 
   getMode() {
-    return Store.getMode();
+    return Model.getMode();
   }
 
   setMode(mode) {
-    selectMode(mode, Dispatcher, Store);
+    selectMode(mode, Dispatcher, Model);
   }
 
   getStatus() {

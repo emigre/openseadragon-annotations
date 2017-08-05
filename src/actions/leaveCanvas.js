@@ -1,5 +1,5 @@
-export default function leaveCanvas(Dispatcher, Store) {
-  switch (Store.getMode()) {
+export default function leaveCanvas(Dispatcher, Model) {
+  switch (Model.getMode()) {
 
     case 'DRAW':
       Dispatcher.dispatch({

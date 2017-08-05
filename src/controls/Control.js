@@ -1,6 +1,6 @@
 import { extend, Button } from 'OpenSeadragon';
 import selectMode from '../actions/selectMode';
-import Store from '../store/Store';
+import Model from '../model/Model';
 import Dispatcher from '../dispatcher/Dispatcher';
 
 export default class Control {
@@ -9,11 +9,11 @@ export default class Control {
     this.btn = new Button(extend({
       onClick: this.onClick,
     }, options));
-    if (Store.getMode() === this.mode) {
+    if (Model.getMode() === this.mode) {
       this.activate();
     }
-    Store.addHandler('CHANGE_EVENT', () => {
-      if (Store.getMode() === this.mode) {
+    Model.addHandler('CHANGE_EVENT', () => {
+      if (Model.getMode() === this.mode) {
         this.activate();
       } else {
         this.deactivate();
@@ -31,7 +31,7 @@ export default class Control {
 
   onClick(e) {
     if (e.eventSource.Tooltip) {
-      selectMode(e.eventSource.Tooltip.toUpperCase(), Dispatcher, Store);
+      selectMode(e.eventSource.Tooltip.toUpperCase(), Dispatcher, Model);
     }
   }
 }

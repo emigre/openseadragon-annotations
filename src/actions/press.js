@@ -15,8 +15,8 @@ const shapesFactory = {
   },
 };
 
-export default function press(x, y, Dispatcher, Store) {
-  switch (Store.getMode()) {
+export default function press(x, y, Dispatcher, Model) {
+  switch (Model.getMode()) {
 
     case 'DRAW':
       Dispatcher.dispatch({

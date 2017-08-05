@@ -1,9 +1,9 @@
-export default function move(x, y, Dispatcher, Store) {
-  switch (Store.getMode()) {
+export default function move(x, y, Dispatcher, Model) {
+  switch (Model.getMode()) {
 
     case 'DRAW':
-      if (Store.isActivityInProgress()) {
-        const last = Store.getLast();
+      if (Model.isActivityInProgress()) {
+        const last = Model.getLast();
         if (last && last[0] === 'path') {
           const d = last[1].d;
           Dispatcher.dispatch({

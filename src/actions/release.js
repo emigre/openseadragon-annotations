@@ -1,5 +1,5 @@
-export default function release(Dispatcher, Store) {
-  switch (Store.getMode()) {
+export default function release(Dispatcher, Model) {
+  switch (Model.getMode()) {
 
     case 'DRAW':
       Dispatcher.dispatch({
