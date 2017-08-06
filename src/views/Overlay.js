@@ -1,26 +1,25 @@
 import { h, Component } from 'preact';
 
-const convertWidthToPercent = (horizontalMeasureInPixels, model) => {
-  const totalImageWidthInPixels = model.getWidth();
-  if (totalImageWidthInPixels === 0) { return 0; } // image not yet initialized
-  return (horizontalMeasureInPixels * 100) / totalImageWidthInPixels;
-};
-
-const createAnnotations = (() => {
-  let fn = el => h(...el);
-  // IE and Edge fix. Checks if we can not rely on vector-effect="non-scaling-stroke"
-  // to maintain constant the witdh of the SVG strokes during zoom
-  if (!(document.documentElement.style.vectorEffect !== undefined)) {
-    fn = (el) => {
+class Overlay extends Component {
+  constructor(...args) {
+    super(...args);
+    // In Internet Explorer and Edge we can not rely on vector-effect="non-scaling-stroke"
+    // to maintain constant the witdh of the SVG strokes during zoom
+    const vectorEffectNotAvailable = document.documentElement.style.vectorEffect === undefined;
+    const standardRender = (el) => h(...el);
+    const renderForIeAndEdge = (el, model) => {
       const newEl = el;
-      newEl[1]['stroke-width'] = convertWidthToPercent(3, this.props.model);
+      const baseWidth = 3;
+      let percentWidth;
+      const totalImageWidthInPixels = model.getWidth();
+      if (totalImageWidthInPixels === 0) { percentWidth = 0; } // image not yet initialized
+      percentWidth = (baseWidth * 100) / totalImageWidthInPixels;
+      newEl[1]['stroke-width'] = percentWidth;
       return h(...newEl);
     };
+    this.renderElement = vectorEffectNotAvailable ? renderForIeAndEdge : standardRender;
   }
-  return fn;
-})();
 
-class Annotations extends Component {
   getInitialState() {
     return { annotations: this.props.model.getAll() };
   }
@@ -90,9 +89,9 @@ class Annotations extends Component {
         onPointerDown: onMouseDown,
         onPointerUp: onMouseUp,
       },
-      this.state.annotations.map(createAnnotations),
+      this.state.annotations.map((el) => render(el, this.props.model)),
     );
   }
 }
 
-export default Annotations;
+export default Overlay;
