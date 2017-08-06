@@ -89,7 +89,7 @@ class Overlay extends Component {
         onPointerDown: onMouseDown,
         onPointerUp: onMouseUp,
       },
-      this.state.annotations.map((el) => render(el, this.props.model)),
+      this.state.annotations.map((el) => this.renderElement(el, this.props.model)),
     );
   }
 }
