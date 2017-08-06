@@ -1,5 +1,4 @@
 import { extend, Button, ControlAnchor } from 'OpenSeadragon';
-import selectMode from '../actions/selectMode';
 
 import drawGroupHover from '../../img/draw_grouphover.png';
 import drawHover from '../../img/draw_hover.png';
@@ -13,7 +12,7 @@ import moveRest from '../../img/move_rest.png';
 
 export class Control {
   constructor(options) {
-    this.dispatcher = options.dispatcher;
+    this.dispatch = options.dispatch;
     this.model = options.model;
     this.viewer = options.viewer;
     this.mode = options.Tooltip.toUpperCase();
@@ -45,7 +44,8 @@ export class Control {
 
   onClick({ eventSource }) {
     if (eventSource.Tooltip) {
-      selectMode(eventSource.Tooltip.toUpperCase(), this.dispatcher, this.model);
+      const mode = eventSource.Tooltip.toUpperCase();
+      this.dispatch({ type: 'MODE_UPDATE', mode });
     }
   }
 }

@@ -1,51 +1,37 @@
 import { Rect } from 'OpenSeadragon';
 import { h, render } from 'preact';
-import { Dispatcher } from 'flux';
 import Overlay from './views/Overlay';
 import { DrawControl, MoveControl } from './views/Controls';
 import Model from './model/Model';
-import generalConsequences from './consequences/general';
-import initialize from './actions/initialize';
-import selectMode from './actions/selectMode';
-import cleanCanvas from './actions/cleanCanvas';
-import fillCanvasWith from './actions/fillCanvasWith';
-import setZoom from './actions/setZoom';
+import createDispatch from './model/createDispatch';
+import generalActions from './model/generalActions';
 
 export default class Annotations {
-  constructor(options) {
+  constructor({ viewer }) {
     this.model = new Model();
-    this.dispatcher = new Dispatcher();
-    this.dispatcher.register(generalConsequences(this.model));
+    this.dispatch = createDispatch(this.model, generalActions);
     this.overlay = null;
-    this.viewer = options.viewer;
-    this.viewer.addHandler('open', this.onOpen, { annotations: this });
-    this.viewer.addHandler('zoom', this.onZoom, { annotations: this });
-    if (this.viewer.isOpen()) { this.initialize(); }
-  }
-
-  onOpen({ userData }) {
-    const { annotations } = userData;
-    annotations.initialize.call(annotations);
-  }
-
-  onZoom({ zoom, userData }) {
-    const { annotations } = userData;
-    setZoom(zoom, annotations.dispatcher);
+    this.viewer = viewer;
+    this.viewer.addHandler('open', () => this.initialize());
+    this.viewer.addHandler('zoom', ({ zoom }) => this.dispatch({ type: 'ZOOM_UPDATE', zoom }));
+    if (this.viewer.isOpen()) {
+      this.initialize();
+    }
   }
 
   initialize() {
-    const { dispatcher, model, viewer } = this;
-    this.overlay = render(h(Overlay, { dispatcher, model }));
+    const { dispatch, model, viewer } = this;
+    this.overlay = render(h(Overlay, { dispatch, model }));
     const homeBounds = viewer.world.getHomeBounds();
     viewer.addOverlay(this.overlay, new Rect(0, 0, homeBounds.width, homeBounds.height));
 
     const zoom = viewer.viewport.getZoom();
     const { width, height } = this.overlay.getBoundingClientRect();
-    initialize({ zoom, width, height }, dispatcher);
+    this.dispatch({ type: 'INITIALIZE', zoom, width, height });
 
     this.controls = [
-      new MoveControl({ dispatcher, model, viewer }),
-      new DrawControl({ dispatcher, model, viewer }),
+      new MoveControl({ dispatch, model, viewer }),
+      new DrawControl({ dispatch, model, viewer }),
     ];
   }
 
@@ -58,11 +44,11 @@ export default class Annotations {
   }
 
   setAnnotations(annotations) {
-    fillCanvasWith(annotations, this.dispatcher);
+    this.dispatch({ type: 'ANNOTATIONS_RESET', annotations });
   }
 
   cleanAnnotations() {
-    cleanCanvas(this.dispatcher);
+    this.dispatch({ type: 'ANNOTATIONS_RESET' });
   }
 
   getMode() {
@@ -70,7 +56,7 @@ export default class Annotations {
   }
 
   setMode(mode) {
-    selectMode(mode, this.dispatcher, this.model);
+    this.dispatch({ type: 'MODE_UPDATE', mode });
   }
 
   getStatus() {
