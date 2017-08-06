@@ -15,15 +15,15 @@ const shapesFactory = {
   },
 };
 
-export default function press(x, y, Dispatcher, Model) {
-  switch (Model.getMode()) {
+export default function press(x, y, dispatcher, model) {
+  switch (model.getMode()) {
 
     case 'DRAW':
-      Dispatcher.dispatch({
+      dispatcher.dispatch({
         type: 'ACTIVITY_UPDATE',
         inProgress: true,
       });
-      Dispatcher.dispatch({
+      dispatcher.dispatch({
         type: 'ANNOTATIONS_CREATE',
         annotation: shapesFactory.getPath(x, y),
       });

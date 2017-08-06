@@ -1,8 +1,8 @@
-export default function release(Dispatcher, Model) {
-  switch (Model.getMode()) {
+export default function release(dispatcher, model) {
+  switch (model.getMode()) {
 
     case 'DRAW':
-      Dispatcher.dispatch({
+      dispatcher.dispatch({
         type: 'ACTIVITY_UPDATE',
         inProgress: false,
       });

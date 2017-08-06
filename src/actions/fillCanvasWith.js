@@ -1,9 +1,9 @@
-export default function fillCanvasWith(annotations, Dispatcher) {
-  Dispatcher.dispatch({
+export default function fillCanvasWith(annotations, dispatcher) {
+  dispatcher.dispatch({
     type: 'ACTIVITY_UPDATE',
     inProgress: false,
   });
-  Dispatcher.dispatch({
+  dispatcher.dispatch({
     type: 'ANNOTATIONS_RESET',
     annotations,
   });

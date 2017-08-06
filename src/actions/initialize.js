@@ -1,5 +1,5 @@
-export default function initialize(options, Dispatcher) {
-  Dispatcher.dispatch({
+export default function initialize(options, dispatcher) {
+  dispatcher.dispatch({
     type: 'INITIALIZE',
     options,
   });

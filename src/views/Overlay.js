@@ -1,11 +1,8 @@
 import { h, Component } from 'preact';
-import Model from '../model/Model';
-import Dispatcher from '../dispatcher/Dispatcher';
 import leaveCanvas from '../actions/leaveCanvas';
 import move from '../actions/move';
 import press from '../actions/press';
 import release from '../actions/release';
-import { convertWidth, convertHeight } from '../utils/convert';
 
 const svgProperties = {
   xmlns: 'http://www.w3.org/2000/svg',
@@ -14,6 +11,12 @@ const svgProperties = {
   viewBox: '0 0 100 100',
   width: '100%',
   height: '100%',
+};
+
+const convertWidthToPercent = (horizontalMeasureInPixels, model) => {
+  const totalImageWidthInPixels = model.getWidth();
+  if (totalImageWidthInPixels === 0) { return 0; } // image not yet initialized
+  return (horizontalMeasureInPixels * 100) / totalImageWidthInPixels;
 };
 
 // checks if we can use vector-effect="non-scaling-stroke" to
@@ -33,7 +36,7 @@ const createAnnotations = (() => {
   if (!isVectorEffectSupported()) { // IE and Edge fix
     fn = (el) => {
       const newEl = el;
-      newEl[1]['stroke-width'] = convertWidth.toPercent(3);
+      newEl[1]['stroke-width'] = convertWidthToPercent(3, this.props.model);
       return h(...newEl);
     };
   }
@@ -42,26 +45,26 @@ const createAnnotations = (() => {
 
 class Annotations extends Component {
   getInitialState() {
-    return { annotations: Model.getAll() };
+    return { annotations: this.props.model.getAll() };
   }
 
   componentDidMount() {
-    Model.addHandler('CHANGE_EVENT', () => {
-      this.setState({ annotations: Model.getAll() });
+    this.props.model.addHandler('CHANGE_EVENT', () => {
+      this.setState({ annotations: this.props.model.getAll() });
     });
   }
 
   handleMouseLeave(e) {
-    if (Model.notInMoveMode()) {
+    if (this.props.model.notInMoveMode()) {
       e.stopPropagation();
-      leaveCanvas(Dispatcher, Model);
+      leaveCanvas(this.props.dispatcher, this.props.model);
     }
   }
 
   handleMouseUp(e) {
-    if (Model.notInMoveMode()) {
+    if (this.props.model.notInMoveMode()) {
       e.stopPropagation();
-      release(Dispatcher, Model);
+      release(this.props.dispatcher, this.props.model);
     }
   }
 
@@ -69,8 +72,8 @@ class Annotations extends Component {
     const rect = this.base.getBoundingClientRect();
     const offsetX = e.clientX - rect.left;
     const offsetY = e.clientY - rect.top;
-    const x = 100 * offsetX / rect.width;
-    const y = 100 * offsetY / rect.height;
+    const x = (100 * offsetX) / rect.width;
+    const y = (100 * offsetY) / rect.height;
     return [
       Math.round(x * 100) / 100,
       Math.round(y * 100) / 100,
@@ -78,16 +81,16 @@ class Annotations extends Component {
   }
 
   handleMouseDown(e) {
-    if (Model.notInMoveMode()) {
+    if (this.props.model.notInMoveMode()) {
       e.stopPropagation();
-      press(...this.coords(e), Dispatcher, Model);
+      press(...this.coords(e), this.props.dispatcher, this.props.model);
     }
   }
 
   handleMouseMove(e) {
-    if (Model.notInMoveMode()) {
+    if (this.props.model.notInMoveMode()) {
       e.stopPropagation();
-      move(...this.coords(e), Dispatcher, Model);
+      move(...this.coords(e), this.props.dispatcher, this.props.model);
     }
   }
 
