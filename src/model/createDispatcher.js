@@ -1,6 +1,6 @@
 import { Dispatcher } from 'flux';
 
-const createDispatch = (model, ...reactions) => {
+const createDispatcher = (model, ...reactions) => {
   const dispatcher = new Dispatcher();
   reactions.forEach((reaction) => {
     dispatcher.register(reaction(model));
@@ -8,4 +8,4 @@ const createDispatch = (model, ...reactions) => {
   return (action) => dispatcher.dispatch(action);
 };
 
-export default createDispatch;
+export default createDispatcher;

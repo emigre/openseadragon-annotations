@@ -22,11 +22,11 @@ export class Control {
     this.viewer.addControl(this.btn.element, {
       anchor: ControlAnchor.BOTTOM_LEFT,
     });
-    if (this.model.getMode() === this.mode) {
+    if (this.model.mode === this.mode) {
       this.activate();
     }
     this.model.addHandler('CHANGE_EVENT', () => {
-      if (this.model.getMode() === this.mode) {
+      if (this.model.mode === this.mode) {
         this.activate();
       } else {
         this.deactivate();

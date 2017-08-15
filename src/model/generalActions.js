@@ -1,23 +1,21 @@
-import { extend } from 'OpenSeadragon';
-
 const reactToGeneralAction = (model) =>
   (action) => {
     switch (action.type) {
       case 'MODE_UPDATE':
-        model.data.activityInProgress = false;
-        if (model.data.mode !== action.mode) {
-          model.data.mode = action.mode;
+        model.activityInProgress = false;
+        if (model.mode !== action.mode) {
+          model.mode = action.mode;
         }
         break;
 
       case 'ACTIVITY_UPDATE':
-        model.data.activityInProgress = action.inProgress;
+        model.activityInProgress = action.inProgress;
         break;
 
       case 'PRESS':
-        if (model.data.mode === 'DRAW') {
-          model.data.activityInProgress = true;
-          model.data.annotations.push([
+        if (model.mode === 'DRAW') {
+          model.activityInProgress = true;
+          model.annotations.push([
             'path',
             {
               fill: 'none',
@@ -33,14 +31,14 @@ const reactToGeneralAction = (model) =>
         break;
 
       case 'RELEASE':
-        if (model.data.mode === 'DRAW') {
-          model.data.activityInProgress = false;
+        if (model.mode === 'DRAW') {
+          model.activityInProgress = false;
         }
         break;
 
       case 'MOVE':
-        if (model.data.mode === 'DRAW' && model.data.activityInProgress === true) {
-          const annotations = model.data.annotations;
+        if (model.mode === 'DRAW' && model.activityInProgress === true) {
+          const annotations = model.annotations;
           const lastAnnotation = annotations[annotations.length - 1];
           if (lastAnnotation && lastAnnotation[0] === 'path') {
             lastAnnotation[1].d += ` L${action.x} ${action.y}`;
@@ -49,29 +47,30 @@ const reactToGeneralAction = (model) =>
         break;
 
       case 'ANNOTATIONS_RESET':
-        model.data.activityInProgress = false;
-        model.data.annotations = action.annotations || [];
+        model.activityInProgress = false;
+        model.annotations = action.annotations || [];
         break;
 
       case 'ZOOM_UPDATE':
-        model.data.zoom = action.zoom;
+        model.zoom = action.zoom;
         break;
 
       case 'LEAVE_CANVAS':
-        if (model.data.mode === 'DRAW') {
-          model.data.activityInProgress = false;
+        if (model.mode === 'DRAW') {
+          model.activityInProgress = false;
         }
         break;
 
       case 'INITIALIZE':
-        model.data.zoom = action.zoom;
-        model.data.width = action.width;
-        model.data.height = action.height;
+        model.zoom = action.zoom;
+        model.width = action.width;
+        model.height = action.height;
         break;
 
       default:
         break;
     }
+    console.log(model)
     model.raiseEvent('CHANGE_EVENT');
   };
 

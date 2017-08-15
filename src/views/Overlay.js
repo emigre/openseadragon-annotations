@@ -11,7 +11,7 @@ class Overlay extends Component {
       const newEl = el;
       const baseWidth = 3;
       let percentWidth;
-      const totalImageWidthInPixels = model.getWidth();
+      const totalImageWidthInPixels = model.width * model.zoom;
       if (totalImageWidthInPixels === 0) { percentWidth = 0; } // image not yet initialized
       percentWidth = (baseWidth * 100) / totalImageWidthInPixels;
       newEl[1]['stroke-width'] = percentWidth;
@@ -21,38 +21,38 @@ class Overlay extends Component {
   }
 
   getInitialState() {
-    return { annotations: this.props.model.getAll() };
+    return { annotations: this.props.model.annotations };
   }
 
   componentDidMount() {
     this.props.model.addHandler('CHANGE_EVENT', () => {
-      this.setState({ annotations: this.props.model.getAll() });
+      this.setState({ annotations: this.props.model.annotations });
     });
   }
 
   onMouseDown = (e) => {
-    if (this.props.model.notInMoveMode()) {
+    if (this.props.model.mode !== 'MOVE') {
       e.stopPropagation();
       this.props.dispatch({ type: 'PRESS', ...this.calculateCoords(e) });
     }
   };
 
   onMouseMove = (e) => {
-    if (this.props.model.notInMoveMode()) {
+    if (this.props.model.mode !== 'MOVE') {
       e.stopPropagation();
       this.props.dispatch({ type: 'MOVE', ...this.calculateCoords(e) })
     }
   };
 
   onMouseUp = (e) => {
-    if (this.props.model.notInMoveMode()) {
+    if (this.props.model.mode !== 'MOVE') {
       e.stopPropagation();
       this.props.dispatch({ type: 'RELEASE' });
     }
   };
 
   onMouseLeave = (e) => {
-    if (this.props.model.notInMoveMode()) {
+    if (this.props.model.mode !== 'MOVE') {
       e.stopPropagation();
       this.props.dispatch({ type: 'LEAVE_CANVAS' });
     }
