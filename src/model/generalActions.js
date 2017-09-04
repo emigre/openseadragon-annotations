@@ -70,7 +70,7 @@ const reactToGeneralAction = (model) =>
       default:
         break;
     }
-    console.log(model)
+
     model.raiseEvent('CHANGE_EVENT');
   };
 

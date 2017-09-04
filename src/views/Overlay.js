@@ -21,38 +21,38 @@ class Overlay extends Component {
   }
 
   getInitialState() {
-    return { annotations: this.props.model.annotations };
+    return this.props.model;
   }
 
   componentDidMount() {
     this.props.model.addHandler('CHANGE_EVENT', () => {
-      this.setState({ annotations: this.props.model.annotations });
+      this.setState(this.props.model);
     });
   }
 
   onMouseDown = (e) => {
-    if (this.props.model.mode !== 'MOVE') {
+    if (this.state.mode !== 'MOVE') {
       e.stopPropagation();
       this.props.dispatch({ type: 'PRESS', ...this.calculateCoords(e) });
     }
   };
 
   onMouseMove = (e) => {
-    if (this.props.model.mode !== 'MOVE') {
+    if (this.state.mode !== 'MOVE') {
       e.stopPropagation();
       this.props.dispatch({ type: 'MOVE', ...this.calculateCoords(e) })
     }
   };
 
   onMouseUp = (e) => {
-    if (this.props.model.mode !== 'MOVE') {
+    if (this.state.mode !== 'MOVE') {
       e.stopPropagation();
       this.props.dispatch({ type: 'RELEASE' });
     }
   };
 
   onMouseLeave = (e) => {
-    if (this.props.model.mode !== 'MOVE') {
+    if (this.state.mode !== 'MOVE') {
       e.stopPropagation();
       this.props.dispatch({ type: 'LEAVE_CANVAS' });
     }
@@ -89,7 +89,7 @@ class Overlay extends Component {
         onPointerDown: onMouseDown,
         onPointerUp: onMouseUp,
       },
-      this.state.annotations.map((el) => this.renderElement(el, this.props.model)),
+      this.state.annotations.map((el) => this.renderElement(el, this.state)),
     );
   }
 }
