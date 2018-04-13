@@ -40,7 +40,7 @@ class Overlay extends Component {
   onMouseMove = (e) => {
     if (this.state.mode !== 'MOVE') {
       e.stopPropagation();
-      this.props.dispatch({ type: 'MOVE', ...this.calculateCoords(e) })
+      this.props.dispatch({ type: 'MOVE', ...this.calculateCoords(e) });
     }
   };
 
@@ -82,10 +82,10 @@ class Overlay extends Component {
           cursor: 'default',
           'background-color': 'rgba(0,0,0,0)', // IE 9-10 fix
         },
-        onMouseDown,
+        // onMouseDown,
         onMouseLeave,
         onMouseMove,
-        onMouseUp,
+        // onMouseUp,
         onPointerDown: onMouseDown,
         onPointerUp: onMouseUp,
       },
