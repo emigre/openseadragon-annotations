@@ -9,4 +9,8 @@ export default () =>
     height: 0,
     activityInProgress: false,
     annotations: [],
+    style: {
+      color: 'red',
+      width: 3,
+    },
   });

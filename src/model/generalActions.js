@@ -20,8 +20,8 @@ const reactToGeneralAction = (model) =>
             {
               fill: 'none',
               d: `M${action.x} ${action.y}`,
-              stroke: 'red',
-              'stroke-width': 3,
+              stroke: model.style.color || 'red',
+              'stroke-width': model.style.width || 3,
               'stroke-linejoin': 'round',
               'stroke-linecap': 'round',
               'vector-effect': 'non-scaling-stroke',
