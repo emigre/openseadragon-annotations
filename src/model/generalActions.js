@@ -33,6 +33,9 @@ const reactToGeneralAction = (model) =>
       case 'RELEASE':
         if (model.mode === 'DRAW') {
           model.activityInProgress = false;
+          if (model.addAnnotaionCallback instanceof Function) {
+            model.addAnnotaionCallback();
+          }
         }
         break;
 

@@ -9,6 +9,7 @@ export default () =>
     height: 0,
     activityInProgress: false,
     annotations: [],
+    addAnnotaionCallback: null,
     style: {
       color: 'red',
       width: 3,
