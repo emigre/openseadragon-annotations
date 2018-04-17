@@ -79,7 +79,6 @@ class Overlay extends Component {
         width: '100%',
         height: '100%',
         style: {
-          cursor: 'default',
           'background-color': 'rgba(0,0,0,0)', // IE 9-10 fix
         },
         // onMouseDown,
