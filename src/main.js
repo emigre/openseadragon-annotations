@@ -50,10 +50,12 @@ const annotationsPrototype = {
 
   onStartDraw() {
     this.dispatch({ type: 'MODE_UPDATE', mode: 'DRAW' });
+    this.overlay.style.cursor = 'pointer';
   },
 
   onStopDraw() {
     this.dispatch({ type: 'MODE_UPDATE', mode: 'MOVE' });
+    this.overlay.style.cursor = '';
   },
 };
 
