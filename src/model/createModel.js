@@ -3,7 +3,7 @@ import { EventSource } from 'OpenSeadragon';
 export default () =>
   Object.assign(Object.create(EventSource.prototype), {
     events: {},
-    mode: 'MOVE',
+    mode: 'DRAW',
     zoom: 1,
     width: 0,
     height: 0,

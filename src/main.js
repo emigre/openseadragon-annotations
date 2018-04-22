@@ -48,15 +48,13 @@ const annotationsPrototype = {
     return { active: !!this.overlay };
   },
 
-  onStartDraw() {
-    this.dispatch({ type: 'MODE_UPDATE', mode: 'DRAW' });
-    this.overlay.style.cursor = 'pointer';
-  },
+  // onStartDraw() {
+  //   this.dispatch({ type: 'MODE_UPDATE', mode: 'DRAW' });
+  // },
 
-  onStopDraw() {
-    this.dispatch({ type: 'MODE_UPDATE', mode: 'MOVE' });
-    this.overlay.style.cursor = '';
-  },
+  // onStopDraw() {
+  //   this.dispatch({ type: 'MODE_UPDATE', mode: 'MOVE' });
+  // },
 };
 
 export default ({ viewer }) => {

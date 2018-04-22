@@ -31,9 +31,12 @@ class Overlay extends Component {
   }
 
   onMouseDown = (e) => {
-    if (this.state.mode !== 'MOVE') {
+    if (e.button !== 0) {
       e.stopPropagation();
       this.props.dispatch({ type: 'PRESS', ...this.calculateCoords(e) });
+      this.base.style.cursor = 'pointer'
+    } else {
+      this.base.style.cursor = 'move'
     }
   };
 
@@ -49,6 +52,7 @@ class Overlay extends Component {
       e.stopPropagation();
       this.props.dispatch({ type: 'RELEASE' });
     }
+    this.base.style.cursor = 'default';
   };
 
   onMouseLeave = (e) => {
@@ -56,6 +60,7 @@ class Overlay extends Component {
       e.stopPropagation();
       this.props.dispatch({ type: 'LEAVE_CANVAS' });
     }
+    this.base.style.cursor = 'default';
   };
 
   calculateCoords(e) {
