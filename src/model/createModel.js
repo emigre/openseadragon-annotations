@@ -11,6 +11,7 @@ export default () =>
     annotations: [],
     addAnnotationCallback: null,
     style: {
+      type: 'path', // type: polyline, polygon, line, ellipse, rect, path (default)
       color: 'red',
       width: 3,
     },
