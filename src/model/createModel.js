@@ -3,7 +3,7 @@ import { EventSource } from 'OpenSeadragon';
 export default () =>
   Object.assign(Object.create(EventSource.prototype), {
     events: {},
-    mode: 'DRAW',
+    mode: 'MOVE',
     zoom: 1,
     width: 0,
     height: 0,
@@ -11,7 +11,7 @@ export default () =>
     annotations: [],
     addAnnotationCallback: null,
     style: {
-      type: 'path', // type: polyline, polygon, line, ellipse, rect, path (default)
+      type: 'polyline', // type: polyline, polygon, line, ellipse, rect, path (default)
       color: 'red',
       width: 3,
     },

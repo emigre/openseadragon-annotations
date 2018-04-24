@@ -32,11 +32,12 @@ class Overlay extends Component {
 
   onMouseDown = (e) => {
     if (e.button !== 0) {
+      return false;
+    }
+    if (this.state.mode !== 'MOVE') {
       e.stopPropagation();
       this.props.dispatch({ type: 'PRESS', ...this.calculateCoords(e) });
       this.base.style.cursor = 'pointer'
-    } else {
-      this.base.style.cursor = 'move'
     }
   };
 
