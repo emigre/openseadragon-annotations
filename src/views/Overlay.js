@@ -31,16 +31,20 @@ class Overlay extends Component {
   }
 
   onMouseDown = (e) => {
+    if (e.button !== 0) {
+      return false;
+    }
     if (this.state.mode !== 'MOVE') {
       e.stopPropagation();
       this.props.dispatch({ type: 'PRESS', ...this.calculateCoords(e) });
+      this.base.style.cursor = 'pointer'
     }
   };
 
   onMouseMove = (e) => {
     if (this.state.mode !== 'MOVE') {
       e.stopPropagation();
-      this.props.dispatch({ type: 'MOVE', ...this.calculateCoords(e) })
+      this.props.dispatch({ type: 'MOVE', ...this.calculateCoords(e) });
     }
   };
 
@@ -49,6 +53,7 @@ class Overlay extends Component {
       e.stopPropagation();
       this.props.dispatch({ type: 'RELEASE' });
     }
+    this.base.style.cursor = 'default';
   };
 
   onMouseLeave = (e) => {
@@ -56,6 +61,7 @@ class Overlay extends Component {
       e.stopPropagation();
       this.props.dispatch({ type: 'LEAVE_CANVAS' });
     }
+    this.base.style.cursor = 'default';
   };
 
   calculateCoords(e) {
@@ -79,13 +85,12 @@ class Overlay extends Component {
         width: '100%',
         height: '100%',
         style: {
-          cursor: 'default',
           'background-color': 'rgba(0,0,0,0)', // IE 9-10 fix
         },
-        onMouseDown,
+        // onMouseDown,
         onMouseLeave,
         onMouseMove,
-        onMouseUp,
+        // onMouseUp,
         onPointerDown: onMouseDown,
         onPointerUp: onMouseUp,
       },

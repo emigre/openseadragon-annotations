@@ -9,4 +9,10 @@ export default () =>
     height: 0,
     activityInProgress: false,
     annotations: [],
+    addAnnotationCallback: null,
+    style: {
+      type: 'polyline', // type: polyline, polygon, line, ellipse, rect, path (default)
+      color: 'red',
+      width: 3,
+    },
   });

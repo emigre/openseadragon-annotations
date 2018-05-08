@@ -1,7 +1,7 @@
 import { Rect } from 'OpenSeadragon';
 import { h, render } from 'preact';
 import Overlay from './views/Overlay';
-import { DrawControl, MoveControl } from './views/Controls';
+// import { DrawControl, MoveControl } from './views/Controls';
 import createDispatcher from './model/createDispatcher';
 import generalActions from './model/generalActions';
 import createModel from './model/createModel';
@@ -14,10 +14,10 @@ const annotationsPrototype = {
     const zoom = this.viewer.viewport.getZoom();
     const { width, height } = this.overlay.getBoundingClientRect();
     this.dispatch({ type: 'INITIALIZE', zoom, width, height });
-    this.controls = [
-      new MoveControl({ dispatch: this.dispatch, model: this.model, viewer: this.viewer }),
-      new DrawControl({ dispatch: this.dispatch, model: this.model, viewer: this.viewer }),
-    ];
+    // this.controls = [
+    //   new MoveControl({ dispatch: this.dispatch, model: this.model, viewer: this.viewer }),
+    //   new DrawControl({ dispatch: this.dispatch, model: this.model, viewer: this.viewer }),
+    // ];
   },
 
   onClose() {
@@ -25,7 +25,7 @@ const annotationsPrototype = {
   },
 
   getAnnotations() {
-    return this.model.getAll();
+    return this.model.annotations;
   },
 
   setAnnotations(annotations) {
@@ -46,6 +46,14 @@ const annotationsPrototype = {
 
   getStatus() {
     return { active: !!this.overlay };
+  },
+
+  onStartDraw() {
+    this.dispatch({ type: 'MODE_UPDATE', mode: 'DRAW' });
+  },
+
+  onStopDraw() {
+    this.dispatch({ type: 'MODE_UPDATE', mode: 'MOVE' });
   },
 };
 
