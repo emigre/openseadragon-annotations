@@ -5,15 +5,15 @@
   "homepage": "https://github.com/Emigre/openseadragon-annotations",
   "main": "src/main.js",
   "scripts": {
-    "prestart": "rimraf dist",
+    "prestart": "shx rm -rf dist",
     "start": "webpack --progress --watch",
     "test": "ava -v",
     "tdd": "ava -w",
-    "prebuild": "rimraf dist",
+    "prebuild": "shx rm -rf dist",
     "build": "webpack --progress --env.production",
+    "prepublish": "npm run build",
     "coverage": "nyc ava",
-    "lint": "eslint . --ignore-pattern '/dist/' --ignore-pattern '/coverage/' || shx echo",
-    "flow": "flow; test $? -eq 0 -o $? -eq 2"
+    "lint": "eslint . --ignore-pattern '/dist/' --ignore-pattern '/coverage/' || shx echo"
   },
   "repository": {
     "type": "git",
@@ -23,6 +23,29 @@
   "license": "BSD-3-Clause",
   "bugs": {
     "url": "https://github.com/Emigre/openseadragon-annotations/issues"
+  },
+  "babel": {
+    "presets": [
+      "stage-0",
+      "es2015"
+    ]
+  },
+  "eslintConfig": {
+    "parser": "babel-eslint",
+    "globals": {
+      "OpenSeadragon": 1
+    },
+    "env": {
+      "browser": true,
+      "node": true
+    },
+    "extends": "airbnb",
+    "rules": {
+      "class-methods-use-this": 0,
+      "import/extensions": 0,
+      "import/no-extraneous-dependencies": 0,
+      "import/no-unresolved": 0
+    }
   },
   "ava": {
     "babel": "inherit",
@@ -67,8 +90,6 @@
     "babel-core": "^6.23.1",
     "babel-eslint": "^7.1.1",
     "babel-loader": "^6.3.2",
-    "babel-plugin-transform-class-properties": "^6.24.1",
-    "babel-plugin-transform-flow-strip-types": "^6.22.0",
     "babel-preset-es2015": "^6.22.0",
     "babel-preset-stage-0": "^6.22.0",
     "eslint": "^3.17.0",
@@ -76,15 +97,14 @@
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^4.0.0",
     "eslint-plugin-react": "^6.10.0",
-    "file-loader": "^1.0.0",
-    "flow-bin": "^0.42.0",
+    "file-loader": "^0.10.1",
     "jsdom": "^9.11.0",
     "nyc": "^10.1.2",
-    "rimraf": "^2.6.1",
+    "shx": "^0.2.2",
     "sinon": "^1.17.6",
     "url-loader": "^0.5.8",
-    "webpack": "^3.4.1",
-    "webpack-dev-server": "^2.6.1"
+    "webpack": "^2.2.1",
+    "webpack-dev-server": "^2.4.1"
   },
   "peerDependencies": {
     "openseadragon": "^2.2.1"

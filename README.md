@@ -15,7 +15,7 @@ npm install openseadragon openseadragon-annotations --save-dev
 Once OpenSeadragon and the plugin are included in your page, you can start an OpenSeadragon viewer with the plugin in this way:
 
 ```javascript
-const viewer = OpenSeadragon({
+var viewer = OpenSeadragon({
     id: 'viewer',
     showNavigator:  true,
     tileSources: {
@@ -34,10 +34,30 @@ const viewer = OpenSeadragon({
     }
 });
 
-const annotations = new OpenSeadragon.Annotations({ viewer });
+viewer.initializeAnnotations();
 ```
 
 The viewer screen will have an additional set of icons at the bottom-left side, that you can use to toggle the drawing mode and draw annotatations over the image.
+
+### Initialization
+
+Once the plugin is loaded, when you create a OpenSeadragon viewer object, it will have three additional methods that allow you to trigger the plugin.
+
+To initialize the plugin use `viewer.initializeAnnotations();`. The plugin will then wait until an image is loaded in the page (open event) to create the vector overlay that allows you to draw.
+
+To check the state of the plugin, call `viewer.areAnnotationsActive();`, it will return a boolean. Note that the plugin could be active and waiting for the image to load.
+
+To shut down the plugin use `viewer.shutdownAnnotations();`. This will destroy the overlay and remove the buttons and event handlers. The plugin can be started again later in the usual way.
+
+### Interacting With The Plugin
+
+When the plugin is installed, your `viewer` object gains a property object named `annotations` that allows you to interact with it. Through this object's methods you can set and retrieve the current annotations.
+
+Calling `viewer.annotations.get()` will return an Array of annotations. Annotations are themselves arrays as well, composed of two elements: a name tag which is a String, and an object describing the properties of that tag.
+
+You can call `viewer.annotations.set()` and pass one of those Array of Arrays to reset the current drawing to that particular data.
+
+`viewer.annotations.clean()` will erase all annotations currently on screen.
 
 ### Supported Browsers
 

@@ -1,0 +1,26 @@
+{
+  "name": "openseadragon-annotations",
+  "version": "1.0.5",
+  "authors": [
+    "Gaspar Rey <info@gasparrey.com> (http://www.gasparrey.com/)"
+  ],
+  "license": "BSD-3-Clause",
+  "description": "OpenSeadragon annotations plugin",
+  "homepage": "https://github.com/Emigre/openseadragon-annotations",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Emigre/openseadragon-annotations.git"
+  },
+  "main": "dist/openseadragon-annotations.js",
+  "moduleType": "es6",
+  "dependencies": {
+    "openseadragon": "^2.2.1"
+  },
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "img/preview.gif"
+  ]
+}
