@@ -3,5 +3,6 @@ import Draw from './Draw';
 
 export default [
   Move,
-  Draw,
+  // more tools here
+  // Draw,
 ];
