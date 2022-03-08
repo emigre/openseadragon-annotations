@@ -8,7 +8,6 @@ module.exports = (env = {}) => {
     plugins = [
       new webpack.optimize.OccurrenceOrderPlugin(),
       new webpack.optimize.UglifyJsPlugin({
-        sourceMap: true,
         compressor: {
           warnings: false,
           screw_ie8: true,
@@ -26,9 +25,8 @@ module.exports = (env = {}) => {
     output: {
       path: path.resolve(__dirname, 'dist/'),
       filename: 'openseadragon-annotations.js',
-      library: ['OpenSeadragon', 'Annotations'],
       libraryTarget: 'var',
-      libraryExport: 'default',
+      library: ['OpenSeadragon', 'Viewer', 'prototype', 'annotations'],
       pathinfo: true,
     },
     externals: {

@@ -1,0 +1,37 @@
+/* The sidebar menu */
+.sidenav {
+    height: 70%; /* Full-height: remove this if you want "auto" height */
+    width: 15%; /* Set the width of the sidebar */
+    position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+    z-index: 1; /* Stay on top */
+    top: 0; /* Stay at the top */
+    left: 0;
+    background-color: rgb(252, 250, 250); /* Black */
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 20px;
+  }
+
+  /* Style page content */
+.main {
+    margin-left: 15%; /* Same as the width of the sidebar */
+    padding: 0px 10px;
+  }
+
+button {font-size: 16px; width: 90%;}
+input {font-size: 16px;}
+#steatosis_btn {color: #000000; width: 90%;} /* Red */
+#inflammation_btn {color: #008CBA; width: 90%;} /* Blue */
+#ballooning_btn {color: #4CAF50; width: 90%;} /* Green */
+
+#steatosis_label {color: #000000;} /* Red */
+#inflammation_label {color: #008CBA;} /* Blue */
+#ballooning_label {color: #4CAF50;} /* Green */
+
+/* #steatosis_mask {border-color: #ff0000;}
+#inflammation_mask {border-color: #008CBA;}
+#ballooning_mask {border-color: #4CAF50;} */
+
+/* path {stroke: #000000; stroke-width: 2px; } */
+/* .steatosis {stroke: #ff0000;}
+.inflammation {stroke: #008CBA;}
+.ballooning {stroke: #4CAF50;} */
